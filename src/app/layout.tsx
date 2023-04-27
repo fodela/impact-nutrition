@@ -18,11 +18,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body
-        className={`p-10 flex flex-col justify-between  min-h-screen gap-10 
-      
-        `}
-      >
+      <body className="px-10 pt-10">
         <Header />
         {children}
         <Footer />
