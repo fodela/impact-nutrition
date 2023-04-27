@@ -1,6 +1,6 @@
 const Hero = () => {
   return (
-    <section className="grid md:grid-cols-2">
+    <section className="section_grid">
       <div>
         <h1 className="heading_primary text-4xl font-bold uppercase mb-6">
           Impact nutrition consult leaders in nutrition for health

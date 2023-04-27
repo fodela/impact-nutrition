@@ -6,7 +6,7 @@ import Logo from "../Logo";
 
 const FooterColOne = () => {
   return (
-    <div className=" flex flex-col gap-6 ">
+    <div className="flex flex-col gap-6 ">
       <Logo />
       <div className="">
         <p>info@nutritionconsultgh.com</p>

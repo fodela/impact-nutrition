@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Hero from "@/components/Hero";
 import AnalyticContent from "@/components/AnalyticContent";
+import Testimony from "@/components/Testimony";
 
 // const inter = Inter({ subsets: ["latin"] });
 
@@ -10,11 +11,49 @@ export default async function Home() {
       <Hero />
       <section>
         <h2 className="heading_secondary ">Insights and Analytics</h2>
-        <div className="grid grid-cols-2 gap-10">
+        <div className="section_grid">
           <AnalyticContent />
           <AnalyticContent />
           <AnalyticContent />
           <AnalyticContent />
+        </div>
+      </section>
+
+      <section className="section_grid">
+        <div>
+          <h3 className="heading_tertiary pt-10">
+            The right place to develop your passion in nutritional well-being
+          </h3>
+          <p className="text-xl">
+            We organize development program for Nutritionist of divers
+            background and we believe that in unity there is strength.
+          </p>
+          <p className="text-xl">
+            We organize development program for Nutritionist of divers
+            background and we believe that in unity there is strength.
+          </p>
+        </div>
+        <img src="assets/services_image.svg" alt="services image" />
+      </section>
+
+      <section>
+        <h2 className="heading_secondary">Subscribe for our newsletters</h2>
+        <div className="section_grid">
+          <img src="assets/newsletter_image.svg" alt="newsletter image" />
+          <p className="text-2xl">
+            We organize multiple CPD programs every year to keep our
+            professionals up to and well informed We organize multiple CPD
+            programs every year to keep our professionals up to and well informe
+          </p>
+        </div>
+      </section>
+
+      <section>
+        <h2 className="heading_secondary">What People Say About Us</h2>
+        <div className="flex gap-4 justify-around flex-nowrap">
+          <Testimony />
+          <Testimony />
+          <Testimony />
         </div>
       </section>
 
