@@ -2,11 +2,12 @@ import Link from "next/link";
 
 import { ImFacebook, ImLinkedin2, ImTwitter } from "react-icons/im";
 import { BsEnvelopeFill } from "react-icons/bs";
+import Logo from "../Logo";
 
 const FooterColOne = () => {
   return (
-    <div className="1 flex flex-col gap-6 ">
-      <div>Logo</div>
+    <div className=" flex flex-col gap-6 ">
+      <Logo />
       <div className="">
         <p>info@nutritionconsultgh.com</p>
         <p>Address line 1, address line 2</p>
