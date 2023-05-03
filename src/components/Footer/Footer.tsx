@@ -2,10 +2,6 @@ import FooterColOne from "./FooterColOne";
 import FooterColThree from "./FooterColThree";
 import FooterColTwo from "./FooterColTwo";
 
-<<<<<<< HEAD
-=======
-
->>>>>>> 14e35bd (merge main)
 const Footer = () => {
   return (
     <footer className="flex flex-col divide-y-2 gap-4 mt-20 bg-colorPrimary/10 full_bleed">
