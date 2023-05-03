@@ -1,9 +1,26 @@
 {
+<<<<<<< HEAD
   "extends": "@strapi/typescript-utils/tsconfigs/server",
   "compilerOptions": {
     "outDir": "dist",
     "rootDir": "."
   },
+=======
+  "compilerOptions": {
+    "esModuleInterop": true,
+    "outDir": "dist",
+    "rootDir": ".",
+    "target": "es6",
+    "module": "commonjs",
+    "lib": ["es6"],
+    "strict": true
+  },
+  "types": [
+    "node",
+    "@types/express",
+    "@prisma/client"
+  ],
+>>>>>>> 14e35bd (merge main)
   "include": [
     "./",
     "./**/*.ts",

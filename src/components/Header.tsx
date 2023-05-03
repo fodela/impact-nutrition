@@ -1,7 +1,6 @@
-import Image from "next/image";
-import NavBar from "./NavBar";
 import Link from "next/link";
 import Logo from "./Logo";
+import NavBar from "./NavBar";
 
 const Header = () => {
   return (
