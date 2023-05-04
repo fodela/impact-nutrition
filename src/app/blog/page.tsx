@@ -12,9 +12,12 @@ const blog = async () => {
       <section className="">
         <h2 className="heading_secondary">Blogs</h2>
         <div className="grid md:grid-cols-2 gap-6">
-          {posts.map((post) => (
-            <article className="flex flex-col gap-4">
-              <img
+          {
+          //@ts-ignore  
+      posts.map((post) => (
+            <article key={post.id} className="flex flex-col gap-4">
+              <Image
+              //@ts-ignore 
                 src={post.imageUrl?.toString()}
                 alt="post image"
                 // width={2000}

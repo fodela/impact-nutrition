@@ -6,7 +6,7 @@ const Testimony = () => {
       <BsQuote className="absolute right-1 top-1 text-6xl text-black/50 dark:text-white/50 rotate-180" />
       <p className="mb-4">
         Lorem Ipsum is simply dummy text of the printing and typesetting
-        industry. Lorem Ipsum has been the industry's standard dummy text ever
+        industry. Lorem Ipsum has been the industry `&apos;`s standard dummy text ever
         since the 1500s, when an unknown printer{" "}
       </p>
       <div className="flex items-center gap-4 flex-nowrap">

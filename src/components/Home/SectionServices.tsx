@@ -1,3 +1,5 @@
+import Image from "next/image";
+
 const SectionServices = () => {
   return (
     <section className="section_grid">
@@ -14,7 +16,7 @@ const SectionServices = () => {
           and we believe that in unity there is strength.
         </p>
       </div>
-      <img src="assets/services_image.svg" alt="services image" />
+      <Image src="assets/services_image.svg" alt="services image" />
     </section>
   );
 };
