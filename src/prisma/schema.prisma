@@ -26,15 +26,26 @@ model Post {
 }
 
 model User {
-  id        String   @id @default(cuid())
-  firstname String
-  lastname  String
-  email     String?  @unique
-  createdAt DateTime @default(now()) @map(name: "created_at")
-  updatedAt DateTime @updatedAt @map(name: "updated_at")
-  posts     Post[]
-
+  id           String           @id @default(cuid())
+  firstname    String
+  lastname     String
+  username     String           @unique
+  email        String?          @unique
+  createdAt    DateTime         @default(now()) @map(name: "created_at")
+  updatedAt    DateTime         @updatedAt @map(name: "updated_at")
+  posts        Post[]
+  role         UserRole         @default(SUBSCRIBER)
+  
   @@map(name: "users")
+}
+
+enum UserRole {
+  SUPER_ADMIN
+  ADMINISTRATOR
+  EDITOR
+  AUTHOR
+  CONTRIBUTOR
+  SUBSCRIBER
 }
 
 model Category {
@@ -51,3 +62,4 @@ model Tag {
   description String?
   posts       Post[]
 }
+

@@ -17,7 +17,7 @@ const Hero = () => {
           View more
         </button>
       </div>
-      <Image src="./assets/hero_image.svg" alt="hero image" />
+      <Image src="./assets/hero_image.svg" width={1800} height={600} alt="hero image" />
     </section>
   );
 };
