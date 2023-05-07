@@ -9,7 +9,7 @@ async function main() {
       firstname: 'John',
       lastname: 'Doe',
       email: 'johndoe@example.com',
-      role: 'SUBSCRIBER'
+      username: "kelibst",
     },
   })
   console.log(`Created user with ID: ${user.id}`)

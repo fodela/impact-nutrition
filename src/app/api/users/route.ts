@@ -9,12 +9,17 @@ export async function GET() {
   return NextResponse.json(users);
 }
 
-
-export async function POST(req: NextApiRequest, res: NextApiResponse) {
-    const { firstname, lastname, username, email } = req.body;
+export async function POST(req: Request) {
+  try {
+    const { firstname, lastname, username, email } = await req.json();
+    if(!firstname || !lastname ||  !username || !email) {
+      return NextResponse.json({"message": "Missing required data"})
+    }
     const user = await prisma.user.create({
-        data: { firstname, lastname, username, email },
-      });
-  
-      res.status(201).json({ user });
+      data: { firstname, lastname, username, email },
+    });
+     return NextResponse.json( user );
+  } catch (error) {    
+    return NextResponse.json( error);
+  }
 }
