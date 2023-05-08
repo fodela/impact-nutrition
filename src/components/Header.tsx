@@ -1,6 +1,7 @@
 import Link from "next/link";
 import Logo from "./Logo";
 import NavBar from "./NavBar";
+import SessionButtons from "./SessionButtons";
 
 const Header = () => {
   return (
@@ -10,6 +11,7 @@ const Header = () => {
       <button className="text-xl px-4 py-2 bg-colorPrimary text-white rounded">
         Login/Signup
       </button>
+      <SessionButtons />
     </header>
   );
 };

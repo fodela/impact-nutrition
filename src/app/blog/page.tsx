@@ -1,9 +1,13 @@
-import Hero from "@/components/Hero";
-import getPosts from "@/lib/getPosts";
+
+import { getServerSession } from "next-auth";
 import Image from "next/image";
 import React from "react";
+import { authOptions } from "../api/auth/[...nextauth]/route";
+import getPosts from "../../lib/getPosts";
+import Hero from "../../components/Hero";
 
 const blog = async () => {
+  const session = await getServerSession(authOptions)
   const posts = await getPosts();
 
   return (
@@ -36,6 +40,7 @@ const blog = async () => {
             </article>
           ))}
         </div>
+        <pre>{JSON.stringify(session)}</pre>
       </section>
       <button className="self-center border-blue-800 border px-4 py-2 rounded">
         Load more

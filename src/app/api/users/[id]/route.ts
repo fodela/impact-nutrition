@@ -11,7 +11,6 @@ const prisma = new PrismaClient();
 
 export async function GET(req: Request, { params: { id } }: Props) {
   try {
-    console.log(id, 'id')
     const user = await prisma.user.findUnique({
       where: {
         username: id,
@@ -24,7 +23,6 @@ export async function GET(req: Request, { params: { id } }: Props) {
 
     return NextResponse.json(user);
   } catch (error) {
-    console.log(error, 'error');
     return NextResponse.json({ message: 'Sorry, we could not get the user' });
   }
 }

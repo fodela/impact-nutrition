@@ -32,6 +32,7 @@ CREATE TABLE "users" (
     "id" TEXT NOT NULL,
     "firstname" TEXT NOT NULL,
     "lastname" TEXT NOT NULL,
+    "password" TEXT NOT NULL,
     "username" TEXT NOT NULL,
     "email" TEXT NOT NULL,
     "date_of_birth" TIMESTAMP(3) DEFAULT CURRENT_TIMESTAMP,

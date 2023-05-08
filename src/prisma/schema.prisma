@@ -38,6 +38,7 @@ model User {
   id           String           @id @default(cuid())
   firstname    String
   lastname     String
+  password     String
   username     String           @unique
   email        String           @unique
   date_of_birth DateTime?       @default(now())
