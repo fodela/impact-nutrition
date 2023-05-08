@@ -1,3 +1,4 @@
+"use client"
 import AnalyticContent from "../AnalyticContent";
 
 const SectionAnalytics = () => {

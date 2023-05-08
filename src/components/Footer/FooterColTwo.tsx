@@ -1,3 +1,4 @@
+"use client"
 const FooterColTwo = () => {
     return (
       <div className="flex flex-col gap-6">

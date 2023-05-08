@@ -5,14 +5,12 @@ export default function SessionButtons() {
   const { data: session } = useSession()
   if (session) {
     return (
-      <>
-        <button onClick={() => signOut()}>Sign out</button>
-      </>
+      <button className="bg-colorPrimary hover:bg-green-900 px-4 rounded-xl text-white transition-colors duration-1200" onClick={() => signOut()}>Sign out</button>
     )
   }
+  
   return (
-    <>
-      <button onClick={() => signIn()}>Sign in</button>
-    </>
+    <button className="bg-colorPrimary hover:bg-green-900 px-4 rounded-xl text-white transition-colors duration-1200" onClick={() => signIn()}>Sign in</button>
   )
+  
 }

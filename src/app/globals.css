@@ -29,7 +29,7 @@ body {
 }
 main{
   min-height: calc(100svh - 635px);
-  @apply flex flex-col max-w-screen-xl mx-auto my-20 
+  @apply flex flex-col max-w-screen-xl mx-auto my-10
 }
 
 section{
@@ -45,7 +45,7 @@ section{
 }
 
 .heading_secondary{
-  @apply text-5xl text-center mb-20
+  @apply  text-center mb-20
 
 
 }
@@ -64,3 +64,13 @@ section{
   @apply grid md:grid-cols-2 gap-10 items-center
 }
 
+.btn-active:hover .absolute,
+.btn-active:focus .absolute {
+  transform: scale-x-100;
+  opacity: 1;
+}
+
+.btn-effect:hover span,.btn-effect:focus span {
+  width: 100%;
+  opacity: 1;
+}

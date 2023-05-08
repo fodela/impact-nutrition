@@ -1,3 +1,4 @@
+"use client"
 const FooterColThree = () => {
     return (
       <div className="min-w-96">
