@@ -1,3 +1,4 @@
+'use client'
 import SectionAnalytics from "../components/Home/SectionAnalytics";
 import SectionServices from "../components/Home/SectionServices";
 import SectionNewsLetter from "../components/Home/SectionNewsLetter";
