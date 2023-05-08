@@ -11,9 +11,7 @@ export const authOptions: NextAuthOptions = {
   jwt: {
     secret: process.env.NEXT_AUTH_SECRET,
   },
-  session: {
-    strategy: 'jwt',
-    },
+ 
     providers: [
         CredentialsProvider({
           name: 'Sign in',
