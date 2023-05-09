@@ -24,25 +24,38 @@ export const authOptions: NextAuthOptions = {
         }
       },
       async authorize(credentials, req) {
-        if (!credentials?.email || !credentials?.password) {
+        try {
+          if (!credentials?.email || !credentials?.password) {
+            throw new Error('Please provide an email or a password')
+            return null
+          }
+
+          const user = await prisma.user.findUnique({
+            where: {
+              email: credentials?.email
+            }
+          })
+          if (!user) {
+            throw new Error('Wrong email')
+            return null
+          }
+
+          const isPasswordValid = await compare(credentials?.password, user.password)
+          if (!isPasswordValid) {
+            throw new Error('Wrong email')
+            return null
+          }
+          return {
+            id: user.id,
+            email: user.email,
+            name: `${user.firstname} ${user.lastname} `
+          }
+        } catch (error) {
+          console.error('Authentication error:', error)
           return null
         }
-
-        const user = await prisma.user.findUnique({
-          where: {
-            email: credentials?.email
-          }
-        })
-        if (!user) return null
-
-        const isPasswordValid = await compare(credentials?.password, user.password)
-        if (!isPasswordValid) return null
-        return {
-          id: user.id,
-          email: user.email,
-          name: `${user.firstname} ${user.lastname} `
-        }
-      },
+      }
+      ,
     })
   ],
   callbacks: {
@@ -52,6 +65,9 @@ export const authOptions: NextAuthOptions = {
     jwt: ({ token, user }) => {
       return token
     }
+  },
+  pages: {
+    signIn: "/SignIn"
   }
 }
 
