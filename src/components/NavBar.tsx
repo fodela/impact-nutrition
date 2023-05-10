@@ -15,11 +15,11 @@ const NavBar = () => {
   ];
 
   return (
-    <ul className="flex gap-4">
+    <ul className="flex justify-center items-center gap-4">
       {links.map(({ href, label }) => (
         <li key={href}>
           <Link href={href} legacyBehavior>
-            <a className={`relative btn-effect ${pathname === href ? 'active' : ''}`}>
+            <a className={`font-bold relative btn-effect ${pathname === href ? 'active' : ''}`}>
               {label}
               <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-green-400 transition-all duration-300 opacity-0"></span>
             </a>
