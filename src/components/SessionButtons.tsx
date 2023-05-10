@@ -7,8 +7,6 @@ export default function SessionButtons() {
   const { data: session } = useSession()
   const [showAction, setShowAction] = useState(false)
 
-  console.log(session);
-
   if (session) {
     return (
       <div className="relative">
