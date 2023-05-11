@@ -1,3 +1,5 @@
+import Image from "next/image";
+
 const Hero = () => {
   return (
     <section className="section_grid">
@@ -15,7 +17,7 @@ const Hero = () => {
           View more
         </button>
       </div>
-      <img src="./assets/hero_image.svg" alt="hero image" />
+      <Image src="./assets/hero_image.svg" width={1800} height={600} alt="hero image" />
     </section>
   );
 };

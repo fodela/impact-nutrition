@@ -1,3 +1,4 @@
+"use client"
 import Link from "next/link";
 
 import { ImFacebook, ImLinkedin2, ImTwitter } from "react-icons/im";
