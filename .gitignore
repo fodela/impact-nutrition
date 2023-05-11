@@ -36,3 +36,9 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+
+#some usefull hide files
+/.Task.txt.kate-swp
+/Task.txt
+/yarn.lock

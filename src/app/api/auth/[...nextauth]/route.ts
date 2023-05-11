@@ -6,6 +6,16 @@ import CredentialsProvider from "next-auth/providers/credentials"
 
 const prisma = new PrismaClient()
 
+export type User = {
+  id: String,
+  firstname: String,
+  lastname: String,
+  email: String,
+  password?: String,
+  username?: String,
+  date_of_birth?: String,
+  role: String
+}
 
 export const authOptions: NextAuthOptions = {
   jwt: {
@@ -27,7 +37,6 @@ export const authOptions: NextAuthOptions = {
         try {
           if (!credentials?.email || !credentials?.password) {
             throw new Error('Please provide an email or a password')
-            return null
           }
 
           const user = await prisma.user.findUnique({
@@ -37,21 +46,20 @@ export const authOptions: NextAuthOptions = {
           })
           if (!user) {
             throw new Error('Wrong email')
-            return null
           }
 
           const isPasswordValid = await compare(credentials?.password, user.password)
           if (!isPasswordValid) {
             throw new Error('Wrong email')
-            return null
           }
+
           return {
             id: user.id,
             email: user.email,
-            name: `${user.firstname} ${user.lastname} `
+            name: `${user.firstname} ${user.lastname}`,
+            role: user.role
           }
         } catch (error) {
-          console.error('Authentication error:', error)
           return null
         }
       }
@@ -60,9 +68,25 @@ export const authOptions: NextAuthOptions = {
   ],
   callbacks: {
     session: ({ session, token }) => {
-      return session
+      return {
+        ...session,
+        user: {
+          ...session.user,
+          id: token.id,
+          role: token.role
+        }
+      }
     },
     jwt: ({ token, user }) => {
+      if (user) {
+        console.log('user', user)
+        const u = user as unknown as User
+        return {
+          ...token,
+          id: u.id,
+          role: u.role
+        }
+      }
       return token
     }
   },

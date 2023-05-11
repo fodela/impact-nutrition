@@ -29,7 +29,7 @@ const LoginForm = () => {
             });
             if (result && result.url) {
                 setError('');
-                window.location.href = '/profile';
+                window.location.href = '/dashboard';
             } else {
                 setError('Unable to login, Incorrect email or password.')
             }
