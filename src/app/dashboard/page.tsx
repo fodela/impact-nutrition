@@ -9,11 +9,10 @@ const Profile = (async () => {
         redirect('/api/auth/signin');
     }
     const { user } = session
-    // console.log('user', user.role)
-
-
-    return <div className="mx-2 bg-gray-200">
-        <TabMenu role={user?.role} />
+    //@ts-ignore
+    const role = user.role
+    return <div className="mx-2 rounded bg-gray-200">
+        <TabMenu role={role} />
     </div>;
 });
 

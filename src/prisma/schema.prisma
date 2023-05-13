@@ -17,41 +17,68 @@ model Post {
   createAt   DateTime   @default(now())
   updatedAt  DateTime   @updatedAt
   published  Boolean    @default(false)
-  slug       String?
-  author     User?      @relation(fields: [authorId], references: [id])
-  authorId   String?
+  slug       String     @unique
+  author     User       @relation(fields: [authorId], references: [id])
+  authorId   String
   imageUrl   String     @default("https://images.unsplash.com/photo-1577896850715-ed0b7e3ece57?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1174&q=80")
   categories Category[]
   tags       Tag[]
 }
 
-model Session {
-  id         String   @id @default(cuid())
-  createdAt  DateTime @default(now())
-  updatedAt  DateTime @updatedAt
-  expiresAt  DateTime
-  user       User     @relation(fields: [userId], references: [id])
-  userId     String
-}
-
 model User {
-  id           String           @id @default(cuid())
-  firstname    String
-  lastname     String
-  password     String
-  username     String           @unique
-  email        String           @unique
-  date_of_birth DateTime?       @default(now())
-  createdAt    DateTime         @default(now()) @map(name: "created_at")
-  updatedAt    DateTime         @updatedAt @map(name: "updated_at")
-  posts        Post[]
-  role         UserRole         @default(SUBSCRIBER)
-  sessions     Session[]
-  
-  @@map(name: "users")
+  id            String     @id @default(cuid())
+  firstname     String
+  lastname      String
+  password      String
+  username      String     @unique
+  email         String     @unique
+  date_of_birth DateTime?  @default(now())
+  createdAt     DateTime   @default(now()) @map(name: "created_at")
+  updatedAt     DateTime   @updatedAt @map(name: "updated_at")
+  image         String?
+  posts         Post[]
+  role          UserRole   @default(SUBSCRIBER)
+  sessions      Session[]
+  events        Event[]    @relation("author")
+  Attendee      Attendee[] @relation("registrant")
 }
 
+model Event {
+  id         String     @id @default(cuid())
+  title      String
+  details    String
+  location   String
+  organizers String
+  createdAt  DateTime   @default(now()) @map(name: "created_at")
+  updatedAt  DateTime   @updatedAt @map(name: "updated_at")
+  image      String?
+  user       User       @relation("author", fields: [userId], references: [id])
+  userId     String
+  attendees  Attendee[]
+}
 
+model Attendee {
+  id           String   @id @default(cuid())
+  paid         Boolean  @default(false)
+  amount_paid  Float?
+  amount_due   Float?
+  createdAt    DateTime @default(now()) @map(name: "created_at")
+  updatedAt    DateTime @updatedAt @map(name: "updated_at")
+  event        Event    @relation(fields: [eventId], references: [id])
+  eventId      String
+  user         User     @relation("registrant", fields: [userId], references: [id])
+  userId       String
+  registrantId String
+}
+
+model Session {
+  id        String   @id @default(cuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  expiresAt DateTime
+  user      User     @relation(fields: [userId], references: [id])
+  userId    String
+}
 
 enum UserRole {
   SUPER_ADMIN
@@ -76,4 +103,3 @@ model Tag {
   description String?
   posts       Post[]
 }
-

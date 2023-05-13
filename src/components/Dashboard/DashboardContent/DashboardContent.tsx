@@ -11,10 +11,10 @@ const DashboardContent = () => {
     ]
 
     return (
-        <div className='m-2 flex justify-between'>
+        <div className='m-2 flex justify-start'>
             {
                 cards.map(card => (
-                    <div className='rounded-md p-3 shadow-md bg-white' key={card.title}>
+                    <div className='rounded-md p-3 shadow-md bg-white mx-2' key={card.title}>
                         <div className="rounded-full w-40">
                             <FiCalendar />
                         </div>
