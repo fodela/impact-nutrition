@@ -24,8 +24,8 @@ const blog = async () => {
                   //@ts-ignore 
                   src={post.imageUrl?.toString()}
                   alt="post image"
-                // width={2000}
-                // height={2000}
+                  width={200}
+                  height={200}
                 />
                 <div className="">
                   <h3 className="heading_tertiary">{post.title}</h3>

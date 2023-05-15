@@ -2,7 +2,17 @@
 const nextConfig = {
   experimental: {
     appDir: true,
-    serverComponentsExternalPackages: ['@prisma/client', 'bcrypt']
+    serverComponentsExternalPackages: ['@prisma/client', 'bcrypt'],
+  },
+  images: {
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'images.unsplash.com',
+        port: '',
+        pathname: '/**',
+      },
+    ],
   },
 }
 

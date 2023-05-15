@@ -1,4 +1,4 @@
-const { hash } = require("bcrypt") 
+const { hash } = require("bcrypt")
 
 // prisma/seed.js
 const { PrismaClient } = require('@prisma/client')
@@ -9,8 +9,7 @@ async function main() {
   const password = await hash('password123', 12)
   const user = await prisma.user.create({
     data: {
-      firstname: 'John',
-      lastname: 'Doe',
+      name: 'John Doe',
       email: 'johndoe@example.com',
       username: "kelibst",
       password
