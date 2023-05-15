@@ -24,7 +24,6 @@ export default function RootLayout({
           {children}
           <Footer />
         </NextAuthProvider>
-
       </body>
     </html>
   );

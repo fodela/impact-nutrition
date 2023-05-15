@@ -7,13 +7,12 @@ import { verifyUserRole } from '@/lib/verifyUserRole';
 const prisma = new PrismaClient();
 
 export async function GET() {
-    const posts = await prisma.post.findMany();
-    return NextResponse.json(posts);
+    const events = await prisma.event.findMany();
+    return NextResponse.json(events);
 }
 
 export async function POST(req: Request) {
     const session = await getServerSession(authOptions);
-    console.log(session, 'session')
     if (!session) return NextResponse.json({ error: "You are not authenticated" }, { status: 401 })
 
     //@ts-ignore
@@ -21,12 +20,12 @@ export async function POST(req: Request) {
     //@ts-ignore
     const authorId = session.user.id;
     try {
-        const { title, content, slug, author, imageUrl } = await req.json();
-        if (!title || !content || !slug) {
+        const { title, details, location, organizers } = await req.json();
+        if (!title || !details || !location || !organizers) {
             return NextResponse.json({ "message": "Missing required data" }, { status: 400 })
         }
         const post = await prisma.post.create({
-            data: { title, content, slug, author, authorId, imageUrl },
+            data: { title, details, location, authorId, organizers },
         });
         return NextResponse.json(post, { status: 200 });
     } catch (error) {
