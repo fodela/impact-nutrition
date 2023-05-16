@@ -2,7 +2,7 @@ import Image from "next/image";
 import { BsQuote } from "react-icons/bs";
 const Testimony = () => {
   return (
-    <div className="p-10 w-96 shadow-xl dark:shadow-white relative">
+    <div className="p-10 w-96 shadow-md md:shadow-xl dark:shadow-white relative my-8">
       <BsQuote className="absolute right-1 top-1 text-6xl text-black/50 dark:text-white/50 rotate-180" />
       <p className="mb-4">
         Lorem Ipsum is simply dummy text of the printing and typesetting

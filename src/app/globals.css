@@ -27,13 +27,20 @@ body {
     rgb(var(--background-start-rgb));
     /* font-family: "Montserrat, sans-serif"; */
 }
-main{
+/* main{
   min-height: calc(100svh - 635px);
-  @apply flex flex-col max-w-screen-xl mx-auto my-10
+  @apply max-w-screen-xl mx-auto my-5 sm:my-10 sm:block
+} */
+
+.background-image {
+  background-image: url("/assets/Images/salad.jpg");
+  background-size: cover;
+  background-repeat: no-repeat;
+  /* Add additional CSS properties as needed */
 }
 
-section{
-  @apply my-20
+.content {
+@apply mx-auto my-5 sm:my-10 sm:block
 }
 
 .btn_primary{
@@ -45,7 +52,7 @@ section{
 }
 
 .heading_secondary{
-  @apply  text-center mb-20
+  @apply text-3xl font-bold text-center my-10
 
 
 }
@@ -54,11 +61,10 @@ section{
   @apply font-bold text-3xl mb-4
 }
 
-.full_bleed{
+/* .full_bleed{
   box-shadow: 0 0 0 100vmax rgba(var(--color-primary-light-rgba));
   clip-path: inset(0 -100vmax);
-  padding:  20px 0;
-}
+} */
 
 .section_grid{
   @apply grid md:grid-cols-2 gap-10 items-center
@@ -78,4 +84,25 @@ section{
 .active span {
    width: 100%;
    opacity: 1;
+ }
+
+ .contact-container {
+   display: grid;
+   place-items: center;
+   margin-top: 40px;
+ }
+
+ .contact-wrapper {
+   width: fit-content;
+   display: flex;
+   gap: 2rem;
+ }
+
+ .contact-wrapper a {
+   background: #5BAD34;
+   font-size: 3rem;
+   border: 2px solid transparent;
+   color: white;
+   padding: 1rem;
+   border-radius: 1.5rem;
  }

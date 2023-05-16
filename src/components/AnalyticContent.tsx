@@ -1,16 +1,11 @@
 "use client"
 import Image from "next/image";
-
+import { BsFillAlarmFill } from "react-icons/bs";
 const AnalyticContent = () => {
   return (
-    <div className="flex gap-4">
+    <div className="flex flex-col md:flex-row justify-center items-center p-4 gap-4">
       <div>
-        <Image
-          height={130}
-          width={130}
-          src="/../../favicon.ico"
-          alt="analytics image"
-        />
+        <BsFillAlarmFill size={100} />
       </div>
       <div>
         <h5 className="heading_tertiary">Sed ut perspiciatis</h5>

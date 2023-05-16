@@ -3,9 +3,9 @@ import Testimony from "../Testimony";
 
 const SectionTestimonial = () => {
   return (
-    <section>
+    <section className="max-w-screen-xl mpx-2 md:mx-auto">
       <h2 className="heading_secondary">What People Say About Us</h2>
-      <div className="flex justify-center">
+      <div className="block md:flex justify-between">
         <Testimony />
         <Testimony />
         <Testimony />

@@ -4,7 +4,7 @@ import NavBar from "./NavBar";
 
 const Header = () => {
   return (
-    <header className="flex justify-between items-center">
+    <header className="flex max-w-screen-xl mx-auto justify-between items-center">
       <Logo />
       <NavBar />
     </header>

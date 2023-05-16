@@ -9,7 +9,7 @@ const FooterColOne = () => {
   return (
     <div className="flex flex-col gap-6 ">
       <Logo />
-      <div className="">
+      <div className="flex md:flex-col">
         <p>info@nutritionconsultgh.com</p>
         <p>Address line 1, address line 2</p>
       </div>

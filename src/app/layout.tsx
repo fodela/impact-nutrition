@@ -18,12 +18,15 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className="px-10 pt-10">
-        <NextAuthProvider>
-          <Header />
-          {children}
-          <Footer />
-        </NextAuthProvider>
+      <body>
+        <div className="content">
+          <NextAuthProvider>
+            <Header />
+            {children}
+            <Footer />
+          </NextAuthProvider>
+        </div>
+
       </body>
     </html>
   );
