@@ -10,16 +10,16 @@ export async function GET() {
 }
 
 export async function POST(req: Request) {
-  try {
-    const { firstname, lastname, username, email } = await req.json();
-    if(!firstname || !lastname ||  !username || !email) {
-      return NextResponse.json({"message": "Missing required data"})
-    }
-    const user = await prisma.user.create({
-      data: { firstname, lastname, username, email },
-    });
-     return NextResponse.json( user );
-  } catch (error) {    
-    return NextResponse.json( error);
-  }
+  // try {
+  //   const { firstname, lastname, username, email } = await req.json();
+  //   if(!firstname || !lastname ||  !username || !email) {
+  //     return NextResponse.json({"message": "Missing required data"})
+  //   }
+  //   const user = await prisma.user.create({
+  //     data: { firstname, lastname, username, email },
+  //   });
+  //    return NextResponse.json( user );
+  // } catch (error) {    
+  //   return NextResponse.json( error);
+  // }
 }

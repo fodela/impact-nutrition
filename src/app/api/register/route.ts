@@ -8,25 +8,23 @@ const prisma = new PrismaClient();
 
 export async function POST(req: Request) {
   try {
-    const { firstname, lastname, username, date_of_birth, email, password } = (await req.json()) as {
-      firstname: string;
-      lastname: string;
+    const { name, username, date_of_birth, email, password } = (await req.json()) as {
+      name: string
       username: string;
       date_of_birth: string;
       email: string;
       password: string;
     };
-    if(!firstname || !lastname ||  !username || !email || !password) {
-        return NextResponse.json({"message": "Missing required data"})
-      }
+    if (!name || !username || !email || !password) {
+      return NextResponse.json({ "message": "Missing required data" })
+    }
 
 
     const hashed_password = await hash(password, 12);
 
     const user = await prisma.user.create({
       data: {
-        firstname,
-        lastname,
+        name,
         date_of_birth: new Date(date_of_birth),
         username,
         email: email.toLowerCase(),
@@ -36,7 +34,7 @@ export async function POST(req: Request) {
 
     return NextResponse.json({
       user: {
-        name: `${user.firstname} ${user.lastname}`,
+        name: user.name,
         email: user.email,
       },
     });
