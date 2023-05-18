@@ -3,7 +3,7 @@ import Image from "next/image";
 
 const SectionNewsLetter = () => {
   return (
-    <section>
+    <section className="max-w-screen-xl px-4 my-18 md:mx-auto">
       <h2 className="heading_secondary">Subscribe for our newsletters</h2>
       <div className="section_grid">
         <Image src="assets/newsletter_image.svg" width={600} height={400} alt="newsletter image" />
