@@ -9,7 +9,7 @@ type Params = {
     }
 }
 
-export async function GET({ params: { id } }: Params) {
+export async function GET({ params: { id } }: any) {
 
     try {
         const post = await prisma.post.findUnique({

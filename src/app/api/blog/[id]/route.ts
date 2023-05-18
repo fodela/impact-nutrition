@@ -8,7 +8,7 @@ type Params = {
     id: string;
 };
 
-export async function GET(req: NextApiRequest, res: NextApiResponse) {
+export async function GET(req: any, res: NextApiResponse) {
     const id = req.query.id! as string;
     try {
         const post = await prisma.post.findUnique({
@@ -30,7 +30,7 @@ export async function GET(req: NextApiRequest, res: NextApiResponse) {
 
 
 
-export async function DELETE(req: NextApiRequest, res: NextApiResponse) {
+export async function DELETE(req: any, res: NextApiResponse) {
     const id = req.query.id! as string;
     const session = await getServerSession(authOptions);
     if (!session) return NextResponse.json({ error: "You are not authenticated" }, { status: 401 })

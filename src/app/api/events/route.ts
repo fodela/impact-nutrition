@@ -25,6 +25,7 @@ export async function POST(req: Request) {
             return NextResponse.json({ "message": "Missing required data" }, { status: 400 })
         }
         const post = await prisma.post.create({
+            //@ts-ignore
             data: { title, details, location, authorId, organizers },
         });
         return NextResponse.json(post, { status: 200 });
