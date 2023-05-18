@@ -7,36 +7,36 @@ import Logo from "../Logo";
 
 const FooterColOne = () => {
   return (
-    <div className="flex flex-col gap-6 ">
+    <div className="md:flex p-4 flex-col gap-6 ">
       <Logo />
-      <div className="flex md:flex-col">
-        <p>info@nutritionconsultgh.com</p>
-        <p>Address line 1, address line 2</p>
+      <div className="text-xl p-4 font-bold md:flex md:flex-col">
+        <p className="py-4">info@nutritionconsultgh.com</p>
+        <p className="py-4">Address line 1, address line 2</p>
       </div>
-      <div>
-        <p>Follow us:</p>
-        <div className="flex gap-4 text-white pt-2">
-          <div className="social_handle">
+      <div className="flex flex-col justify-center items-center border-t-2 border-t-black md:border-t-0">
+        <p className="text-xl font-bold pt-4">Follow us:</p>
+        <div className="flex gap-4 pt-2">
+          <div className="shadow-md rounded-full p-4">
             <Link href="/">
-              <ImFacebook className="social_handle" />
+              <ImFacebook className="rounded-full" size={30} />
             </Link>
           </div>
 
-          <span className="social_handle">
+          <span className="shadow-md rounded-full p-4">
             <Link href="/">
-              <ImLinkedin2 className="social_handle" />
+              <ImLinkedin2 className="rounded-full" size={30} />
             </Link>
           </span>
 
-          <div className="social_handle">
+          <div className="shadow-md rounded-full p-4">
             <Link href="/">
-              <ImTwitter className="social_handle" />
+              <ImTwitter className="rounded-full" size={30} />
             </Link>
           </div>
 
-          <div className="social_handle">
+          <div className="shadow-md rounded-full p-4">
             <Link href="/">
-              <BsEnvelopeFill className="social_handle" />
+              <BsEnvelopeFill className="rounded-full" size={30} />
             </Link>
           </div>
         </div>

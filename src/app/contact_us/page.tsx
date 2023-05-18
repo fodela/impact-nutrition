@@ -8,9 +8,8 @@ import {
 } from "react-icons/fa";
 const contact_us = () => {
   return (
-    <div>
+    <div className="max-w-screen-xl p-4 md:p-2  md:mx-auto">
       <h1 className="text-3xl font-bold text-center mt-20">
-
         Get in touch with Us
       </h1>
       <p className="mt-10 text-xl">
@@ -22,23 +21,24 @@ const contact_us = () => {
         consectetur adipisicing elit. Sint incidunt reprehenderit iste dolorum
         optio inventore aliquam deserunt quae doloribus minima.
       </p>
-      <div className="contact">
-        <div className="contact-container">
-          <div className="contact-wrapper">
+      <div className="">
+        <div className="">
+          <h4 className="text-2xl text-center my-5 font-bold">Follow us</h4>
+          <div className="flex gap-2 justify-center">
             <a href="">
-              <FaTelegramPlane />
+              <FaTelegramPlane color="green" size={60} />
             </a>
             <a href="">
-              <FaFacebook />
+              <FaFacebook color="green" size={60} />
             </a>
             <a href="">
-              <FaSnapchatGhost />
+              <FaSnapchatGhost color="green" size={60} />
             </a>
             <a href="">
-              <FaLinkedin />
+              <FaLinkedin color="green" size={60} />
             </a>
             <a href="">
-              <FaInstagram />
+              <FaInstagram color="green" size={60} />
             </a>
           </div>
         </div>

@@ -11,7 +11,7 @@ const Footer = () => {
         <FooterColTwo />
         <FooterColThree />
       </div>
-      <p className="pt-4">
+      <p className="p-4 md:pt-4">
         © Nutrition Consult Ghana, Inc. 2019. We love our users!
       </p>
     </footer>
