@@ -203,9 +203,9 @@ export const authOptions: NextAuthOptions = {
       return token
     }
   },
-  // pages: {
-  //   signIn: "/signin"
-  // }
+  pages: {
+    signIn: "/signin"
+  }
 }
 
 const handler = NextAuth(authOptions)
