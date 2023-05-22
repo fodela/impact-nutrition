@@ -5,6 +5,7 @@ import TabMenu from "@/components/Dashboard/DashboardTab";
 import DashboardTable from "@/components/Dashboard/DashboardTable";
 import Header from "@/components/Dashboard/DashboardTable/Header";
 
+
 const Profile = async () => {
   const session = await getServerSession(authOptions);
   if (!session) {
@@ -25,5 +26,6 @@ const Profile = async () => {
     </div>
   );
 };
+
 
 export default Profile;
