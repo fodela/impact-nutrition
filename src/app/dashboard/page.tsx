@@ -6,9 +6,7 @@ import TabMenu from '@/components/Dashboard/DashboardTab';
 const Profile = (async () => {
     const session = await getServerSession(authOptions);
     if (!session) {
-        // redirect('/api/auth/signin');
-        console.log(session, 'seon')
-        return
+        redirect('/api/auth/signin');
     }
     const { user } = session
     //@ts-ignore

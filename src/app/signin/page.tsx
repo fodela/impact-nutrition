@@ -9,16 +9,14 @@ const LoginForm = () => {
     const [error, setError] = useState('')
     const { data: session } = useSession()
     const [providers, setProviders] = useState([]);
-    console.log(providers, 'provider')
 
     useEffect(() => {
         const setProvidr = async () => {
             const providerData = await getProviders();
-
         }
         console.log(setProvidr, 'provdier')
         // setProviders(setProvidr);
-    }, []);
+    }, [providers, setProviders]);
 
     const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setEmail(e.target.value);

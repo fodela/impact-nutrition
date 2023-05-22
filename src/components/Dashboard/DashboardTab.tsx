@@ -5,6 +5,7 @@ import DashboardContent from './DashboardContent/DashboardContent';
 import DashboardUser from './DashboardUser';
 import DashboardPost from './DashboardPost';
 import DashboardComments from './DashboardComments';
+import DashboardAction from './DashboarAction';
 
 interface props {
     role: string
@@ -19,7 +20,7 @@ const TabMenu: React.FC<props> = ({ role }) => {
         setActiveTab(tab);
     }
     return (
-        <div className="border-b border-gray-300">
+        <div className="max-w-screen-xl md:mx-auto border-b border-gray-300">
             <nav className="flex justify-start">
                 {tabs.map((tab) => {
                     if (verifyUserRole(role, tab) || tab === 'Dashboard')
@@ -35,12 +36,16 @@ const TabMenu: React.FC<props> = ({ role }) => {
                         )
                 })}
             </nav>
-            {activeTab === 'Dashboard' && <DashboardContent />}
-            {activeTab === 'Users' && <DashboardUser />}
-            {activeTab === 'Posts' && <DashboardPost />}
-            {activeTab === 'Events' && <p>Event content goes here</p>}
-            {activeTab === 'Categories' && <DashboardComments />}
-            {activeTab === 'Comments' && <DashboardComments />}
+            <div className='bg-white rounded-xl p-4 m-4'>
+                <DashboardAction />
+                {activeTab === 'Dashboard' && <DashboardContent />}
+                {activeTab === 'Users' && <DashboardUser />}
+                {activeTab === 'Posts' && <DashboardPost />}
+                {activeTab === 'Events' && <p>Event content goes here</p>}
+                {activeTab === 'Categories' && <DashboardComments />}
+                {activeTab === 'Comments' && <DashboardComments />}
+            </div>
+
         </div>
     );
 };

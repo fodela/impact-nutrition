@@ -164,7 +164,6 @@ export const authOptions: NextAuthOptions = {
           //@ts-ignore
           const isPasswordValid = await compare(credentials?.password, user.password)
           if (!isPasswordValid) {
-            console.log('got here')
             throw new Error('Wrong email')
           }
           return {
@@ -173,7 +172,6 @@ export const authOptions: NextAuthOptions = {
             role: user.role
           }
         } catch (error) {
-          console.log('error', error)
           return null
         }
       }
