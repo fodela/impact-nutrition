@@ -6,13 +6,11 @@ const DashboardPost = () => {
         ssr: false,
     });
     return (
-<<<<<<< HEAD
         <div className=''>
             <SunEditor placeholder="Please type here..." />
         </div>
-=======
-        <div className=''>DashboardPost</div>
->>>>>>> b905e9e (Dev (#8))
+
+
     )
 }
 
