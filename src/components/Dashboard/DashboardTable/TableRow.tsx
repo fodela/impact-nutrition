@@ -3,6 +3,7 @@ import { capitalizeWord } from "@/app/utils/capitalizeWord";
 import RowStatus from "./RowStatus";
 import { FiMoreHorizontal } from "react-icons/fi";
 import { useState } from "react";
+import Image from "next/image";
 
 type RowDetail = {
   name: string;
@@ -19,10 +20,12 @@ const TableRow = ({ rowDetail }: { rowDetail: RowDetail }) => {
     <tr className="hover:bg-inherit/80">
       <th className="flex gap-3 px-6 py-4 font-normal">
         <div className="relative h-10 w-10">
-          <img
+          <Image
             className="h-full w-full rounded-full object-cover object-center"
             src={rowDetail.imageUrl}
             alt=""
+            width={100}
+            height={100}
           />
           <span className="absolute right-0 bottom-0 h-2 w-2 rounded-full bg-green-400 ring ring-white"></span>
         </div>
@@ -35,8 +38,8 @@ const TableRow = ({ rowDetail }: { rowDetail: RowDetail }) => {
       <td className="px-6 py-4">{capitalizeWord(rowDetail.Role)}</td>
       <td className="px-6 py-4">
         <div className="flex gap-2">
-          {rowDetail.teams.map((team) => (
-            <span className="inline-flex items-center gap-1 rounded-full bg-violet-50 dark:bg-violet-600 px-2 py-1 text-xs font-semibold text-violet-600 dark:text-violet-50">
+          {rowDetail.teams.map((team, index) => (
+            <span key={index} className="inline-flex items-center gap-1 rounded-full bg-violet-50 dark:bg-violet-600 px-2 py-1 text-xs font-semibold text-violet-600 dark:text-violet-50">
               {capitalizeWord(team)}
             </span>
           ))}

@@ -1,9 +1,6 @@
-import { verifyUserRole } from "@/lib/verifyUserRole";
-import { getServerSession } from "next-auth";
-import { NextResponse } from "next/server";
-import { authOptions } from "../../auth/[...nextauth]/route";
+
+import prisma from "@/lib/prisma";
 import { NextApiRequest, NextApiResponse } from "next";
-import { validateAuthorization } from "../route";
 
 
 export async function GET(req: any, res: NextApiResponse) {

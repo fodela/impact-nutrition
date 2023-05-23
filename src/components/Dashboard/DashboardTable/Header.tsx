@@ -95,7 +95,7 @@ const Header = () => {
           </h6>
           <ul className="space-y-2 text-sm " aria-labelledby="dropdownDefault">
             {categories.map((cat, index) => (
-              <li className="flex items-center">
+              <li className="flex items-center" key={index}>
                 <input
                   id="apple"
                   type="checkbox"

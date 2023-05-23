@@ -1,11 +1,10 @@
-import { PrismaClient } from '@prisma/client';
 import { getServerSession } from 'next-auth';
 import { NextResponse } from 'next/server';
 import { authOptions } from '../auth/[...nextauth]/route';
 import { verifyUserRole } from '@/lib/verifyUserRole';
 import { parse } from 'url';
+import prisma from '@/lib/prisma';
 
-const prisma = new PrismaClient();
 
 export async function GET() {
     const events = await prisma.event.findMany();
