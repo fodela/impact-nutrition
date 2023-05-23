@@ -4,7 +4,6 @@ import { authOptions } from "../api/auth/[...nextauth]/route";
 import TabMenu from "@/components/Dashboard/DashboardTab";
 
 
-
 const Profile = async () => {
   const session = await getServerSession(authOptions);
   if (!session) {
@@ -19,5 +18,4 @@ const Profile = async () => {
     </div>
   );
 };
-
 export default Profile;
