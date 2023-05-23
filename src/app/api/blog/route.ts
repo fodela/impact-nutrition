@@ -5,7 +5,7 @@ import { authOptions } from '../auth/[...nextauth]/route';
 import { verifyUserRole } from '@/lib/verifyUserRole';
 import { parse } from 'url';
 
-const prisma = new PrismaClient();
+
 
 export async function GET() {
     const posts = await prisma.post.findMany();

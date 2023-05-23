@@ -37,7 +37,8 @@ const TabMenu: React.FC<props> = ({ role }) => {
                 })}
             </nav>
             <div className='bg-white rounded-xl p-4 m-4'>
-                <DashboardAction />
+                {activeTab !== 'Dashboard' && <DashboardAction />}
+
                 {activeTab === 'Dashboard' && <DashboardContent />}
                 {activeTab === 'Users' && <DashboardUser />}
                 {activeTab === 'Posts' && <DashboardPost />}

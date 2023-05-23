@@ -1,4 +1,3 @@
-import { PrismaClient } from '@prisma/client';
 import { NextResponse } from 'next/server';
 
 type Props = {
@@ -7,7 +6,6 @@ type Props = {
   };
 };
 
-const prisma = new PrismaClient();
 
 export async function GET(req: Request, { params: { id } }: Props) {
   // try {

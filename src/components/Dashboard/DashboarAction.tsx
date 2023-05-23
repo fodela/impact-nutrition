@@ -2,12 +2,12 @@
 const DashboardAction = () => {
     return (
         <div className="flex items-center justify-between">
-            <div className="p-2 flex pr-4">
-                <div className="filter px-4 py-2 border font-bold rounded">
+            <div className="flex pr-4">
+                <button className="filter px-4 py-2 border font-bold rounded-md">
                     Filter
-                </div>
+                </button>
                 <div className="search">
-                    <input className="border p-4 ml-6" type="search" name="dash-search" id="" />
+                    <input className=" border-black border rounded-md p-4 ml-6" type="search" name="dash-search" id="" />
                 </div>
             </div>
             <div className="search-btn">

@@ -60,8 +60,8 @@ const DashboardTable = () => {
       <table className="w-full border-collapse  text-left text-sm">
         <TableHeader />
         <tbody className="divide-y divide-gray-100 border-t border-gray-100">
-          {rowDetails.map((detail) => (
-            <TableRow rowDetail={detail} />
+          {rowDetails.map((detail, index) => (
+            <TableRow key={index} rowDetail={detail} />
           ))}
         </tbody>
       </table>
