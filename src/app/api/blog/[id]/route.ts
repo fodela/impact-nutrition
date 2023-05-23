@@ -1,6 +1,7 @@
 
 import prisma from "@/lib/prisma";
 import { NextApiRequest, NextApiResponse } from "next";
+import { validateAuthorization } from "../route";
 
 
 export async function GET(req: any, res: NextApiResponse) {
