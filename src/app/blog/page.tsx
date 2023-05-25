@@ -29,7 +29,9 @@ const blog = async () => {
                   <h3 className="heading_tertiary">{post.title}</h3>
                   <p>{post.slug}</p>
 
-                  <EditorJSContent content={JSON.parse(post.content)} />
+                  {post.content ? (
+                    <div dangerouslySetInnerHTML={{ __html: post.content }} />
+                  ) : null}
                 </div>
                 <div className=" flex gap-2">
                   <button className="btn_primary">Read more</button>
