@@ -43,11 +43,7 @@ export const createPost = async (title: string, content: string, slug: string, i
         });
         return response.data;
     } catch (error) {
-        console.log(response.data);
-        return response.data;
-    } catch (error) {
-        console.log("post error", error);
-        throw error;
+        throw (error)
     }
 };
 
@@ -106,9 +102,6 @@ const AddPostForm: FC<AddPostProp> = ({ onClose }) => {
             });
             notify()
             // onClose()
-            console.log(post, "post")
-        } catch (error) {
-            setError(true)
         }
 
     };
