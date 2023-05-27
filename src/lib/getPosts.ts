@@ -1,11 +1,19 @@
-import { Session, getServerSession } from "next-auth";
-import { authOptions } from "@/app/api/auth/[...nextauth]/route";
-import prisma from "./prisma";
-import { verifyUserRole } from "./verifyUserRole";
+import axios from "axios";
+
 
 const getPosts = async () => {
-  const feed = await prisma.post.findMany();
-  return feed;
+  let headersList = {
+    "Accept": "*/*",
+  }
+
+  let reqOptions = {
+    url: "http://localhost:3000/api/blog",
+    method: "GET",
+    headers: headersList,
+  }
+
+  let response = await axios.request(reqOptions);
+  return response.data;
 };
 
 
@@ -25,3 +33,4 @@ export const validateRole = async (session: Session, authorId: String, requiredR
 }
 
 export default getPosts;
+
