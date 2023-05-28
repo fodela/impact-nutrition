@@ -1,11 +1,22 @@
 
 import prisma from "@/lib/prisma";
-import { NextApiRequest, NextApiResponse } from "next";
+import { NextApiResponse } from "next";
+import { NextResponse } from "next/server";
+import { paramsProp } from "../../users/[id]/route";
 
 
-export async function GET(req: any, res: NextApiResponse) {
-    const id = req.query.id! as string;
+
+export async function GET(req: Request, { params: { id } }: paramsProp) {
+
     try {
+        console.log(id, 'req')
+        // const id = req.query.id;
+
+        if (!id) {
+            return NextResponse.json({ error: "Post not found!" }, { status: 400 });
+        }
+
+
         const post = await prisma.post.findUnique({
             where: {
                 id: id,
@@ -13,12 +24,12 @@ export async function GET(req: any, res: NextApiResponse) {
         });
 
         if (!post) {
-            return res.status(404).json({ message: "Post not found" });
+            return NextResponse.json({ message: "Post not found" }, { status: 404 });
         }
 
-        return res.status(200).json(post);
+        return NextResponse.json(post);
     } catch (error) {
-        return res.status(500).json(error);
+        NextResponse.json(error, { status: 500 });
     }
 }
 

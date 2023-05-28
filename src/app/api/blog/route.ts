@@ -34,7 +34,7 @@ export async function POST(req: Request) {
     const authorId = session?.user?.id;
 
     try {
-        const { title, content, slug, author, imageUrl } = await req.json();
+        const { title, content, slug, author, imageUrl, published } = await req.json();
         if (!title || !content || !slug) {
             return NextResponse.json({ message: "Missing required data" }, { status: 400 });
         }
@@ -42,7 +42,7 @@ export async function POST(req: Request) {
         await validateAuthorization(session, authorId, 'POSTS');
 
         const post = await prisma.post.create({
-            data: { title, content, slug, author, authorId, imageUrl },
+            data: { title, content, slug, author, authorId, imageUrl, published },
         });
 
         return NextResponse.json(post, { status: 200 });

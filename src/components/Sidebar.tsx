@@ -1,5 +1,5 @@
 import Link from "next/link";
-import React from "react";
+import React, { FC } from "react";
 import { createPortal } from "react-dom";
 import { AiOutlineCloseCircle } from "react-icons/ai";
 import SessionButtons from "./SessionButtons";
@@ -11,7 +11,7 @@ type SidebarProps = {
     sidebarRoot: HTMLElement | null; // Sidebar root element
 };
 
-const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose, sidebarRoot }) => {
+const Sidebar: FC<SidebarProps> = ({ isOpen, onClose, sidebarRoot }) => {
     if (!isOpen || !sidebarRoot) return null;
 
     return createPortal(

@@ -3,6 +3,7 @@
 import { signIn } from "next-auth/react";
 import Link from "next/link";
 import { ChangeEvent, useState } from "react";
+import { ToastContainer, toast } from "react-toastify";
 
 export const RegisterForm = () => {
   let [loading, setLoading] = useState(false);
@@ -37,8 +38,16 @@ export const RegisterForm = () => {
       signIn(undefined, { callbackUrl: "/" });
     } catch (error: any) {
       setLoading(false);
-      console.error(error);
-      alert(error.message);
+      toast.warn(error?.message ? error?.message : "Something Went wrong!", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+      });
     }
   };
 
@@ -49,6 +58,18 @@ export const RegisterForm = () => {
 
   return (
     <div className="flex flex-col justify-center items-center h-screen">
+      <ToastContainer
+        position="top-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="colored"
+      />
       <h1 className="text-3xl font-bold mb-6">Create a new account</h1>
       <form
         className="w-full max-w-md"

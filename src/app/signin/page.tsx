@@ -2,6 +2,8 @@
 import { signIn, useSession, getProviders } from "next-auth/react";
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/ReactToastify.min.css";
 
 const LoginForm = () => {
     const [email, setEmail] = useState("");
@@ -14,7 +16,6 @@ const LoginForm = () => {
         const setProvidr = async () => {
             const providerData = await getProviders();
         }
-        console.log(setProvidr, 'provdier')
         // setProviders(setProvidr);
     }, [providers, setProviders]);
 
@@ -37,26 +38,67 @@ const LoginForm = () => {
             });
             if (result && result.url) {
                 setError('');
+                toast.success('Awesome! Welcome!', {
+                    position: "top-right",
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "colored",
+                });
                 window.location.href = '/dashboard';
             } else {
-                setError('Unable to login, Incorrect email or password.')
+                toast.error('Unable to login, Incorrect email or password.', {
+                    position: "top-right",
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "colored",
+                });
             }
 
 
         } catch (error) {
-            setError('Something went wrong')
+            // setError('Something went wrong')
+            toast.error('Something went wrong.', {
+                position: "top-right",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "colored",
+            });
         }
 
     };
 
     return (
         <div className="flex flex-col justify-center items-center h-screen">
+            <ToastContainer
+                position="top-right"
+                autoClose={5000}
+                hideProgressBar={false}
+                newestOnTop={false}
+                closeOnClick
+                rtl={false}
+                pauseOnFocusLoss
+                draggable
+                pauseOnHover
+                theme="colored"
+            />
             <h1 className="text-3xl font-bold mb-6">Login</h1>
 
-            {error.length > 0 && <div className="p-4 bg-red-700 text-white font-bold rounded-xl">{error}</div>}
+
 
             <div>
-                <button onClick={() => signIn("google")}>Sign in with Google</button>
+                {/* <button onClick={() => signIn("google")}>Sign in with Google</button> */}
                 {/* {providers.map((provider) => (
                     <button
                         key={provider.id}
@@ -112,39 +154,3 @@ const LoginForm = () => {
 };
 
 export default LoginForm;
-
-// import type { GetServerSidePropsContext, InferGetServerSidePropsType } from "next";
-// import { getProviders, signIn } from "next-auth/react"
-// import { getServerSession } from "next-auth/next"
-// import { authOptions } from "../api/auth/[...nextauth]/route";
-
-// export default function SignIn({ providers }: InferGetServerSidePropsType<typeof getServerSideProps>) {
-//     return (
-//         <>
-//             {Object.values(providers).map((provider) => (
-//                 <div key={provider.name}>
-//                     <button onClick={() => signIn(provider.id)}>
-//                         Sign in with {provider.name}
-//                     </button>
-//                 </div>
-//             ))}
-//         </>
-//     )
-// }
-
-// export async function getServerSideProps(context: GetServerSidePropsContext) {
-//     const session = await getServerSession(context.req, context.res, authOptions);
-
-//     // If the user is already logged in, redirect.
-//     // Note: Make sure not to redirect to the same page
-//     // To avoid an infinite loop!
-//     if (session) {
-//         return { redirect: { destination: "/" } };
-//     }
-
-//     const providers = await getProviders();
-
-//     return {
-//         props: { providers: providers ?? [] },
-//     }
-// }
