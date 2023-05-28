@@ -1,13 +1,13 @@
 import { NextResponse } from 'next/server';
 
-type Props = {
+export interface paramsProp {
   params: {
     id: string;
   };
 };
 
 
-export async function GET(req: Request, { params: { id } }: Props) {
+export async function GET(req: Request, { params: { id } }: paramsProp) {
   // try {
   //   const user = await prisma.user.findUnique({
   //     where: {

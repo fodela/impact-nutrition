@@ -42,7 +42,7 @@ export const updatePOST = async (id: string, title: string, content: string, slu
     });
 
     try {
-        const response = await axios.put("http://localhost:3000/api/blog", body, {
+        const response = await axios.put(`${process?.env?.LOCALURL ? process?.env?.LOCALURL : "http://localhost:3000"}/blog/api`, body, {
             headers,
         });
 

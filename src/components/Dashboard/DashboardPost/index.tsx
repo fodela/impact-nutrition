@@ -1,13 +1,9 @@
-'use client'
-import { useState, useEffect, useRef } from 'react';
-
+import { useState, useEffect, useRef, useTransition, useCallback, useMemo } from 'react';
 import { getPosts } from '@/lib/getPosts';
-
 import 'suneditor/dist/css/suneditor.min.css';
 import UpdatePost from './UpdatePost';
 import axios from 'axios';
 import { toast } from 'react-toastify';
-import { getPosts } from '@/lib/getPosts';
 
 export interface Post {
     id?: string;
@@ -21,36 +17,37 @@ export interface Post {
 }
 
 const deletePost = async (id: string) => {
-
-    let headersList = {
+    const headersList = {
         "Accept": "*/*",
-    }
-    console.log(id, 'id')
+    };
 
-    let reqOptions = {
+    const reqOptions = {
         url: `http://localhost:3000/api/blog?id=${id}`,
         method: "DELETE",
         headers: headersList,
-    }
+    };
+
     try {
-        let response = await axios.request(reqOptions);
-        console.log(response.data);
-        return response.data
+        const response = await axios.request(reqOptions);
+        return response.data;
     } catch (error) {
         throw error;
     }
-
-}
+};
 
 const Index = () => {
     const [posts, setPosts] = useState<Post[]>([]);
-    const [updatePost, setUpdatePost] = useState(false)
-    const postUpdateRef = useRef<HTMLDivElement | null>(null)
-    const toggleUpdatePost = () => {
-        setUpdatePost((prevState) => !prevState);
-    };
-    const [selectedPost, setSelectedPost] = useState<Post | null>(null);
+    const [updatePost, setUpdatePost] = useState(false);
+    const postUpdateRef = useRef<HTMLDivElement | null>(null);
 
+    const [startTransition, isPending] = useTransition();
+
+    const toggleUpdatePost = useCallback(() => {
+        setUpdatePost(prevState => !prevState);
+    }, []);
+
+    const [selectedPost, setSelectedPost] = useState<Post | null>(null);
+    const memoizedSelectedPost = useMemo(() => selectedPost, [selectedPost]);
 
     useEffect(() => {
         const fetchPosts = async () => {
@@ -58,21 +55,30 @@ const Index = () => {
                 const fetchedPosts = await getPosts();
                 setPosts(fetchedPosts);
             } catch (error) {
-                console.error('Error fetching posts:', error);
+                const notify = () => toast.error("unable to get posts!", {
+                    position: "top-right",
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "colored",
+                });
+                notify();
             }
         };
 
         fetchPosts();
     }, []);
 
-    const handleDelete = async (id: string) => {
-        const post = posts.find(pst => pst.id === id)
-        setSelectedPost(post!)
+    const handleDelete = useCallback(async (id: string) => {
+        const post = posts.find(pst => pst.id === id);
+        setSelectedPost(post!);
         try {
-            const res = await deletePost(post?.id!);
-            console.log('deleted', res)
+            await deletePost(post?.id!);
             const notify = () => toast.success("Post Deleted!");
-            notify()
+            notify();
         } catch (error) {
             const notify = () => toast.error("Something went wrong!", {
                 position: "top-right",
@@ -84,20 +90,17 @@ const Index = () => {
                 progress: undefined,
                 theme: "colored",
             });
-            notify()
+            notify();
         }
-    };
+    }, [posts]);
 
-    const handleUpdate = (id: string) => {
-        // Handle update action for the post with the provided slug
-        const post = posts.find(pst => pst.id === id)
+    const handleUpdate = useCallback((id: string) => {
+        const post = posts.find(pst => pst.id === id);
         if (post?.title) {
-            setSelectedPost(post)
+            setSelectedPost(post);
             toggleUpdatePost();
         }
-    };
-
-
+    }, [posts, toggleUpdatePost]);
 
     return (
         <div className="p-4 max-w-screen-xl mx-auto">
@@ -115,8 +118,9 @@ const Index = () => {
                     {posts.map((post) => (
                         <tr className='p-4 m-4' key={post.id}>
                             <UpdatePost isOpen={updatePost}
-                                onClose={() => toggleUpdatePost()}
-                                post={selectedPost!}
+                                onClose={toggleUpdatePost}
+                                //@ts-ignore
+                                post={memoizedSelectedPost}
                                 //@ts-ignore
                                 postUpdateRoot={postUpdateRef} />
                             <td>{post.title}</td>
@@ -124,19 +128,14 @@ const Index = () => {
                             <td>
                                 <div className="flex justify-end">
                                     <button
-                                        onClick={() => {
-                                            handleDelete(post.id!)
-                                        }
-                                        }
+                                        onClick={() => handleDelete(post.id!)}
                                         className="bg-red-500 text-white px-4 py-2 mr-2 rounded-md"
                                     >
                                         Delete
                                     </button>
                                     <button
                                         id={post.id}
-                                        onClick={() => {
-                                            handleUpdate(post.id!)
-                                        }}
+                                        onClick={() => handleUpdate(post.id!)}
                                         className="bg-blue-500 text-white px-4 py-2 rounded-md"
                                     >
                                         Update
@@ -152,4 +151,3 @@ const Index = () => {
 };
 
 export default Index;
-

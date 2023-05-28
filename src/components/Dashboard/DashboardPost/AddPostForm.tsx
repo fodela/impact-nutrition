@@ -1,56 +1,41 @@
 import dynamic from "next/dynamic";
-import { FC, useState } from "react";
-import "suneditor/dist/css/suneditor.min.css"; // Import SunEditor CSS
-import axios from "axios";
+import { FC, useState, ChangeEvent, FormEvent, memo } from "react";
 import { toast } from 'react-toastify';
+import axios from "axios";
 
 interface FormProps {
-    id?: string;
     title: string;
     content: string;
     slug: string;
-    author?: string;
-    authorId?: string;
     imageUrl: string;
     published: boolean;
 }
+
 type AddPostProp = {
-    onClose: () => void
-}
+    onClose: () => void;
+};
+
 const SunEditor = dynamic(() => import("suneditor-react"), {
     ssr: false,
 });
 
-
-export const createPost = async (title: string, content: string, slug: string, imageUrl: string, published: boolean) => {
-
+export const createPost = async (formData: FormProps) => {
     const headers = {
         Accept: "*/*",
         "Content-Type": "application/json",
     };
 
-    const body = JSON.stringify({
-        title,
-        content,
-        slug,
-        imageUrl,
-        published,
-    });
-
     try {
-        const response = await axios.post("http://localhost:3000/api/blog", body, {
+        const response = await axios.post("http://localhost:3000/api/blog", formData, {
             headers,
         });
         return response.data;
     } catch (error) {
-        throw (error)
+        throw error;
     }
 };
 
-
-
 const AddPostForm: FC<AddPostProp> = ({ onClose }) => {
-
     const [postInputs, setPostInputs] = useState<FormProps>({
         title: "",
         content: "",
@@ -59,25 +44,12 @@ const AddPostForm: FC<AddPostProp> = ({ onClose }) => {
         published: false,
     });
 
-    const {
-        title,
-        content,
-        slug,
-        imageUrl,
-        published,
-    } = postInputs;
+    const { title, content, slug, imageUrl, published } = postInputs;
 
-    const handleSubmit = async (e: React.FormEvent) => {
+    const handleSubmit = async (e: FormEvent) => {
         e.preventDefault();
-
         try {
-            const post = await createPost(
-                title,
-                content,
-                slug,
-                imageUrl,
-                published,
-            )
+            const post = await createPost(postInputs);
 
             setPostInputs({
                 title: "",
@@ -85,25 +57,33 @@ const AddPostForm: FC<AddPostProp> = ({ onClose }) => {
                 slug: "",
                 imageUrl: "",
                 published: false,
-            })
-            const notify = () => toast.success("Post created!");
-            notify()
-            onClose()
-        } catch (error) {
-            const notify = () => toast.error("Something went wrong!", {
-                position: "top-right",
-                autoClose: 5000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-                theme: "colored",
             });
-            notify()
-            // onClose()
-        }
 
+            const notify = () => toast.success("Post created!");
+            notify();
+            onClose();
+        } catch (error) {
+            const notify = () =>
+                toast.error("Something went wrong!", {
+                    position: "top-right",
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "colored",
+                });
+            notify();
+        }
+    };
+
+    const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
+        const { name, value } = e.target;
+        setPostInputs((prevState) => ({
+            ...prevState,
+            [name]: value,
+        }));
     };
 
     const handleContentChange = (content: string) => {
@@ -125,13 +105,9 @@ const AddPostForm: FC<AddPostProp> = ({ onClose }) => {
                         id="title"
                         required
                         className="w-full px-4 py-2 border rounded-lg"
+                        name="title"
                         value={title}
-                        onChange={(e) =>
-                            setPostInputs((prevState) => ({
-                                ...prevState,
-                                title: e.target.value,
-                            }))
-                        }
+                        onChange={handleInputChange}
                     />
                 </div>
                 <div className="mb-4">
@@ -153,17 +129,11 @@ const AddPostForm: FC<AddPostProp> = ({ onClose }) => {
                         required
                         id="slug"
                         className="w-full px-4 py-2 border rounded-lg"
+                        name="slug"
                         value={slug}
-                        onChange={(e) =>
-                            setPostInputs((prevState) => ({
-                                ...prevState,
-                                slug: e.target.value,
-                            }))
-                        }
+                        onChange={handleInputChange}
                     />
                 </div>
-
-
                 <div className="mb-4">
                     <label htmlFor="imageUrl" className="block mb-2 font-bold">
                         Image URL
@@ -173,13 +143,9 @@ const AddPostForm: FC<AddPostProp> = ({ onClose }) => {
                         type="text"
                         id="imageUrl"
                         className="w-full px-4 py-2 border rounded-lg"
+                        name="imageUrl"
                         value={imageUrl}
-                        onChange={(e) =>
-                            setPostInputs((prevState) => ({
-                                ...prevState,
-                                imageUrl: e.target.value,
-                            }))
-                        }
+                        onChange={handleInputChange}
                     />
                 </div>
                 <div className="mb-4">
@@ -191,6 +157,7 @@ const AddPostForm: FC<AddPostProp> = ({ onClose }) => {
                             type="checkbox"
                             id="published"
                             className="mr-2"
+                            name="published"
                             checked={published}
                             onChange={(e) =>
                                 setPostInputs((prevState) => ({
@@ -222,4 +189,4 @@ const AddPostForm: FC<AddPostProp> = ({ onClose }) => {
     );
 };
 
-export default AddPostForm;
+export default memo(AddPostForm);
