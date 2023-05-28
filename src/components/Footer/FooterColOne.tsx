@@ -10,8 +10,15 @@ const FooterColOne = () => {
     <div className="md:flex p-4 flex-col gap-6 ">
       <Logo />
       <div className="text-xl p-4 font-bold md:flex md:flex-col">
+        <a href="+233 55 007 9311">
+          <span>Contact us at </span>
+          <span>+233 55 007 9311</span>
+        </a>
         <p className="py-4">info@nutritionconsultgh.com</p>
-        <p className="py-4">Address line 1, address line 2</p>
+        <p> Address:</p>
+        <p className="py-4">Suncity-Tema West,  Spring Onion Street</p>
+        <p>Accra</p>
+        <p>Ghana</p>
       </div>
       <div className="flex flex-col justify-center items-center border-t-2 border-t-black md:border-t-0">
         <p className="text-xl font-bold pt-4">Follow us:</p>
