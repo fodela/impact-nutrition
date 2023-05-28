@@ -1,6 +1,6 @@
 'use client'
 import React, { useEffect, useState } from "react";
-import getPosts from "../../lib/getPosts";
+import { getPosts } from "../../lib/getPosts";
 import Hero from "../../components/Hero";
 import { Post } from "@prisma/client";
 

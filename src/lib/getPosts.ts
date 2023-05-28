@@ -15,4 +15,19 @@ const getPosts = async () => {
   return response.data;
 };
 
-export { getPosts }
+const getPublishedPosts = async () => {
+  let headersList = {
+    "Accept": "*/*",
+  }
+
+  let reqOptions = {
+    url: "http://localhost:3000/api/blog",
+    method: "GET",
+    headers: headersList,
+  }
+
+  let response = await axios.request(reqOptions);
+  return response.data;
+};
+
+export { getPosts, getPublishedPosts }
