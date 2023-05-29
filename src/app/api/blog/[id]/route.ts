@@ -9,9 +9,6 @@ import { paramsProp } from "../../users/[id]/route";
 export async function GET(req: Request, { params: { id } }: paramsProp) {
 
     try {
-        console.log(id, 'req')
-        // const id = req.query.id;
-
         if (!id) {
             return NextResponse.json({ error: "Post not found!" }, { status: 400 });
         }

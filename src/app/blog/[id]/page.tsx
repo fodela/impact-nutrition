@@ -5,11 +5,9 @@ import { getPostById } from "@/lib/getPosts";
 import { NextRouter } from "next/router";
 import { useParams } from "next/navigation";
 
-type PostPageProps = {
-    router: NextRouter;
-};
 
-const PostPage: React.FC<PostPageProps> = () => {
+
+const PostPage = () => {
     const { id } = useParams();
 
     const [post, setPost] = useState<Post | null>(null);

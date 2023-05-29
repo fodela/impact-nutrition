@@ -4,6 +4,7 @@ import { NextResponse } from 'next/server';
 import { authOptions } from '../auth/[...nextauth]/route';
 import { verifyUserRole } from '@/lib/verifyUserRole';
 import { parse } from 'url';
+import prisma from '@/lib/prisma';
 
 
 
@@ -17,7 +18,6 @@ export async function validateAuthorization(session: Session, authorId: String, 
         return NextResponse.json({ error: "You are not authenticated" }, { status: 401 });
     }
     //@ts-ignore
-    // aa
     if (!verifyUserRole(session.user.role, requiredRole)) {
         return NextResponse.json({ error: "You are not authorized!" }, { status: 401 });
     }
