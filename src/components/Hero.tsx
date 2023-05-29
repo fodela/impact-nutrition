@@ -1,3 +1,4 @@
+import { signIn } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -15,10 +16,10 @@ const Hero = () => {
             nutritionists are here to provide you with personalized guidance and
             support to help you achieve your health goals
           </p>
-          <button className="capitalize bg-colorPrimary rounded py-2 px-4 text-white hover:bg-green-600">
+          <button className="capitalize bg-colorPrimary rounded py-2 px-4 text-white hover:bg-green-600" onClick={() => signIn()}>
             Get Started
           </button>
-          <Link href="#"> Get Started</Link>
+          {/* <Link href="#"> Get Started</Link> */}
         </div>
       </div>
     </section>

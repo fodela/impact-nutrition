@@ -9,7 +9,7 @@ const SectionNewsLetter = () => {
     <section className="max-w-screen-md md:flex justify-center md:mx-auto">
       <div className="flex flex-col items-center justify-center">
         <div className="rounded-full mb-4 shadow-md max-w-fit bg-gray-100 p-6">
-          <FiMail className="text-blue-700" size={80} />
+          <FiMail className="text-colorPrimary" size={80} />
         </div>
         <div className="font-bold text-xl my-4">Email Address:</div>
         <div>info@impactnutritionconsult.com</div>
@@ -18,7 +18,7 @@ const SectionNewsLetter = () => {
 
       <div className="flex m-4 flex-col items-center justify-center">
         <div className="rounded-full mb-4 shadow-md max-w-fit bg-gray-100 p-6">
-          <BsTelephone className="text-blue-700" size={80} />
+          <BsTelephone className="text-colorPrimary" size={80} />
         </div>
         <div className="font-bold text-xl my-4">Call us:</div>
         <a href="+233 55 007 9311">
@@ -31,7 +31,7 @@ const SectionNewsLetter = () => {
 
       <div className="flex m-4 flex-col items-center justify-center">
         <div className="rounded-full mb-4 shadow-md max-w-fit bg-gray-100 p-6">
-          <ImLocation className="text-blue-700" size={80} />
+          <ImLocation className="text-colorPrimary" size={80} />
         </div>
         <div className="font-bold text-xl my-4">Email Address:</div>
         <div className="text-lg">Suncity-Tema West</div>

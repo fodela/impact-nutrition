@@ -8,9 +8,10 @@ const about = () => {
     <main>
       <Hero />
       <section
-        className="my-24 mx-auto flex flex-col gap-12 max-w-screen-xl text-center text-xl
+        className="my-24 mx-auto m-4 flex flex-col gap-12 max-w-screen-xl text-center text-xl
       "
       >
+        <h1 className="text-2xl md:text-4xl font-bold">Get to know more about us!</h1>
         <article className="flex max-w-screen-lg mx-auto flex-col items-center">
           <header className="text-center">
             <FaBullseye size={100} />

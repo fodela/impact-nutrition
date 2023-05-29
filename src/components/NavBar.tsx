@@ -9,11 +9,12 @@ const NavBar = () => {
   const pathname = usePathname();
   const sidebarRootRef = useRef<HTMLDivElement | null>(null);
 
-  // Define an array of link objects with href and label properties
+  // Define an array of link objects with href and label properties   
+  // { href: '/services', label: 'Services' },
+
   const links = [
     { href: '/', label: 'Home' },
     { href: '/about', label: 'About' },
-    { href: '/services', label: 'Services' },
     { href: '/blog', label: 'Blog' },
     { href: '/contact_us', label: 'Contact Us' },
   ];
