@@ -1,23 +1,23 @@
 "use client"
-import Image from "next/image";
+
+import Link from "next/link";
 
 const SectionServices = () => {
   return (
-    <section className="section_grid max-w-screen-xl md:my-28 px-4 md:mx-auto">
-      <div>
-        <h3 className="heading_tertiary pt-10">
-          The right place to develop your passion in nutritional well-being
-        </h3>
-        <p className="text-xl">
-          We organize development program for Nutritionist of divers background
-          and we believe that in unity there is strength.
-        </p>
-        <p className="text-xl mb-4">
-          We organize development program for Nutritionist of divers background
-          and we believe that in unity there is strength.
-        </p>
+    <section className="">
+      <div className="max-w-screen-lg relative bottom-10 shadow-sm bg-colorPrimary rounded-lg md:flex justify-center p-8 mx-auto">
+        <div className="md:flex text-white flex-col justify-center">
+          <h1 className="text-md font-bold">Create an account</h1>
+          <p className="text-2xl font-bold">
+            An account will get you started
+          </p>
+        </div>
+        <div className="flex justify-center items-center py-8 px-6">
+          <Link className="text-white bg-gray-700 rounded-lg p-4 hover:bg-gray-800" href={'/signIn'}>Login</Link>
+          <span className="text-bold mx-6 text-white text-4xl">/</span>
+          <Link className="text-white bg-blue-700 rounded-lg p-4 hover:bg-blue-950" href={'/register'}>Register</Link>
+        </div>
       </div>
-      <Image src="assets/services_image.svg" width={600} height={400} alt="services image" />
     </section>
   );
 };
