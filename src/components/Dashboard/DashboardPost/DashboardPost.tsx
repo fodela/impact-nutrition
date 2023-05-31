@@ -35,7 +35,7 @@ const deletePost = async (id: string) => {
     }
 };
 
-const Index = () => {
+const DashboardPost = () => {
     const [posts, setPosts] = useState<Post[]>([]);
     const [updatePost, setUpdatePost] = useState(false);
     const postUpdateRef = useRef<HTMLDivElement | null>(null);
@@ -150,4 +150,4 @@ const Index = () => {
     );
 };
 
-export default Index;
+export default DashboardPost;

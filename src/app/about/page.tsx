@@ -1,7 +1,7 @@
 "use client";
-
-import Hero from "@/components/Hero";
+import dynamic from "next/dynamic";
 import { FaBullseye, FaEye, FaFlag } from "react-icons/fa";
+const Hero = dynamic(() => (import("@/components/Hero")))
 
 const about = () => {
   return (

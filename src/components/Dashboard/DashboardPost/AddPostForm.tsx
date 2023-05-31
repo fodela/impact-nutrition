@@ -2,6 +2,7 @@ import dynamic from "next/dynamic";
 import { FC, useState, ChangeEvent, FormEvent, memo } from "react";
 import { toast } from 'react-toastify';
 import axios from "axios";
+import 'suneditor/dist/css/suneditor.min.css';
 
 interface FormProps {
     title: string;
@@ -26,7 +27,7 @@ export const createPost = async (formData: FormProps) => {
     };
 
     try {
-        const response = await axios.post("http://localhost:3000/api/blog", formData, {
+        const response = await axios.post(`${process.env.LOCALURL}/api/blog`, formData, {
             headers,
         });
         return response.data;

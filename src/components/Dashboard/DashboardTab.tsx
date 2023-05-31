@@ -3,9 +3,9 @@ import { verifyUserRole } from '@/lib/verifyUserRole';
 import React, { useState } from 'react';
 import DashboardContent from './DashboardContent/DashboardContent';
 import DashboardUser from './DashboardUser';
-import DashboardPost from './DashboardPost';
 import DashboardComments from './DashboardComments';
 import DashboardAction from './DashboarAction';
+import DashboardPost from './DashboardPost/DashboardPost';
 
 interface props {
     role: string

@@ -6,7 +6,7 @@ const getPosts = async () => {
   }
 
   let reqOptions = {
-    url: `${process.env.LOCALURL ? process.env.LOCALURL : "http://localhost:3000"}/api/blog`,
+    url: `/api/blog`,
     method: "GET",
     headers: headersList,
   }
@@ -21,7 +21,7 @@ const getPublishedPosts = async () => {
   }
 
   let reqOptions = {
-    url: `${process.env.LOCALURL ? process.env.LOCALURL : "http://localhost:3000"}/api/blog/published`,
+    url: `/api/blog/published`,
     method: "GET",
     headers: headersList,
   }
@@ -36,7 +36,7 @@ const getPostById = async (id: string) => {
   }
 
   let reqOptions = {
-    url: `${process.env.LOCALURL ? process.env.LOCALURL : "http://localhost:3000"}/api/blog/${id}`,
+    url: `/api/blog/${id}`,
     method: "GET",
     headers: headersList,
   }

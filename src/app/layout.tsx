@@ -7,7 +7,7 @@ import "./globals.css";
 
 
 export const metadata = {
-  title: "Impact Nutrition",
+  title: "Impact Nutrition Consult",
   description: "The place where we grow expert in Nutrition",
 };
 

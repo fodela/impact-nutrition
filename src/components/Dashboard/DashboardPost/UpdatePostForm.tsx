@@ -4,7 +4,7 @@ import { FC, useState } from "react";
 import "suneditor/dist/css/suneditor.min.css"; // Import SunEditor CSS
 import axios from "axios";
 import { toast } from 'react-toastify';
-import { Post } from ".";
+import { Post } from "./DashboardPost";
 
 interface FormProps {
     id?: string;
@@ -42,7 +42,7 @@ export const updatePOST = async (id: string, title: string, content: string, slu
     });
 
     try {
-        const response = await axios.put(`${process?.env?.LOCALURL ? process?.env?.LOCALURL : "http://localhost:3000"}/blog/api`, body, {
+        const response = await axios.put(`${process.env.LOCALURL}/blog/api`, body, {
             headers,
         });
 

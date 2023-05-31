@@ -1,9 +1,15 @@
 'use client'
-import React, { useEffect, useState } from "react";
+import React, { Suspense, useEffect, useState } from "react";
 import { getPublishedPosts } from "../../lib/getPosts";
-import Hero from "../../components/Hero";
 import { Post } from "@prisma/client";
 import Link from "next/link";
+import Loading from "./loading";
+import dynamic from "next/dynamic";
+import { toast } from "react-toastify";
+// import Hero from "@/components/Hero";
+
+const PostComponent = dynamic(() => import("@/components/Dashboard/DashboardPost/PostComponent"));
+const Hero = dynamic(() => import("../../components/Hero"));
 
 const Blog = () => {
   const [posts, setPosts] = useState<Post[]>([]);
@@ -13,42 +19,37 @@ const Blog = () => {
         const fetchedPosts = await getPublishedPosts();
         setPosts(fetchedPosts);
       } catch (error) {
-        console.error('Error fetching posts:', error);
+        const notify = () =>
+          toast.error("Something went wrong!", {
+            position: "top-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "colored",
+          });
+        notify();
       }
     };
 
     fetchPosts();
   }, []);
 
-
-
   return (
     <main className="main">
       <Hero />
       <section className="max-w-screen-xl px-4 md:mx-auto">
         <h2 className="heading_secondary">Blogs</h2>
-        {(!posts.length) && <div className="text-center">Loading!</div>}
         <div className="grid md:grid-cols-2 mt-4 gap-6">
-          {posts.map((post) => (
-            //@ts-ignore
-            <article key={post.id} className="flex flex-col gap-4">
-              <img
-                className="rounded-md max-h-96"
-                src={post.imageUrl?.toString()}
-                alt="post image"
-              />
-              <div className="border rounded-md">
-                <h3 className="heading_tertiary">{post.title}</h3>
-                <p>{post.slug}</p>
-                {post.content ? (
-                  <div dangerouslySetInnerHTML={{ __html: post.content }} />
-                ) : null}
-              </div>
-              <Link className="btn_primary" href={`/blog/${post.id}`} legacyBehavior>
-                <a className="btn_primary flex">Read more</a>
-              </Link>
-            </article>
-          ))}
+          <Suspense fallback={<Loading />}>
+            {posts.map((post) => (
+              <Suspense key={post.id} fallback={<Loading />}>
+                <PostComponent post={post} />
+              </Suspense>
+            ))}
+          </Suspense>
         </div>
         <div className="flx hidden justify-center">
           <button className="border-blue-800 text-center mt-6 border px-4 py-2 rounded-md">

@@ -1,6 +1,6 @@
 import dynamic from "next/dynamic";
 import { FC, memo } from "react";
-import { Post } from ".";
+import { Post } from "./DashboardPost";
 
 type UpdatePostProp = {
     isOpen: boolean;
