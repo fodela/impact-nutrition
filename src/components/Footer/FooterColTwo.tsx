@@ -6,13 +6,13 @@ const FooterColTwo = () => {
         <p>Directorates</p>
         <p>Administrative Affairs</p>
         <p>Finance</p>
-
-      </div>
-      <div className="font-bold">
         <p>Projects</p>
         <p>Monitoring and Evaluation</p>
         <p>International Relations Affairs</p>
         <p>Information Technology</p>
+      </div>
+      <div className="font-bold">
+
       </div>
     </div>
   );

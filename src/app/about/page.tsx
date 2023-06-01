@@ -58,13 +58,13 @@ const about = () => {
         <figure className="md:flex mx-auto bg-slate-100 rounded-xl p-8 md:p-0 dark:bg-slate-800">
           <img
             className="w-24 h-24 md:w-48 md:h-auto md:rounded-none rounded-full mx-auto"
-            src="https://images.unsplash.com/photo-1487222477894-8943e31ef7b2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=495&q=80"
+            src="assets/Saadong.jpg"
             alt="executive director's image"
             width="484"
             height="612"
           />
           <div className="pt-6 mx-auto md:p-8 text-center md:text-left space-y-4">
-            <h3 className="text-4xl font-bold">Executive Director&apos;s Message</h3>
+            <h3 className="text-2xl md:text-4xl font-bold">Executive Director&apos;s Message</h3>
             <blockquote>
               <p className="text-lg font-medium">
                 “As professionals we believe in our capabilities and we cannot

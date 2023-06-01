@@ -1,5 +1,6 @@
 import dynamic from "next/dynamic";
 import React from "react";
+import { BsInstagram, BsTwitter } from "react-icons/bs";
 import {
   FaFacebook,
   FaTelegramPlane,
@@ -25,20 +26,14 @@ const contact_us = () => {
           <div className="">
             <h4 className="text-2xl text-center my-5 font-bold">Follow us</h4>
             <div className="flex gap-2 justify-center">
-              <a href="">
-                <FaTelegramPlane color="green" size={60} />
+              <a href="https://instagram.com/impact_nutrition_consult">
+                <BsInstagram color="green" size={60} />
               </a>
-              <a href="">
+              <a href="https://www.facebook.com/profile.php?id=100091143753921&mibextid=LQQJ4d">
                 <FaFacebook color="green" size={60} />
               </a>
-              <a href="">
-                <FaSnapchatGhost color="green" size={60} />
-              </a>
-              <a href="">
-                <FaLinkedin color="green" size={60} />
-              </a>
-              <a href="">
-                <FaInstagram color="green" size={60} />
+              <a href="https://twitter.com/incghana?s=21&t=-GfSfOpaIp5lObBXXSu1JQ">
+                <BsTwitter color="green" size={60} />
               </a>
             </div>
           </div>

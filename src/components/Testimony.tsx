@@ -2,7 +2,7 @@ import Image from "next/image";
 import { BsQuote } from "react-icons/bs";
 const Testimony = () => {
   return (
-    <div className="p-10 w-96 shadow-md md:shadow-xl dark:shadow-white relative my-8">
+    <div className="p-10 max-w-md shadow-md md:shadow-xl dark:shadow-white relative my-8">
       <BsQuote className="absolute right-1 top-1 text-6xl text-black/50 dark:text-white/50 rotate-180" />
       <p className="mb-4">
         “As professionals we believe in our capabilities and we cannot
@@ -21,7 +21,7 @@ const Testimony = () => {
       <div className="flex items-center gap-4 flex-nowrap">
         <img
           className="w-24 h-24 rounded-full mx-auto"
-          src="https://images.unsplash.com/photo-1487222477894-8943e31ef7b2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=495&q=80"
+          src="assets/Saadong.jpg"
           alt="executive director's image"
           width="484"
           height="612"
