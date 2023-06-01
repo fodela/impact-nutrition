@@ -1,5 +1,6 @@
 "use client";
 
+import axios from "axios";
 import { signIn } from "next-auth/react";
 import Link from "next/link";
 import { ChangeEvent, useState } from "react";
@@ -22,17 +23,15 @@ export const RegisterForm = () => {
     setLoading(true);
 
     try {
-      const res = await fetch("/api/register", {
-        method: "POST",
-        body: JSON.stringify(formValues),
+      const res = await axios.post("/api/register", formValues, {
         headers: {
           "Content-Type": "application/json",
         },
       });
 
       setLoading(false);
-      if (!res.ok) {
-        const result = ((await res.json()));
+      if (res.status !== 200) {
+        const result = res.data;
         toast.error(result?.message ? result?.message : "Something Went wrong!", {
           position: "top-right",
           autoClose: 5000,
@@ -45,10 +44,20 @@ export const RegisterForm = () => {
         });
         return;
       }
-
-      signIn(undefined, { callbackUrl: "/" });
+      toast.success("Registration is successful. Verify your email!", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+      });
+      signIn(undefined, { callbackUrl: "/dashboard" });
     } catch (error: any) {
       setLoading(false);
+      console.log(error, 'error')
       toast.error(error?.message ? error?.message : "Something Went wrong!", {
         position: "top-right",
         autoClose: 5000,
@@ -61,6 +70,7 @@ export const RegisterForm = () => {
       });
     }
   };
+
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
@@ -86,9 +96,9 @@ export const RegisterForm = () => {
         className="max-w-md"
         onSubmit={onSubmit}
       >
-        <label htmlFor="firstname">Firstname</label>
+        <label className="font-bold" htmlFor="firstname">Firstname</label>
         <input
-          className="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+          className="appearance-none my-4 border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
           required
           type="text"
           name="firstname"
@@ -96,9 +106,9 @@ export const RegisterForm = () => {
           onChange={handleChange}
           style={{ padding: "1rem" }}
         />
-        <label htmlFor="lastname">lastname</label>
+        <label className="font-bold" htmlFor="lastname">Lastname</label>
         <input
-          className="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+          className="appearance-none my-4 border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
           required
           type="text"
           name="lastname"
@@ -106,9 +116,9 @@ export const RegisterForm = () => {
           onChange={handleChange}
           style={{ padding: "1rem" }}
         />
-        <label htmlFor="username">Username</label>
+        <label className="font-bold" htmlFor="username">Username</label>
         <input
-          className="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+          className="appearance-none my-4 border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
           required
           type="text"
           name="username"
@@ -116,9 +126,9 @@ export const RegisterForm = () => {
           onChange={handleChange}
           style={{ padding: "1rem" }}
         />
-        <label htmlFor="date_of_birth">Date of birth</label>
+        <label className="font-bold" htmlFor="date_of_birth">Date of birth</label>
         <input
-          className="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+          className="appearance-none my-4 border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
           required
           type="date"
           name="date_of_birth"
@@ -126,9 +136,9 @@ export const RegisterForm = () => {
           onChange={handleChange}
           style={{ padding: "1rem" }}
         />
-        <label htmlFor="email">Email</label>
+        <label className="font-bold" htmlFor="email">Email</label>
         <input
-          className="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+          className="appearance-none my-4 border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
           required
           type="email"
           name="email"
@@ -138,7 +148,7 @@ export const RegisterForm = () => {
         />
         <label htmlFor="password">Password</label>
         <input
-          className="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+          className="appearance-none my-4 border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
           required
           type="password"
           name="password"

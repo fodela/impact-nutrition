@@ -6,32 +6,30 @@ import { generateToken } from "@/lib/tokenUtils";
 
 export async function POST(req: Request) {
   try {
-    // const { name, username, date_of_birth, email, password } = (await req.json()) as {
-    //   name: string
-    //   username: string;
-    //   date_of_birth: string;
-    //   email: string;
-    //   password: string;
-    // };
-    // if (!name || !username || !email || !password) {
-    //   return NextResponse.json({ "message": "Missing required data" })
-    // }
-
-    // const hashed_password = await hash(password, 12);
-
-    // const user = await prisma.user.create({
-    //   data: {
-    //     name,
-    //     date_of_birth: new Date(date_of_birth),
-    //     username,
-    //     email: email.toLowerCase(),
-    //     password: hashed_password,
-    //   },
-    // });
-    const user = {
-      name: 'kelibst',
-      email: 'kbooster17@gmail.com'
+    const { firstname, lastname, username, date_of_birth, email, password } = (await req.json()) as {
+      firstname: string;
+      lastname: string;
+      username: string;
+      date_of_birth: string;
+      email: string;
+      password: string;
+    };
+    if (!firstname || !lastname || !username || !email || !password) {
+      return NextResponse.json({ "message": "Missing required data" }, { status: 400 })
     }
+
+    const hashed_password = await hash(password, 12);
+
+    const user = await prisma.user.create({
+      data: {
+        name: `${firstname} ${lastname}`,
+        date_of_birth: new Date(date_of_birth),
+        username,
+        email: email.toLowerCase(),
+        password: hashed_password,
+      },
+    });
+
     // Generate a unique verification token
     const verificationToken = generateToken(); // Implement the `generateToken` function to generate a unique token
 
@@ -48,7 +46,7 @@ export async function POST(req: Request) {
 
     // Send the email verification email
     await sendMailValidationEmail({
-      title: "Email Verification",
+      title: "Impact Nutriton: Email Verification",
       message: `Welcome, ${user.name}! Please verify your email by clicking on the following link: ${link}`,
       receiverEmail: user.email,
       link

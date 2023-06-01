@@ -5,7 +5,6 @@ import { NextResponse } from "next/server";
 export async function POST(req: Request) {
     try {
         const { title, message, receiverEmail, link } = await req.json()
-        console.log(title, message, receiverEmail, 'data')
         if (!title || !message || !receiverEmail) {
             return NextResponse.json({ "message": "Missing required data" })
         }
