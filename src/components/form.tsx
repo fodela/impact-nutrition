@@ -4,6 +4,7 @@ import { signIn } from "next-auth/react";
 import Link from "next/link";
 import { ChangeEvent, useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/ReactToastify.min.css";
 
 export const RegisterForm = () => {
   let [loading, setLoading] = useState(false);
@@ -31,14 +32,24 @@ export const RegisterForm = () => {
 
       setLoading(false);
       if (!res.ok) {
-        alert((await res.json()).message);
+        const result = ((await res.json()));
+        toast.error(result?.message ? result?.message : "Something Went wrong!", {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "colored",
+        });
         return;
       }
 
       signIn(undefined, { callbackUrl: "/" });
     } catch (error: any) {
       setLoading(false);
-      toast.warn(error?.message ? error?.message : "Something Went wrong!", {
+      toast.error(error?.message ? error?.message : "Something Went wrong!", {
         position: "top-right",
         autoClose: 5000,
         hideProgressBar: false,
@@ -72,14 +83,8 @@ export const RegisterForm = () => {
       />
       <h1 className="text-3xl font-bold mb-6">Create a new account</h1>
       <form
-        className="w-full max-w-md"
+        className="max-w-md"
         onSubmit={onSubmit}
-        style={{
-          display: "flex",
-          flexDirection: "column",
-          width: 500,
-          rowGap: 10,
-        }}
       >
         <label htmlFor="firstname">Firstname</label>
         <input
@@ -141,7 +146,7 @@ export const RegisterForm = () => {
           onChange={handleChange}
           style={{ padding: "1rem" }}
         />
-        <div className="flex justify-between">
+        <div className="flex my-6 justify-between">
           <button
             className="bg-colorPrimary hover:bg-green-800 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
             disabled={loading}

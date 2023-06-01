@@ -28,7 +28,6 @@ const LoginForm = () => {
     };
 
     const handleLogin = async (e: any) => {
-        // TODO: Implement login functionality  
         e.preventDefault();
         try {
             const result = await signIn('credentials', {
@@ -80,7 +79,7 @@ const LoginForm = () => {
     };
 
     return (
-        <div className="flex flex-col justify-center items-center h-screen">
+        <div className="flex flex-col m-4 justify-center items-center h-full">
             <ToastContainer
                 position="top-right"
                 autoClose={5000}
@@ -94,9 +93,6 @@ const LoginForm = () => {
                 theme="colored"
             />
             <h1 className="text-3xl font-bold mb-6">Login</h1>
-
-
-
             <div>
                 {/* <button onClick={() => signIn("google")}>Sign in with Google</button> */}
                 {/* {providers.map((provider) => (
@@ -108,7 +104,7 @@ const LoginForm = () => {
                     </button>
                 ))} */}
             </div>
-            <form className="w-full max-w-md">
+            <form className="max-w-lg">
                 <div className="mb-4">
                     <label htmlFor="email" className="block text-gray-700 font-bold mb-2">
                         Email
@@ -140,15 +136,20 @@ const LoginForm = () => {
                         className="bg-colorPrimary hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
                         type="submit"
                         onClick={(event) => {
-                            handleLogin(event)
+                            handleLogin(event);
                         }}
                     >
                         Login
                     </button>
-                    <Link className="bg-colorPrimary hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" href={'/register'}>Register</Link>
+                    <Link
+                        className="bg-colorPrimary hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                        href={'/register'}
+                    >
+                        Register
+                    </Link>
                 </div>
-
             </form>
+
         </div>
     );
 };
