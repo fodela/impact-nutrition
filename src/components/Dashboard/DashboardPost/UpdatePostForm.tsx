@@ -42,10 +42,9 @@ export const updatePOST = async (id: string, title: string, content: string, slu
     });
 
     try {
-        const response = await axios.put(`${process.env.LOCALURL}/blog/api`, body, {
+        const response = await axios.put(`/api/blog`, body, {
             headers,
         });
-
         return response.data;
     } catch (error) {
         throw error;
@@ -78,7 +77,6 @@ const UpdatePostForm: FC<AddPostProp> = ({ onClose, post }) => {
         e.preventDefault();
 
         try {
-
             const post = await updatePOST(
                 id!,
                 title,
@@ -100,8 +98,8 @@ const UpdatePostForm: FC<AddPostProp> = ({ onClose, post }) => {
             notify()
             onClose()
         } catch (error) {
-            console.log(error, 'error')
-            const notify = () => toast.error("Something went wrong!", {
+            //@ts-ignore
+            const notify = () => toast.error(error?.message ? error?.message : "Something went wrong!", {
                 position: "top-right",
                 autoClose: 5000,
                 hideProgressBar: false,

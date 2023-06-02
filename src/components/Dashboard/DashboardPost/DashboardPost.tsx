@@ -22,7 +22,7 @@ const deletePost = async (id: string) => {
     };
 
     const reqOptions = {
-        url: `http://localhost:3000/api/blog?id=${id}`,
+        url: `/api/blog?id=${id}`,
         method: "DELETE",
         headers: headersList,
     };

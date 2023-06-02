@@ -59,13 +59,13 @@ const AddPostForm: FC<AddPostProp> = ({ onClose }) => {
                 imageUrl: "",
                 published: false,
             });
-
             const notify = () => toast.success("Post created!");
             notify();
             onClose();
         } catch (error) {
-            const notify = () =>
-                toast.error("Something went wrong!", {
+            const notify = () => {
+                //@ts-ignore
+                toast.error(error?.message ? error.message : "Something went wrong!", {
                     position: "top-right",
                     autoClose: 5000,
                     hideProgressBar: false,
@@ -75,7 +75,8 @@ const AddPostForm: FC<AddPostProp> = ({ onClose }) => {
                     progress: undefined,
                     theme: "colored",
                 });
-            notify();
+                notify();
+            }
         }
     };
 

@@ -40,14 +40,17 @@ const PostPage = () => {
             <main className="main">
                 <section className="max-w-screen-xl px-4 md:mx-auto">
                     <h2 className="heading_secondary">{post.title}</h2>
-                    <article className="flex flex-col gap-4">
-                        <img
-                            className="rounded-md max-h-96 max-w-md"
-                            src={post.imageUrl?.toString()}
-                            alt="post image"
-                        />
-                        <div className="border rounded-md">
-                            <p>{post.slug}</p>
+                    <article className="block mx-auto">
+                        <div className="flex max-h-96 max-w-md mx-auto">
+                            <img
+                                className="rounded-md "
+                                src={post.imageUrl?.toString()}
+                                alt="post image"
+                            />
+                        </div>
+
+                        <div className="max-w-md my-4 mx-auto rounded-md">
+                            <p className="py-4">{post.slug}</p>
                             {post.content ? (
                                 <div dangerouslySetInnerHTML={{ __html: post.content }} />
                             ) : null}

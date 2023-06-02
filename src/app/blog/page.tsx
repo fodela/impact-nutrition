@@ -1,12 +1,10 @@
 'use client'
 import React, { Suspense, useEffect, useState } from "react";
-import { getPublishedPosts } from "../../lib/getPosts";
+import { getPosts } from "../../lib/getPosts";
 import { Post } from "@prisma/client";
-import Link from "next/link";
 import Loading from "./loading";
 import dynamic from "next/dynamic";
 import { toast } from "react-toastify";
-// import Hero from "@/components/Hero";
 
 const PostComponent = dynamic(() => import("@/components/Dashboard/DashboardPost/PostComponent"));
 const Hero = dynamic(() => import("../../components/Hero"));
@@ -16,11 +14,13 @@ const Blog = () => {
   useEffect(() => {
     const fetchPosts = async () => {
       try {
-        const fetchedPosts = await getPublishedPosts();
+        const fetchedPosts: Post[] = await getPosts();
+        // const publishedPosts: Post[] = fetchedPosts.filter((post) => post.published);
         setPosts(fetchedPosts);
       } catch (error) {
-        const notify = () =>
-          toast.error("Something went wrong!", {
+        const notify = () => {
+          //@ts-ignore
+          toast.error(error?.message ? error.message : "Something went wrong!", {
             position: "top-right",
             autoClose: 5000,
             hideProgressBar: false,
@@ -30,7 +30,8 @@ const Blog = () => {
             progress: undefined,
             theme: "colored",
           });
-        notify();
+          notify();
+        }
       }
     };
 
@@ -44,11 +45,11 @@ const Blog = () => {
         <h2 className="heading_secondary">Blogs</h2>
         <div className="grid md:grid-cols-2 mt-4 gap-6">
           <Suspense fallback={<Loading />}>
-            {posts.map((post) => (
+            {posts.length ? posts.map((post) => (
               <Suspense key={post.id} fallback={<Loading />}>
                 <PostComponent post={post} />
               </Suspense>
-            ))}
+            )) : <h1 className="text-center">No posts</h1>}
           </Suspense>
         </div>
         <div className="flx hidden justify-center">
