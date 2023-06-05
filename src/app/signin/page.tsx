@@ -2,15 +2,15 @@
 import { signIn, useSession, getProviders } from "next-auth/react";
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/ReactToastify.min.css";
 
 const LoginForm = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-    const [error, setError] = useState('')
-    const { data: session } = useSession()
     const [providers, setProviders] = useState([]);
+    const [showPassword, setShowPassword] = useState(false);
 
     useEffect(() => {
         const setProvidr = async () => {
@@ -36,7 +36,6 @@ const LoginForm = () => {
                 redirect: false,
             });
             if (result && result.url) {
-                setError('');
                 toast.success('Awesome! Welcome!', {
                     position: "top-right",
                     autoClose: 5000,
@@ -79,7 +78,7 @@ const LoginForm = () => {
     };
 
     return (
-        <div className="flex flex-col m-4 justify-center items-center h-full">
+        <div className="h-full">
             <ToastContainer
                 position="top-right"
                 autoClose={5000}
@@ -92,7 +91,7 @@ const LoginForm = () => {
                 pauseOnHover
                 theme="colored"
             />
-            <h1 className="text-3xl font-bold mb-6">Login</h1>
+            <h1 className="text-3xl text-center font-bold mb-6">Login</h1>
             <div>
                 {/* <button onClick={() => signIn("google")}>Sign in with Google</button> */}
                 {/* {providers.map((provider) => (
@@ -104,7 +103,7 @@ const LoginForm = () => {
                     </button>
                 ))} */}
             </div>
-            <form className="max-w-lg">
+            <form className="max-w-md mx-auto my-auto">
                 <div className="mb-4">
                     <label htmlFor="email" className="block text-gray-700 font-bold mb-2">
                         Email
@@ -112,7 +111,7 @@ const LoginForm = () => {
                     <input
                         type="email"
                         id="email"
-                        className="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                        className="appearance-none border rounded w-full min-w-md py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                         placeholder="Email"
                         value={email}
                         onChange={handleEmailChange}
@@ -122,14 +121,23 @@ const LoginForm = () => {
                     <label htmlFor="password" className="block text-gray-700 font-bold mb-2">
                         Password
                     </label>
-                    <input
-                        type="password"
-                        id="password"
-                        className="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                        placeholder="Password"
-                        value={password}
-                        onChange={handlePasswordChange}
-                    />
+                    <div className="flex relative">
+                        <input type={showPassword ? 'text' : 'password'}
+                            id="password"
+                            className="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                            placeholder="Password"
+                            value={password}
+                            onChange={handlePasswordChange}
+                        />
+                        <button
+                            type="button"
+                            onClick={() => setShowPassword(!showPassword)}
+                            className="text-gray-700 ml-2 absolute right-2 h-full focus:outline-none"
+                        >
+                            {showPassword ? <AiFillEyeInvisible size={30} /> : <AiFillEye size={30} />}
+                        </button>
+                    </div>
+
                 </div>
                 <div className="flex justify-between">
                     <button

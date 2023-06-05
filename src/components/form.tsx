@@ -4,11 +4,13 @@ import axios from "axios";
 import { signIn } from "next-auth/react";
 import Link from "next/link";
 import { ChangeEvent, useState } from "react";
+import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/ReactToastify.min.css";
 
 export const RegisterForm = () => {
   let [loading, setLoading] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
   let [formValues, setFormValues] = useState({
     firstname: "",
     lastname: "",
@@ -57,7 +59,6 @@ export const RegisterForm = () => {
       signIn(undefined, { callbackUrl: "/dashboard" });
     } catch (error: any) {
       setLoading(false);
-      console.log(error, 'error')
       toast.error(error?.message ? error?.message : "Something Went wrong!", {
         position: "top-right",
         autoClose: 5000,
@@ -78,7 +79,7 @@ export const RegisterForm = () => {
   };
 
   return (
-    <div className="flex flex-col justify-center items-center h-screen">
+    <div className="flex my-8 flex-col justify-center items-center h-screen">
       <ToastContainer
         position="top-right"
         autoClose={5000}
@@ -146,16 +147,27 @@ export const RegisterForm = () => {
           onChange={handleChange}
           style={{ padding: "1rem" }}
         />
+
         <label htmlFor="password">Password</label>
-        <input
-          className="appearance-none my-4 border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-          required
-          type="password"
-          name="password"
-          value={formValues.password}
-          onChange={handleChange}
-          style={{ padding: "1rem" }}
-        />
+        <div className="flex relative">
+          <input
+            className="appearance-none my-4 border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            required
+            type={showPassword ? 'text' : 'password'}
+            name="password"
+            value={formValues.password}
+            onChange={handleChange}
+            style={{ padding: "1rem" }}
+          />
+          <button
+            type="button"
+            onClick={() => setShowPassword(!showPassword)}
+            className="text-gray-700 ml-2 absolute right-2 h-full focus:outline-none"
+          >
+            {showPassword ? <AiFillEyeInvisible size={30} /> : <AiFillEye size={30} />}
+          </button>
+        </div>
+
         <div className="flex my-6 justify-between">
           <button
             className="bg-colorPrimary hover:bg-green-800 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
