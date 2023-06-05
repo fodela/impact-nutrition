@@ -15,14 +15,12 @@ async function main() {
       email: 'kelibst@example.com',
       username: 'kelibst111',
       password,
-      role: "ADMINISTRATOR"
-
+      role: "ADMINISTRATOR",
+      emailVerified: Date.now()
     },
   })
 
   const createPost = async (title: string, content: string, slug: string, imageUrl: string) => {
-
-
     await prisma.post.create({
       data: {
         title,

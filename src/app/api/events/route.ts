@@ -1,9 +1,8 @@
+import { PrismaClient, Session } from '@prisma/client';
 import { getServerSession } from 'next-auth';
 import { NextResponse } from 'next/server';
 import { authOptions } from '../auth/[...nextauth]/route';
-import { verifyUserRole } from '@/lib/verifyUserRole';
 import { parse } from 'url';
-
 import prisma from '@/lib/prisma';
 import { validateAuthorization } from '../blog/route';
 
@@ -14,29 +13,30 @@ export async function GET() {
     return NextResponse.json(events);
 }
 
+
+
 export async function POST(req: Request) {
     const session = await getServerSession(authOptions);
-    if (!session) return NextResponse.json({ error: "You are not authenticated" }, { status: 401 })
+    //@ts-ignore
+    const authorId = session?.user?.id;
 
-    //@ts-ignore
-    if (!verifyUserRole(session.user.role, 'POSTS')) return NextResponse.json({ error: "You are not authorized!" }, { status: 401 })
-    //@ts-ignore
-    const authorId = session.user.id;
     try {
-        const { title, details, location, organizers } = await req.json();
-        if (!title || !details || !location || !organizers) {
-            return NextResponse.json({ "message": "Missing required data" }, { status: 400 })
+        const { title, content, slug, author, imageUrl, published } = await req.json();
+        if (!title || !content || !slug) {
+            return NextResponse.json({ message: "Missing required data" }, { status: 400 });
         }
+        //@ts-ignore
+        await validateAuthorization(session, authorId, 'POSTS');
+
         const post = await prisma.post.create({
-            //@ts-ignore
-            data: { title, details, location, authorId, organizers },
+            data: { title, content, slug, author, authorId, imageUrl, published },
         });
+
         return NextResponse.json(post, { status: 200 });
     } catch (error) {
         return NextResponse.json(error, { status: 500 });
     }
 }
-
 
 export async function PUT(req: Request) {
     const session = await getServerSession(authOptions);
@@ -44,24 +44,24 @@ export async function PUT(req: Request) {
     const authorId = session?.user?.id;
 
     try {
-        const { id, title, details, location, organizers } = await req.json();
+        const { id, title, content, slug, author, imageUrl, published } = await req.json();
         if (!id) {
             return NextResponse.json({ message: "Missing required data" }, { status: 400 });
         }
 
-        const event = await prisma.event.findUnique({ where: { id } });
-        if (!event) {
+        const post = await prisma.post.findUnique({ where: { id } });
+        if (!post) {
             return NextResponse.json({ message: "Post not found" }, { status: 404 });
         }
         //@ts-ignore
         await validateAuthorization(session, authorId, 'ADMINISTRATOR');
 
-        const updateEvent = await prisma.event.update({
+        const updatedPost = await prisma.post.update({
             where: { id },
-            data: { title, details, location, organizers, },
+            data: { title, content, slug, author, authorId, imageUrl, published },
         });
 
-        return NextResponse.json(updateEvent, { status: 200 });
+        return NextResponse.json(updatedPost, { status: 200 });
     } catch (error) {
         return NextResponse.json(error, { status: 500 });
     }
@@ -78,17 +78,18 @@ export async function DELETE(req: Request) {
             return NextResponse.json({ message: "Missing required data" }, { status: 400 });
         }
         //@ts-ignore
-        const event = await prisma.event.findUnique({ where: { id } });
-        if (!event) {
-            return NextResponse.json({ message: "Event not found" }, { status: 404 });
+        const post = await prisma.post.findUnique({ where: { id } });
+        if (!post) {
+            return NextResponse.json({ message: "Post not found" }, { status: 404 });
         }
         //@ts-ignore
         await validateAuthorization(session, authorId, 'ADMINISTRATOR');
         //@ts-ignore
-        await prisma.event.delete({ where: { id } });
+        await prisma.post.delete({ where: { id } });
 
-        return NextResponse.json({ message: "Event deleted successfully" }, { status: 200 });
+        return NextResponse.json({ message: "Post deleted successfully" }, { status: 200 });
     } catch (error) {
+        console.log(error, 'errror')
         return NextResponse.json(error, { status: 500 });
     }
 }

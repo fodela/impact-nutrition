@@ -34,11 +34,14 @@ const Sidebar: FC<SidebarProps> = ({ isOpen, onClose, sidebarRoot }) => {
                     <li className="py-2 px-4 text-gray-600 hover:bg-gray-200">
                         <Link href="/about">About</Link>
                     </li>
-                    <li className="py-2 px-4 text-gray-600 hover:bg-gray-200">
+                    {/* <li className="py-2 px-4 text-gray-600 hover:bg-gray-200">
                         <Link href="/services">Services</Link>
-                    </li>
+                    </li> */}
                     <li className="py-2 px-4 text-gray-600 hover:bg-gray-200">
                         <Link href="/blog">Blog</Link>
+                    </li>
+                    <li className="py-2 px-4 text-gray-600 hover:bg-gray-200">
+                        <Link href="/events">Events</Link>
                     </li>
                     <li className="py-2 px-4 text-gray-600 hover:bg-gray-200">
                         <Link href="/contact_us">Contact Us</Link>

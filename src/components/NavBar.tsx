@@ -14,8 +14,9 @@ const NavBar = () => {
 
   const links = [
     { href: '/', label: 'Home' },
+    { href: '/blog', label: 'Blogs' },
+    { href: '/events', label: 'Events' },
     { href: '/about', label: 'About' },
-    { href: '/blog', label: 'Blog' },
     { href: '/contact_us', label: 'Contact Us' },
   ];
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
