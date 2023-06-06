@@ -11,13 +11,21 @@ export async function GET() {
   return NextResponse.json(events);
 }
 
-export async function event(req: Request) {
+export async function POST(req: Request) {
   const session = await getServerSession(authOptions);
   //@ts-ignore
   const userId = session?.user?.id;
+  console.log(session, "sess");
+  if (!session) {
+    return NextResponse.json(
+      { message: "You are not logged in!" },
+      { status: 400 }
+    );
+  }
 
   try {
     const { title, details, location, organizers, image } = await req.json();
+
     if (!title || !details || !location || !organizers) {
       return NextResponse.json(
         { message: "Missing required data" },
@@ -40,12 +48,13 @@ export async function event(req: Request) {
         location,
         organizers,
         image,
-        userId: userId.id,
+        userId,
       },
     });
 
     return NextResponse.json(event, { status: 200 });
   } catch (error) {
+    console.log(error, "error");
     return NextResponse.json("Something went wrong!", { status: 500 });
   }
 }

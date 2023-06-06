@@ -1,6 +1,5 @@
 'use client'
 import { FC, useRef, useState } from "react";
-import AddPost from "./DashboardPost/AddPost";
 import { ToastContainer, toast, ToastContainerProps } from "react-toastify";
 import "react-toastify/ReactToastify.min.css";
 import renderAddButton from "./DashboardTable/RenderButtons";
