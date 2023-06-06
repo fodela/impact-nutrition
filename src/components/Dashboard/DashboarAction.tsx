@@ -1,3 +1,4 @@
+'use client'
 import { FC, useRef, useState } from "react";
 import AddPost from "./DashboardPost/AddPost";
 import { ToastContainer, toast, ToastContainerProps } from "react-toastify";
@@ -9,12 +10,6 @@ type DashProp = {
 };
 
 const DashboardAction: FC<DashProp> = ({ tab }) => {
-    const [isPostOpen, setPostOpen] = useState(false);
-    const postOpenRef = useRef<HTMLDivElement | null>(null);
-
-    const toggleAddPost = () => {
-        setPostOpen((prevState) => !prevState);
-    };
 
     const toastContainerOptions: ToastContainerProps = {
         position: "top-right",
@@ -48,14 +43,8 @@ const DashboardAction: FC<DashProp> = ({ tab }) => {
                             />
                         </div>
                     </div>
-                    <div ref={postOpenRef} id="addPost-root" />
                     <div className="search-btn">
-                        <AddPost
-                            isOpen={isPostOpen}
-                            onClose={toggleAddPost}
-                            addPostRoot={postOpenRef.current}
-                        />
-                        {renderAddButton({ tab, toggleAddPost })}
+                        {renderAddButton({ tab })}
                     </div>
                 </div>
             </div>
