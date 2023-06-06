@@ -1,5 +1,5 @@
 import dynamic from "next/dynamic";
-import { FC } from "react";
+import { FC, MouseEvent } from "react";
 import AddPostForm from "./AddPostForm";
 
 type AddPostProp = {
@@ -8,7 +8,7 @@ type AddPostProp = {
     addPostRoot: HTMLElement | null;
 };
 
-const handleSubElementClick = (e: React.MouseEvent) => {
+const handleSubElementClick = (e: MouseEvent) => {
     e.stopPropagation();
 };
 

@@ -6,6 +6,7 @@ import DashboardUser from './DashboardUser';
 import DashboardComments from './DashboardComments';
 import DashboardAction from './DashboarAction';
 import DashboardPost from './DashboardPost/DashboardPost';
+import DashboardEvents from './DashboardEvent/DashboardEvents';
 
 interface props {
     role: string
@@ -42,7 +43,7 @@ const TabMenu: React.FC<props> = ({ role }) => {
                 {activeTab === 'Dashboard' && <DashboardContent />}
                 {activeTab === 'Users' && <DashboardUser />}
                 {activeTab === 'Posts' && <DashboardPost />}
-                {activeTab === 'Events' && <p>Event content goes here</p>}
+                {activeTab === 'Events' && <DashboardEvents />}
                 {activeTab === 'Categories' && <DashboardComments />}
                 {activeTab === 'Comments' && <DashboardComments />}
             </div>

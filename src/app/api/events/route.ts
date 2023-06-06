@@ -1,95 +1,132 @@
-import { PrismaClient, Session } from '@prisma/client';
-import { getServerSession } from 'next-auth';
-import { NextResponse } from 'next/server';
-import { authOptions } from '../auth/[...nextauth]/route';
-import { parse } from 'url';
-import prisma from '@/lib/prisma';
-import { validateAuthorization } from '../blog/route';
-
-
+import { PrismaClient, Session } from "@prisma/client";
+import { getServerSession } from "next-auth";
+import { NextResponse } from "next/server";
+import { authOptions } from "../auth/[...nextauth]/route";
+import { parse } from "url";
+import prisma from "@/lib/prisma";
+import { validateAuthorization } from "@/lib/validateAuthorization";
 
 export async function GET() {
-    const events = await prisma.event.findMany();
-    return NextResponse.json(events);
+  const events = await prisma.event.findMany();
+  return NextResponse.json(events);
 }
 
+export async function event(req: Request) {
+  const session = await getServerSession(authOptions);
+  //@ts-ignore
+  const userId = session?.user?.id;
 
-
-export async function POST(req: Request) {
-    const session = await getServerSession(authOptions);
-    //@ts-ignore
-    const authorId = session?.user?.id;
+  try {
+    const { title, details, location, organizers, image } = await req.json();
+    if (!title || !details || !location || !organizers) {
+      return NextResponse.json(
+        { message: "Missing required data" },
+        { status: 400 }
+      );
+    }
 
     try {
-        const { title, content, slug, author, imageUrl, published } = await req.json();
-        if (!title || !content || !slug) {
-            return NextResponse.json({ message: "Missing required data" }, { status: 400 });
-        }
-        //@ts-ignore
-        await validateAuthorization(session, authorId, 'POSTS');
-
-        const post = await prisma.post.create({
-            data: { title, content, slug, author, authorId, imageUrl, published },
-        });
-
-        return NextResponse.json(post, { status: 200 });
+      //@ts-ignore
+      await validateAuthorization(session, userId, "EVENTS");
     } catch (error) {
-        return NextResponse.json(error, { status: 500 });
+      //@ts-ignore
+      return NextResponse.json({ message: error?.message }, { status: 401 });
     }
+
+    const event = await prisma.event.create({
+      data: {
+        title,
+        details,
+        location,
+        organizers,
+        image,
+        userId: userId.id,
+      },
+    });
+
+    return NextResponse.json(event, { status: 200 });
+  } catch (error) {
+    return NextResponse.json("Something went wrong!", { status: 500 });
+  }
 }
 
 export async function PUT(req: Request) {
-    const session = await getServerSession(authOptions);
-    //@ts-ignore
-    const authorId = session?.user?.id;
+  const session = await getServerSession(authOptions);
+  //@ts-ignore
+  const userId = session?.user?.id;
 
-    try {
-        const { id, title, content, slug, author, imageUrl, published } = await req.json();
-        if (!id) {
-            return NextResponse.json({ message: "Missing required data" }, { status: 400 });
-        }
+  try {
+    const { id, title, details, location, organizers, image, userId } =
+      await req.json();
 
-        const post = await prisma.post.findUnique({ where: { id } });
-        if (!post) {
-            return NextResponse.json({ message: "Post not found" }, { status: 404 });
-        }
-        //@ts-ignore
-        await validateAuthorization(session, authorId, 'ADMINISTRATOR');
-
-        const updatedPost = await prisma.post.update({
-            where: { id },
-            data: { title, content, slug, author, authorId, imageUrl, published },
-        });
-
-        return NextResponse.json(updatedPost, { status: 200 });
-    } catch (error) {
-        return NextResponse.json(error, { status: 500 });
+    if (!id) {
+      return NextResponse.json(
+        { message: "Missing required data" },
+        { status: 400 }
+      );
     }
+
+    const event = await prisma.event.findUnique({ where: { id } });
+
+    if (!event) {
+      return NextResponse.json({ message: "event not found" }, { status: 404 });
+    }
+    try {
+      //@ts-ignore
+      await validateAuthorization(session, userId, "EVENTS");
+    } catch (error) {
+      //@ts-ignore
+      return NextResponse.json({ message: error?.message }, { status: 401 });
+    }
+
+    const updatedevent = await prisma.event.update({
+      where: { id },
+      data: { id, title, details, location, organizers, image },
+    });
+
+    return NextResponse.json(updatedevent, { status: 200 });
+  } catch (error) {
+    //@ts-ignore
+    const message = error?.message ? error?.message : "something went wrong!";
+    return NextResponse.json({ message }, { status: 500 });
+  }
 }
 
 export async function DELETE(req: Request) {
-    const session = await getServerSession(authOptions);
-    //@ts-ignore
-    const authorId = session?.user?.id;
-    try {
-        const { id } = parse(req.url || '', true).query;
+  const session = await getServerSession(authOptions);
+  //@ts-ignore
+  const userId = session?.user?.id;
+  try {
+    const { id } = parse(req.url || "", true).query;
 
-        if (!id) {
-            return NextResponse.json({ message: "Missing required data" }, { status: 400 });
-        }
-        //@ts-ignore
-        const post = await prisma.post.findUnique({ where: { id } });
-        if (!post) {
-            return NextResponse.json({ message: "Post not found" }, { status: 404 });
-        }
-        //@ts-ignore
-        await validateAuthorization(session, authorId, 'ADMINISTRATOR');
-        //@ts-ignore
-        await prisma.post.delete({ where: { id } });
-
-        return NextResponse.json({ message: "Post deleted successfully" }, { status: 200 });
-    } catch (error) {
-        console.log(error, 'errror')
-        return NextResponse.json(error, { status: 500 });
+    if (!id) {
+      return NextResponse.json(
+        { message: "Missing required data" },
+        { status: 400 }
+      );
     }
+    //@ts-ignore
+    const event = await prisma.event.findUnique({ where: { id } });
+    if (!event) {
+      return NextResponse.json({ message: "event not found" }, { status: 404 });
+    }
+    try {
+      //@ts-ignore
+      await validateAuthorization(session, userId, "EVENTS");
+    } catch (error) {
+      //@ts-ignore
+      return NextResponse.json({ message: error?.message }, { status: 401 });
+    }
+    //@ts-ignore
+    await prisma.event.delete({ where: { id } });
+
+    return NextResponse.json(
+      { message: "event deleted successfully" },
+      { status: 200 }
+    );
+  } catch (error) {
+    //@ts-ignore
+    const message = error?.message ? error?.message : "something went wrong!";
+    return NextResponse.json({ message }, { status: 500 });
+  }
 }

@@ -1,33 +1,48 @@
+
 import dynamic from "next/dynamic";
-import { FC, useState, ChangeEvent, FormEvent, memo } from "react";
-import { toast } from 'react-toastify';
+import { FC, useState } from "react";
+import "suneditor/dist/css/suneditor.min.css"; // Import SunEditor CSS
 import axios from "axios";
-import 'suneditor/dist/css/suneditor.min.css';
+import { toast } from 'react-toastify';
+import { Post } from "./DashboardPost";
 
 interface FormProps {
+    id?: string;
     title: string;
     content: string;
     slug: string;
+    author?: string;
+    authorId?: string;
     imageUrl: string;
     published: boolean;
 }
-
 type AddPostProp = {
-    onClose: () => void;
-};
-
+    onClose: () => void,
+    post: Post
+}
 const SunEditor = dynamic(() => import("suneditor-react"), {
     ssr: false,
 });
 
-export const createPost = async (formData: FormProps) => {
+
+export const updatePOST = async (id: string, title: string, content: string, slug: string, imageUrl: string, published: boolean) => {
+
     const headers = {
         Accept: "*/*",
         "Content-Type": "application/json",
     };
 
+    const body = JSON.stringify({
+        id,
+        title,
+        content,
+        slug,
+        imageUrl,
+        published,
+    });
+
     try {
-        const response = await axios.post(`/api/blog`, formData, {
+        const response = await axios.put(`/api/blog`, body, {
             headers,
         });
         return response.data;
@@ -36,56 +51,67 @@ export const createPost = async (formData: FormProps) => {
     }
 };
 
-const AddPostForm: FC<AddPostProp> = ({ onClose }) => {
+
+
+const UpdatePostForm: FC<AddPostProp> = ({ onClose, post }) => {
+
     const [postInputs, setPostInputs] = useState<FormProps>({
-        title: "",
-        content: "",
-        slug: "",
-        imageUrl: "",
-        published: false,
+        id: post.id,
+        title: post.title,
+        content: post.content,
+        slug: post.slug,
+        imageUrl: post.imageUrl,
+        published: post.published,
     });
 
-    const { title, content, slug, imageUrl, published } = postInputs;
+    const {
+        id,
+        title,
+        content,
+        slug,
+        imageUrl,
+        published,
+    } = postInputs;
 
-    const handleSubmit = async (e: FormEvent) => {
+    const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
+
         try {
-            const post = await createPost(postInputs);
+            const post = await updatePOST(
+                id!,
+                title,
+                content,
+                slug,
+                imageUrl,
+                published,
+            )
 
             setPostInputs({
+                id: "",
                 title: "",
                 content: "",
                 slug: "",
                 imageUrl: "",
                 published: false,
-            });
-            const notify = () => toast.success("Post created!");
-            notify();
-            onClose();
+            })
+            const notify = () => toast.success("Post Updated!");
+            notify()
+            onClose()
         } catch (error) {
-            const notify = () => {
-                //@ts-ignore
-                toast.error(error?.message ? error.message : "Something went wrong!", {
-                    position: "top-right",
-                    autoClose: 5000,
-                    hideProgressBar: false,
-                    closeOnClick: true,
-                    pauseOnHover: true,
-                    draggable: true,
-                    progress: undefined,
-                    theme: "colored",
-                });
-                notify();
-            }
+            //@ts-ignore
+            const notify = () => toast.error(error?.message ? error?.message : "Something went wrong!", {
+                position: "top-right",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "colored",
+            });
+            notify()
         }
-    };
 
-    const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
-        const { name, value } = e.target;
-        setPostInputs((prevState) => ({
-            ...prevState,
-            [name]: value,
-        }));
     };
 
     const handleContentChange = (content: string) => {
@@ -107,9 +133,13 @@ const AddPostForm: FC<AddPostProp> = ({ onClose }) => {
                         id="title"
                         required
                         className="w-full px-4 py-2 border rounded-lg"
-                        name="title"
                         value={title}
-                        onChange={handleInputChange}
+                        onChange={(e) =>
+                            setPostInputs((prevState) => ({
+                                ...prevState,
+                                title: e.target.value,
+                            }))
+                        }
                     />
                 </div>
                 <div className="mb-4">
@@ -131,11 +161,17 @@ const AddPostForm: FC<AddPostProp> = ({ onClose }) => {
                         required
                         id="slug"
                         className="w-full px-4 py-2 border rounded-lg"
-                        name="slug"
                         value={slug}
-                        onChange={handleInputChange}
+                        onChange={(e) =>
+                            setPostInputs((prevState) => ({
+                                ...prevState,
+                                slug: e.target.value,
+                            }))
+                        }
                     />
                 </div>
+
+
                 <div className="mb-4">
                     <label htmlFor="imageUrl" className="block mb-2 font-bold">
                         Image URL
@@ -145,9 +181,13 @@ const AddPostForm: FC<AddPostProp> = ({ onClose }) => {
                         type="text"
                         id="imageUrl"
                         className="w-full px-4 py-2 border rounded-lg"
-                        name="imageUrl"
                         value={imageUrl}
-                        onChange={handleInputChange}
+                        onChange={(e) =>
+                            setPostInputs((prevState) => ({
+                                ...prevState,
+                                imageUrl: e.target.value,
+                            }))
+                        }
                     />
                 </div>
                 <div className="mb-4">
@@ -159,7 +199,6 @@ const AddPostForm: FC<AddPostProp> = ({ onClose }) => {
                             type="checkbox"
                             id="published"
                             className="mr-2"
-                            name="published"
                             checked={published}
                             onChange={(e) =>
                                 setPostInputs((prevState) => ({
@@ -176,7 +215,7 @@ const AddPostForm: FC<AddPostProp> = ({ onClose }) => {
                         type="submit"
                         className="px-4 py-2 mr-2 text-white bg-blue-500 rounded-lg hover:bg-blue-600"
                     >
-                        Submit
+                        Update
                     </button>
                     <button
                         type="button"
@@ -191,4 +230,4 @@ const AddPostForm: FC<AddPostProp> = ({ onClose }) => {
     );
 };
 
-export default memo(AddPostForm);
+export default UpdatePostForm;
