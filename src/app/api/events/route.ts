@@ -15,7 +15,6 @@ export async function POST(req: Request) {
   const session = await getServerSession(authOptions);
   //@ts-ignore
   const userId = session?.user?.id;
-  console.log(session, "sess");
   if (!session) {
     return NextResponse.json(
       { message: "You are not logged in!" },
@@ -54,7 +53,6 @@ export async function POST(req: Request) {
 
     return NextResponse.json(event, { status: 200 });
   } catch (error) {
-    console.log(error, "error");
     return NextResponse.json("Something went wrong!", { status: 500 });
   }
 }

@@ -1,15 +1,16 @@
 import dynamic from "next/dynamic";
 import { FC, memo } from "react";
-import { Post } from "./DashboardPost";
+import { Event } from "@prisma/client";
+import UpdateEventForm from "./UpdateEventForm";
 
 type UpdatePostProp = {
     isOpen: boolean;
     onClose: () => void;
-    post: Post;
+    event: Event;
 };
 
 const UpdatePostForm = dynamic(
-    () => import("./UpdatePostForm"),
+    () => import("./UpdateEventForm"),
     { ssr: false }
 );
 
@@ -20,7 +21,7 @@ const handleSubElementClick = (e: React.MouseEvent) => {
 const UpdatePost: FC<UpdatePostProp> = ({
     isOpen,
     onClose,
-    post
+    event
 }) => {
     if (!isOpen) return null;
 
@@ -35,9 +36,9 @@ const UpdatePost: FC<UpdatePostProp> = ({
                     } transition-transform duration-1000 ease-linear`}
             >
                 <h1 className="font-bold text-center uppercase text-2xl">
-                    Add new Post
+                    Add new Event
                 </h1>
-                <UpdatePostForm onClose={onClose} post={post} />
+                <UpdateEventForm onClose={onClose} event={event} />
             </div>
         </div>
     );

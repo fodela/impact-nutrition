@@ -13,7 +13,6 @@ const handleSubElementClick = (e: MouseEvent) => {
 };
 
 const AddEvent: FC<AddEventProp> = ({ isOpen, onClose, addEventRoot }) => {
-    console.log(isOpen, addEventRoot, 'root')
     if (!isOpen || !addEventRoot) return null
 
     return (

@@ -4,28 +4,27 @@ import { FC, useState } from "react";
 import "suneditor/dist/css/suneditor.min.css"; // Import SunEditor CSS
 import axios from "axios";
 import { toast } from 'react-toastify';
-import { Post } from "./DashboardPost";
+import { Event } from "@prisma/client";
 
 interface FormProps {
-    id?: string;
+    id: string;
     title: string;
-    content: string;
-    slug: string;
-    author?: string;
-    authorId?: string;
-    imageUrl: string;
-    published: boolean;
+    event: string;
+    details: string,
+    location: string;
+    image?: string;
+    organizers?: string;
 }
-type AddPostProp = {
+type AddEventProp = {
     onClose: () => void,
-    post: Post
+    event: Event
 }
 const SunEditor = dynamic(() => import("suneditor-react"), {
     ssr: false,
 });
 
 
-export const updatePOST = async (id: string, title: string, content: string, slug: string, imageUrl: string, published: boolean) => {
+export const updateEvent = async (id: string, title: string, details: string, location: string, organizers: string, image: string) => {
 
     const headers = {
         Accept: "*/*",
@@ -35,14 +34,14 @@ export const updatePOST = async (id: string, title: string, content: string, slu
     const body = JSON.stringify({
         id,
         title,
-        content,
-        slug,
-        imageUrl,
-        published,
+        details,
+        image,
+        location,
+        organizers,
     });
 
     try {
-        const response = await axios.put(`/api/blog`, body, {
+        const response = await axios.put(`/api/events`, body, {
             headers,
         });
         return response.data;
@@ -53,48 +52,48 @@ export const updatePOST = async (id: string, title: string, content: string, slu
 
 
 
-const UpdatePostForm: FC<AddPostProp> = ({ onClose, post }) => {
+const UpdateEventForm: FC<AddEventProp> = ({ onClose, event }) => {
 
-    const [postInputs, setPostInputs] = useState<FormProps>({
-        id: post.id,
-        title: post.title,
-        content: post.content,
-        slug: post.slug,
-        imageUrl: post.imageUrl,
-        published: post.published,
+    const [eventInputs, setEventInputs] = useState<FormProps>({
+        id: event.id,
+        title: event.title,
+        details: event.details,
+        image: event.image,
+        location: event.location,
+        organizers: event.organizers,
     });
 
     const {
         id,
         title,
-        content,
-        slug,
-        imageUrl,
-        published,
-    } = postInputs;
+        details,
+        image,
+        location,
+        organizers,
+    } = eventInputs;
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
 
         try {
-            const post = await updatePOST(
+            const event = await updateEvent(
                 id!,
                 title,
-                content,
-                slug,
-                imageUrl,
-                published,
+                details,
+                location,
+                image,
+                organizers
             )
 
-            setPostInputs({
+            setEventInputs({
                 id: "",
                 title: "",
-                content: "",
-                slug: "",
-                imageUrl: "",
-                published: false,
+                details: "",
+                location: "",
+                image: "",
+                organizers: "",
             })
-            const notify = () => toast.success("Post Updated!");
+            const notify = () => toast.success("Event Updated!");
             notify()
             onClose()
         } catch (error) {
@@ -115,9 +114,9 @@ const UpdatePostForm: FC<AddPostProp> = ({ onClose, post }) => {
     };
 
     const handleContentChange = (content: string) => {
-        setPostInputs((prevState) => ({
+        setEventInputs((prevState) => ({
             ...prevState,
-            content: content,
+            details: content,
         }));
     };
 
@@ -135,7 +134,7 @@ const UpdatePostForm: FC<AddPostProp> = ({ onClose, post }) => {
                         className="w-full px-4 py-2 border rounded-lg"
                         value={title}
                         onChange={(e) =>
-                            setPostInputs((prevState) => ({
+                            setEventInputs((prevState) => ({
                                 ...prevState,
                                 title: e.target.value,
                             }))
@@ -143,29 +142,29 @@ const UpdatePostForm: FC<AddPostProp> = ({ onClose, post }) => {
                     />
                 </div>
                 <div className="mb-4">
-                    <label htmlFor="content" className="block mb-2 font-bold">
-                        Content
+                    <label htmlFor="details" className="block mb-2 font-bold">
+                        Details
                     </label>
                     <SunEditor
                         placeholder="Please type here..."
                         onChange={handleContentChange}
-                        setContents={content}
+                        setContents={details}
                     />
                 </div>
                 <div className="mb-4">
-                    <label htmlFor="slug" className="block mb-2 font-bold">
-                        Slug
+                    <label htmlFor="location" className="block mb-2 font-bold">
+                        Location
                     </label>
                     <input
                         type="text"
                         required
-                        id="slug"
+                        id="location"
                         className="w-full px-4 py-2 border rounded-lg"
-                        value={slug}
+                        value={location}
                         onChange={(e) =>
-                            setPostInputs((prevState) => ({
+                            setEventInputs((prevState) => ({
                                 ...prevState,
-                                slug: e.target.value,
+                                location: e.target.value,
                             }))
                         }
                     />
@@ -173,42 +172,41 @@ const UpdatePostForm: FC<AddPostProp> = ({ onClose, post }) => {
 
 
                 <div className="mb-4">
-                    <label htmlFor="imageUrl" className="block mb-2 font-bold">
+                    <label htmlFor="image" className="block mb-2 font-bold">
                         Image URL
                     </label>
                     <input
                         required
                         type="text"
-                        id="imageUrl"
+                        id="image"
                         className="w-full px-4 py-2 border rounded-lg"
-                        value={imageUrl}
+                        value={image}
                         onChange={(e) =>
-                            setPostInputs((prevState) => ({
+                            setEventInputs((prevState) => ({
                                 ...prevState,
-                                imageUrl: e.target.value,
+                                image: e.target.value,
                             }))
                         }
                     />
                 </div>
                 <div className="mb-4">
-                    <label htmlFor="published" className="block mb-2 font-bold">
-                        Published
+                    <label htmlFor="organizers" className="block mb-2 font-bold">
+                        Organizers
                     </label>
-                    <label className="flex items-center">
-                        <input
-                            type="checkbox"
-                            id="published"
-                            className="mr-2"
-                            checked={published}
-                            onChange={(e) =>
-                                setPostInputs((prevState) => ({
-                                    ...prevState,
-                                    published: e.target.checked,
-                                }))
-                            }
-                        />
-                        Published
-                    </label>
+                    <input
+                        required
+                        type="text"
+                        id="organizers"
+                        className="w-full px-4 py-2 border rounded-lg"
+                        value={organizers}
+                        onChange={(e) =>
+                            setEventInputs((prevState) => ({
+                                ...prevState,
+                                organizers: e.target.value,
+                            }))
+                        }
+                    />
+
                 </div>
                 <div className="flex">
                     <button
@@ -230,4 +228,4 @@ const UpdatePostForm: FC<AddPostProp> = ({ onClose, post }) => {
     );
 };
 
-export default UpdatePostForm;
+export default UpdateEventForm;

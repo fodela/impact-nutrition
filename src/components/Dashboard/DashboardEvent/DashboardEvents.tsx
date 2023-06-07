@@ -6,6 +6,7 @@ import axios from 'axios';
 import { toast } from 'react-toastify';
 import { Event } from '@prisma/client';
 import { getEvents } from '@/lib/getEvents';
+import UpdateEvent from './UpdateEvent';
 
 
 
@@ -110,12 +111,12 @@ const DashboardEvents = () => {
                 <tbody>
                     {events.map((event) => (
                         <tr className='p-4 m-4' key={event.id}>
-                            {/* <UpdatePost isOpen={updatePost}
+                            <UpdateEvent isOpen={updateEvent}
                                 onClose={toggleUpdateEvent}
                                 //@ts-ignore
-                                post={memoizedSelectedPost}
+                                event={memoizedSelectedEvent}
                                 //@ts-ignore
-                                postUpdateRoot={postUpdateRef} /> */}
+                                eventUpdateRoot={eventUpdateRef} />
                             <td>{event.title}</td>
                             <td> <div dangerouslySetInnerHTML={{ __html: event.details }} /></td>
                             <td>
