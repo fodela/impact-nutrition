@@ -6,7 +6,7 @@ import Link from "next/link";
 const SectionServices = () => {
   return (
     <section className="">
-      <div className="max-w-screen-lg relative bottom-10 shadow-sm bg-colorPrimary rounded-lg md:flex justify-center p-8 mx-auto">
+      <div className="dark:bg-black max-w-screen-lg relative bottom-10 shadow-sm bg-colorPrimary rounded-lg md:flex justify-center p-8 mx-auto">
         <div className="md:flex text-white flex-col justify-center">
           <h1 className="text-md font-bold">Create an account</h1>
           <p className="text-2xl font-bold">

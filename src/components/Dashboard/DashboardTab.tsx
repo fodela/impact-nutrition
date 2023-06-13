@@ -29,7 +29,7 @@ const TabMenu: React.FC<props> = ({ role }) => {
                             <button
                                 key={tab}
                                 onClick={() => onTabChange(tab)}
-                                className={`px-4 py-2 text-gray-600 font-medium hover:text-gray-900 hover:border-gray-900 focus:outline-none focus:text-gray-900 focus:border-gray-900 border-b-2 ${activeTab === tab ? 'border-gray-900' : 'border-transparent'
+                                className={`px-4 py-2 text-gray-600 font-medium hover:text-gray-900 hover:border-gray-900 focus:outline-none focus:text-gray-900 focus:border-gray-900 border-b-2 dark:text-white ${activeTab === tab ? 'border-gray-900' : 'border-transparent'
                                     }`}
                             >
                                 {tab}
@@ -37,7 +37,7 @@ const TabMenu: React.FC<props> = ({ role }) => {
                         )
                 })}
             </nav>
-            <div className='bg-white rounded-xl p-4 m-4'>
+            <div className='dark:bg-black bg-white rounded-xl p-4 m-4'>
                 {activeTab !== 'Dashboard' && <DashboardAction tab={activeTab} />}
 
                 {activeTab === 'Dashboard' && <DashboardContent />}
