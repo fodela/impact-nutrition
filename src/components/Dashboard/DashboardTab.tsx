@@ -21,7 +21,7 @@ const TabMenu: React.FC<props> = ({ role }) => {
         setActiveTab(tab);
     }
     return (
-        <div className="max-w-screen-xl md:mx-auto border-b border-gray-300">
+        <div className="pt-10 max-w-screen-xl md:mx-auto border-b border-gray-300">
             <nav className="flex justify-start">
                 {tabs.map((tab) => {
                     if (verifyUserRole(role, tab) || tab === 'Dashboard')
@@ -29,7 +29,7 @@ const TabMenu: React.FC<props> = ({ role }) => {
                             <button
                                 key={tab}
                                 onClick={() => onTabChange(tab)}
-                                className={`px-4 py-2 text-gray-600 font-medium hover:text-gray-900 hover:border-gray-900 focus:outline-none focus:text-gray-900 focus:border-gray-900 border-b-2 dark:text-white ${activeTab === tab ? 'border-gray-900' : 'border-transparent'
+                                className={`px-4 py-2 text-gray-900 font-medium hover:text-gray-200 hover:border-gray-200 focus:outline-none focus:text-gray-300 focus:border-gray-900 border-b-2 dark:text-white ${activeTab === tab ? 'border-gray-300' : 'border-transparent'
                                     }`}
                             >
                                 {tab}

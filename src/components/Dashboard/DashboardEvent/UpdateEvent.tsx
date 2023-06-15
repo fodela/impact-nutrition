@@ -27,7 +27,7 @@ const UpdatePost: FC<UpdatePostProp> = ({
 
     return (
         <div
-            className="fixed flex justify-center items-center w-screen inset-0 bg-gray-800 bg-opacity-50"
+            className="fixed dark:text-black flex justify-center items-center w-screen inset-0 bg-gray-800 bg-opacity-50"
             onClick={onClose}
         >
             <div

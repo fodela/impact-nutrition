@@ -69,6 +69,7 @@ model Event {
   details    String
   location   String
   organizers String
+  price      Int        @default(0)
   createdAt  DateTime   @default(now()) @map(name: "created_at")
   updatedAt  DateTime   @updatedAt @map(name: "updated_at")
   image      String?

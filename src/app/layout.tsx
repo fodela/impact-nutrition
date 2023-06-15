@@ -19,7 +19,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        <div className="content dark:bg-black">
+        <div className="relative dark:bg-black">
           <NextAuthProvider>
             <Header />
             {children}

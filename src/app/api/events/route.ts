@@ -23,8 +23,9 @@ export async function POST(req: Request) {
   }
 
   try {
-    const { title, details, location, organizers, image } = await req.json();
-
+    const { title, details, location, organizers, image, price } =
+      await req.json();
+    let Evprice = Number(price);
     if (!title || !details || !location || !organizers) {
       return NextResponse.json(
         { message: "Missing required data" },
@@ -36,6 +37,7 @@ export async function POST(req: Request) {
       //@ts-ignore
       await validateAuthorization(session, userId, "EVENTS");
     } catch (error) {
+      console.log(error, "err");
       //@ts-ignore
       return NextResponse.json({ message: error?.message }, { status: 401 });
     }
@@ -47,6 +49,7 @@ export async function POST(req: Request) {
         location,
         organizers,
         image,
+        price: Evprice,
         userId,
       },
     });
@@ -63,9 +66,9 @@ export async function PUT(req: Request) {
   const userId = session?.user?.id;
 
   try {
-    const { id, title, details, location, organizers, image, userId } =
+    const { id, title, details, location, price, image, organizers } =
       await req.json();
-
+    let evPrice = Number(price);
     if (!id) {
       return NextResponse.json(
         { message: "Missing required data" },
@@ -85,10 +88,9 @@ export async function PUT(req: Request) {
       //@ts-ignore
       return NextResponse.json({ message: error?.message }, { status: 401 });
     }
-
     const updatedevent = await prisma.event.update({
       where: { id },
-      data: { id, title, details, location, organizers, image },
+      data: { title, details, location, organizers, image, price: evPrice },
     });
 
     return NextResponse.json(updatedevent, { status: 200 });

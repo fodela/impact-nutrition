@@ -4,18 +4,15 @@ import { verifyUserRole } from "./verifyUserRole";
 export async function validateAuthorization(
   session: Session,
   authorId: String,
-  requiredRole: String
+  requiredRole: string
 ) {
   if (!session) {
     throw new Error("You are not logged in!");
   }
   //@ts-ignore
-  if (
-    //@ts-ignore
-    session.user.id !== authorId ||
-    //@ts-ignore
-    !verifyUserRole(session.user.role, requiredRole)
-  ) {
+  const { id, role } = session.user;
+  //id !== authorId ||
+  if (!verifyUserRole(role, requiredRole)) {
     throw new Error(
       "Permission error, you are not allowed to perfrom this action"
     );

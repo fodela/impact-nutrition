@@ -23,7 +23,7 @@ const AddEvent: FC<AddEventProp> = ({ isOpen, onClose, addEventRoot }) => {
             >
                 <div
                     onClick={handleSubElementClick}
-                    className={`max-w-lg bg-white lg:m-6 rounded-lg lg:p-6 z-20 transform ${isOpen ? "translate-x-0" : "-translate-x-full"
+                    className={`max-w-lg dark:text-black bg-white lg:m-6 rounded-lg lg:p-6 z-20 transform ${isOpen ? "translate-x-0" : "-translate-x-full"
                         } transition-transform duration-1000 ease-linear`}
                 >
                     <h1 className="font-bold text-center uppercase text-2xl">

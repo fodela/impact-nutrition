@@ -13,6 +13,7 @@ interface FormProps {
     details: string,
     location: string;
     image?: string;
+    price: string;
     organizers?: string;
 }
 type AddEventProp = {
@@ -24,12 +25,12 @@ const SunEditor = dynamic(() => import("suneditor-react"), {
 });
 
 
-export const updateEvent = async (id: string, title: string, details: string, location: string, organizers: string, image: string) => {
-
+export const updateEvent = async (id: string, title: string, details: string, image: string, location: string, price: string, organizers: string) => {
     const headers = {
         Accept: "*/*",
         "Content-Type": "application/json",
     };
+
 
     const body = JSON.stringify({
         id,
@@ -37,9 +38,9 @@ export const updateEvent = async (id: string, title: string, details: string, lo
         details,
         image,
         location,
+        price,
         organizers,
     });
-
     try {
         const response = await axios.put(`/api/events`, body, {
             headers,
@@ -59,6 +60,7 @@ const UpdateEventForm: FC<AddEventProp> = ({ onClose, event }) => {
         title: event.title,
         details: event.details,
         image: event.image,
+        price: event.price,
         location: event.location,
         organizers: event.organizers,
     });
@@ -69,19 +71,22 @@ const UpdateEventForm: FC<AddEventProp> = ({ onClose, event }) => {
         details,
         image,
         location,
+        price,
         organizers,
     } = eventInputs;
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-
+        console.log(eventInputs, 'evv')
         try {
+
             const event = await updateEvent(
-                id!,
+                id,
                 title,
                 details,
-                location,
                 image,
+                location,
+                price,
                 organizers
             )
 
@@ -91,12 +96,14 @@ const UpdateEventForm: FC<AddEventProp> = ({ onClose, event }) => {
                 details: "",
                 location: "",
                 image: "",
+                price: "",
                 organizers: "",
             })
             const notify = () => toast.success("Event Updated!");
             notify()
             onClose()
         } catch (error) {
+            console.log(error, 'err')
             //@ts-ignore
             const notify = () => toast.error(error?.message ? error?.message : "Something went wrong!", {
                 position: "top-right",
@@ -170,7 +177,24 @@ const UpdateEventForm: FC<AddEventProp> = ({ onClose, event }) => {
                     />
                 </div>
 
-
+                <div className="mb-4">
+                    <label htmlFor="price" className="block mb-2 font-bold">
+                        Price
+                    </label>
+                    <input
+                        type="text"
+                        required
+                        id="price"
+                        className="w-full px-4 py-2 border rounded-lg"
+                        value={price}
+                        onChange={(e) =>
+                            setEventInputs((prevState) => ({
+                                ...prevState,
+                                price: e.target.value,
+                            }))
+                        }
+                    />
+                </div>
                 <div className="mb-4">
                     <label htmlFor="image" className="block mb-2 font-bold">
                         Image URL

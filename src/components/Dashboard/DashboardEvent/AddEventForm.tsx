@@ -9,6 +9,7 @@ interface FormProps {
     details: string;
     location: string;
     organizers: string;
+    price: string;
     image: string;
 }
 
@@ -37,6 +38,7 @@ const AddEventForm: FC<AddPostProp> = ({ onClose }) => {
         details: "",
         location: "",
         organizers: "",
+        price: "",
         image: ""
     });
 
@@ -45,18 +47,19 @@ const AddEventForm: FC<AddPostProp> = ({ onClose }) => {
         details,
         location,
         organizers,
+        price,
         image, } = eventInputs;
 
     const handleSubmit = async (e: FormEvent) => {
         e.preventDefault();
         try {
-            console.log('erv', eventInputs)
             const event = await createEvent(eventInputs);
             setEventInputs({
                 title: "",
                 details: "",
                 location: "",
                 organizers: "",
+                price: '',
                 image: "",
             });
             const notify = () => toast.success("Event created!");
@@ -135,6 +138,21 @@ const AddEventForm: FC<AddPostProp> = ({ onClose }) => {
                         className="w-full px-4 py-2 border rounded-lg"
                         name="location"
                         value={location}
+                        onChange={handleInputChange}
+                    />
+                </div>
+
+                <div className="mb-4">
+                    <label htmlFor="price" className="block mb-2 font-bold">
+                        Price
+                    </label>
+                    <input
+                        type="text"
+                        required
+                        id="price"
+                        className="w-full px-4 py-2 border rounded-lg"
+                        name="price"
+                        value={price}
                         onChange={handleInputChange}
                     />
                 </div>
