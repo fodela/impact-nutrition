@@ -37,7 +37,6 @@ export async function POST(req: Request) {
       //@ts-ignore
       await validateAuthorization(session, userId, "EVENTS");
     } catch (error) {
-      console.log(error, "err");
       //@ts-ignore
       return NextResponse.json({ message: error?.message }, { status: 401 });
     }
