@@ -31,7 +31,7 @@ const NavBar = () => {
       <div ref={sidebarRootRef} id="sidebar-root" />
       <Sidebar isOpen={isSidebarOpen} onClose={() => { toggleSidebar() }} sidebarRoot={sidebarRootRef.current} />
       <div className="hidden md:block">
-        <ul className="flex justify-center text-xl items-center gap-4">
+        <ul className="flex text-white justify-center text-xl items-center gap-4">
           {links.map(({ href, label }) => (
             <li key={href}>
               <Link href={href} legacyBehavior>

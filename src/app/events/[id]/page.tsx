@@ -7,7 +7,6 @@ import Loading from "../loading";
 import dynamic from "next/dynamic";
 import { getEventById } from "@/lib/getEvents";
 
-const Hero = dynamic(() => import("@/components/Hero"));
 
 const EventPage = () => {
     const { id } = useParams();
@@ -47,7 +46,6 @@ const EventPage = () => {
 
     return (
         <div>
-            <Hero />
             <main className="main">
                 <section className="max-w-screen-xl px-4 md:mx-auto">
                     <h2 className="heading_secondary">{title}</h2>

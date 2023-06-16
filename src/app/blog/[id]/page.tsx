@@ -7,9 +7,6 @@ import Loading from "../loading";
 import dynamic from "next/dynamic";
 
 
-const Hero = dynamic(() => import("@/components/Hero"))
-
-
 const PostPage = () => {
     const { id } = useParams();
 
@@ -36,7 +33,6 @@ const PostPage = () => {
 
     return (
         <div>
-            <Hero />
             <main className="main">
                 <section className="max-w-screen-xl px-4 md:mx-auto">
                     <h2 className="heading_secondary">{post.title}</h2>

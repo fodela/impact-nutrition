@@ -7,7 +7,6 @@ import dynamic from "next/dynamic";
 import { toast } from "react-toastify";
 
 const PostComponent = dynamic(() => import("@/components/Dashboard/DashboardPost/PostComponent"));
-const Hero = dynamic(() => import("../../components/Hero"));
 
 const Blog = () => {
   const [posts, setPosts] = useState<Post[]>([]);
@@ -40,7 +39,6 @@ const Blog = () => {
 
   return (
     <main className="main">
-      <Hero />
       <section className="max-w-screen-xl px-4 md:mx-auto">
         <h2 className="heading_secondary">Blogs</h2>
         <div className="grid md:grid-cols-2 mt-4 gap-6">

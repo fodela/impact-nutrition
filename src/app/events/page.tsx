@@ -9,7 +9,6 @@ import { getEvents } from "@/lib/getEvents";
 
 
 const EventDisplay = dynamic(() => import("@/components/EventDisplay/EventDisplay"));
-const Hero = dynamic(() => import("../../components/Hero"));
 
 const Events = () => {
   const [events, setEvents] = useState<Event[]>([]);
@@ -42,7 +41,6 @@ const Events = () => {
 
   return (
     <main className="main">
-      <Hero />
       <section className="max-w-screen-xl px-4 md:mx-auto">
         <h2 className="heading_secondary">Events</h2>
         <div className="grid md:grid-cols-2 mt-4 gap-6">

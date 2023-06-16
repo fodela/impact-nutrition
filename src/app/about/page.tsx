@@ -1,12 +1,10 @@
 "use client";
 import dynamic from "next/dynamic";
 import { FaBullseye, FaEye, FaFlag } from "react-icons/fa";
-const Hero = dynamic(() => (import("@/components/Hero")))
 
 const about = () => {
   return (
     <main>
-      <Hero />
       <section
         className="my-24 mx-auto m-4 flex flex-col gap-12 max-w-screen-xl text-center text-xl
       "

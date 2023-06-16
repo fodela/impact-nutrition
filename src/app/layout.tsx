@@ -1,10 +1,11 @@
 
+import dynamic from "next/dynamic";
 import Footer from "../components/Footer/Footer";
 import Header from "../components/Header";
 import { NextAuthProvider } from "../components/NextAuthProvider";
 import "./globals.css";
 
-
+const Hero = dynamic(() => import("@/components/Hero"))
 
 export const metadata = {
   title: "Impact Nutrition Consult",
@@ -22,6 +23,7 @@ export default function RootLayout({
         <div className="relative dark:bg-black">
           <NextAuthProvider>
             <Header />
+            <Hero />
             {children}
             <Footer />
           </NextAuthProvider>

@@ -9,12 +9,10 @@ import {
   FaSnapchatGhost,
 } from "react-icons/fa";
 
-const Hero = dynamic(() => import("@/components/Hero"))
 
 const contact_us = () => {
   return (
     <div>
-      <Hero />
       <div className="max-w-screen-xl p-4 md:p-2  md:mx-auto">
         <h1 className="text-3xl font-bold text-center mt-20">
           Get in touch with Us
