@@ -21,7 +21,7 @@ export default function SessionButtons() {
           </span>
         </div>
         {
-          showAction && <div className="absolute dark:bg-black w-48 mx-2 mt-3 right-6 rounded-xl bg-gray-200 shadow-md px-4 py-2">
+          showAction && <div className="absolute dark:bg-black  w-48 mx-2 mt-3 right-6 rounded-xl text-black dark:text-white bg-gray-200 shadow-md px-4 py-2">
             <ul>
               <li className="mb-1 font-bold relative">
                 <Link className="btn-effect" href="/dashboard"> Profile

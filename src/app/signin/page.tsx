@@ -62,7 +62,6 @@ const LoginForm = () => {
 
 
         } catch (error) {
-            // setError('Something went wrong')
             toast.error('Something went wrong.', {
                 position: "top-right",
                 autoClose: 5000,

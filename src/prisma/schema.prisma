@@ -48,6 +48,7 @@ model User {
   id            String     @id @default(cuid())
   name          String
   password      String?
+  balance       Float      @default(0)
   username      String?    @unique
   email         String     @unique
   date_of_birth DateTime?  @default(now())
@@ -59,8 +60,19 @@ model User {
   role          UserRole   @default(SUBSCRIBER)
   sessions      Session[]
   events        Event[]    @relation("author")
-  Attendee      Attendee[] @relation("registrant")
+  attendees     Attendee[] @relation("registrant")
   accounts      Account[]
+  payments      Payment[]
+}
+
+model Payment {
+  id        String   @id @default(cuid())
+  receipt   String?
+  amount    Float
+  createdAt DateTime @default(now()) @map(name: "created_at")
+  updatedAt DateTime @updatedAt @map(name: "updated_at")
+  user      User     @relation(fields: [userId], references: [id])
+  userId    String
 }
 
 model Event {
@@ -69,7 +81,7 @@ model Event {
   details    String
   location   String
   organizers String
-  price      Int        @default(0)
+  price      Float      @default(0)
   createdAt  DateTime   @default(now()) @map(name: "created_at")
   updatedAt  DateTime   @updatedAt @map(name: "updated_at")
   image      String?
@@ -89,7 +101,7 @@ model Attendee {
   eventId      String
   user         User     @relation("registrant", fields: [userId], references: [id])
   userId       String
-  registrantId String
+  registrantId String   @default(cuid())
 }
 
 model Session {
@@ -110,7 +122,7 @@ enum UserRole {
 }
 
 model Category {
-  id          Int     @id @default(autoincrement())
+  id          String  @id @default(cuid())
   name        String
   slug        String?
   description String?

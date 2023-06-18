@@ -5,6 +5,7 @@ import { Post } from "@prisma/client";
 import Loading from "./loading";
 import dynamic from "next/dynamic";
 import { toast } from "react-toastify";
+import 'suneditor/dist/css/suneditor.min.css';
 
 const PostComponent = dynamic(() => import("@/components/Dashboard/DashboardPost/PostComponent"));
 

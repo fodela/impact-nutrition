@@ -1,6 +1,5 @@
-import prisma from "@/lib/prisma";
+import { paramsProp } from "@/app/api/users/[id]/route";
 import { NextResponse } from "next/server";
-import { paramsProp } from "../../users/[id]/route";
 
 export async function GET(req: Request, { params: { id } }: paramsProp) {
   try {
@@ -12,17 +11,11 @@ export async function GET(req: Request, { params: { id } }: paramsProp) {
       where: {
         id: id,
       },
-      include: {
-        attendees: {
-          include: {
-            user: true, // Include the user details of attendees
-          },
-        },
-      },
     });
 
+    console.log(event.attendee, "attn");
     if (!event) {
-      return NextResponse.json({ message: "Post not found" }, { status: 404 });
+      return NextResponse.json({ message: "Event not found" }, { status: 404 });
     }
 
     return NextResponse.json(event);
