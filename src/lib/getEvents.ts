@@ -45,6 +45,25 @@ const addEventAttendee = async (eventId: string) => {
   return response.data;
 };
 
+const deleteEvent = async (id: string) => {
+  const headersList = {
+    Accept: "*/*",
+  };
+
+  const reqOptions = {
+    url: `/api/events?id=${id}`,
+    method: "DELETE",
+    headers: headersList,
+  };
+
+  try {
+    const response = await axios.request(reqOptions);
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};
+
 const getEventAttendees = async (id: string) => {
   let headersList = {
     Accept: "*/*",
@@ -60,4 +79,4 @@ const getEventAttendees = async (id: string) => {
   return response.data;
 };
 
-export { getEvents, getEventById, addEventAttendee };
+export { getEvents, getEventById, addEventAttendee, deleteEvent };
