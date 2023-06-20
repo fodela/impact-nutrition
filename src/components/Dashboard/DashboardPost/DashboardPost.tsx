@@ -1,3 +1,4 @@
+'use client'
 import { useState, useEffect, useRef, useTransition, useCallback, useMemo } from 'react';
 import { getPosts } from '@/lib/getPosts';
 import 'suneditor/dist/css/suneditor.min.css';
@@ -104,7 +105,11 @@ const DashboardPost = () => {
 
     return (
         <div className="p-4 max-w-screen-xl mx-auto">
-            {(!posts.length) && <div>Loading!</div>}
+            <div className="relative flex justify-end">
+                <a href="/dashboard/posts/addpost" className='p-3 rounded-lg bg-colorPrimary'> Add post</a>
+            </div>
+
+            {(!posts.length) && <div className='text-center'>Loading! posts</div>}
             <table className="w-full">
                 <thead className='p-4 m-4 bg-slate-300 rounded-xl border'>
                     <tr>

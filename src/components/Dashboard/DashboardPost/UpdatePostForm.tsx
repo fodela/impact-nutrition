@@ -1,10 +1,12 @@
 
+'use client'
 import dynamic from "next/dynamic";
 import { FC, useState } from "react";
 import "suneditor/dist/css/suneditor.min.css"; // Import SunEditor CSS
-import axios from "axios";
-import { toast } from 'react-toastify';
+import { ToastContainer, toast } from 'react-toastify';
 import { Post } from "./DashboardPost";
+import { updatePOST } from "@/lib/getPosts";
+import "react-toastify/ReactToastify.min.css";
 
 interface FormProps {
     id?: string;
@@ -24,32 +26,6 @@ const SunEditor = dynamic(() => import("suneditor-react"), {
     ssr: false,
 });
 
-
-export const updatePOST = async (id: string, title: string, content: string, slug: string, imageUrl: string, published: boolean) => {
-
-    const headers = {
-        Accept: "*/*",
-        "Content-Type": "application/json",
-    };
-
-    const body = JSON.stringify({
-        id,
-        title,
-        content,
-        slug,
-        imageUrl,
-        published,
-    });
-
-    try {
-        const response = await axios.put(`/api/blog`, body, {
-            headers,
-        });
-        return response.data;
-    } catch (error) {
-        throw error;
-    }
-};
 
 
 
@@ -96,8 +72,9 @@ const UpdatePostForm: FC<AddPostProp> = ({ onClose, post }) => {
             })
             const notify = () => toast.success("Post Updated!");
             notify()
-            onClose()
+            // post && onClose()
         } catch (error) {
+            console.log(error, 'error')
             //@ts-ignore
             const notify = () => toast.error(error?.message ? error?.message : "Something went wrong!", {
                 position: "top-right",
@@ -123,6 +100,7 @@ const UpdatePostForm: FC<AddPostProp> = ({ onClose, post }) => {
 
     return (
         <div>
+            <ToastContainer />
             <form className="p-4" onSubmit={handleSubmit}>
                 <div className="mb-4">
                     <label htmlFor="title" className="block mb-2 font-bold">
@@ -132,7 +110,7 @@ const UpdatePostForm: FC<AddPostProp> = ({ onClose, post }) => {
                         type="text"
                         id="title"
                         required
-                        className="w-full px-4 py-2 border rounded-lg"
+                        className="w-full text-black px-4 py-2 border rounded-lg"
                         value={title}
                         onChange={(e) =>
                             setPostInputs((prevState) => ({
@@ -160,7 +138,7 @@ const UpdatePostForm: FC<AddPostProp> = ({ onClose, post }) => {
                         type="text"
                         required
                         id="slug"
-                        className="w-full px-4 py-2 border rounded-lg"
+                        className="w-full px-4 text-black py-2 border rounded-lg"
                         value={slug}
                         onChange={(e) =>
                             setPostInputs((prevState) => ({
@@ -180,7 +158,7 @@ const UpdatePostForm: FC<AddPostProp> = ({ onClose, post }) => {
                         required
                         type="text"
                         id="imageUrl"
-                        className="w-full px-4 py-2 border rounded-lg"
+                        className="w-full text-black px-4 py-2 border rounded-lg"
                         value={imageUrl}
                         onChange={(e) =>
                             setPostInputs((prevState) => ({
