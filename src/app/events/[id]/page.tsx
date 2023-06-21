@@ -8,8 +8,10 @@ import Loading from "../loading";
 import { addEventAttendee, getEventById } from "@/lib/getEvents";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { useSession } from "next-auth/react";
 
 const EventPage = () => {
+    const { data: session, status } = useSession()
     const eventAddAttendee = async (id: string) => {
         try {
             await addEventAttendee(id);
@@ -41,8 +43,8 @@ const EventPage = () => {
 
     const [event, setEvent] = useState<Event | null>(null);
     const [isLoading, setIsLoading] = useState(true);
-    //@ts-expect-error
-    const { attendees } = event
+
+
     useEffect(() => {
         const fetchEvent = async () => {
             try {
@@ -71,7 +73,10 @@ const EventPage = () => {
         return <p>Event not found.</p>;
     }
 
+    //@ts-expect-error
+    const { attendees } = event
     const { title, image, location, details } = event;
+
 
     return (
         <div>
@@ -94,16 +99,22 @@ const EventPage = () => {
                             {details && (
                                 <div dangerouslySetInnerHTML={{ __html: details }} />
                             )}
-                        </div>
-                        <div className="max-w-md my-4 mx-auto rounded-md">
-                            <button
-                                className="p-3 bg-green-600 rounded-md text-white"
-                                onClick={() => {
-                                    eventAddAttendee(id);
-                                }}
-                            >
-                                Attend Event
-                            </button>
+                        </div><
+                            div className="max-w-md my-4 mx-auto rounded-md">
+                            {
+                                session ?
+
+                                    <button
+                                        className="p-3 bg-colorPrimary rounded-md text-white"
+                                        onClick={() => {
+                                            eventAddAttendee(id);
+                                        }}
+                                    >
+                                        Attend Event
+                                    </button>
+                                    : <a className="p-3 bg-colorPrimary rounded-md text-white" href="/login">Login to attend event</a>
+
+                            }
                         </div>
 
                         <div className="max-w-md my-4 mx-auto rounded-md">

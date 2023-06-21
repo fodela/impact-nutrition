@@ -1,10 +1,11 @@
 'use client'
-import { useState, useEffect, useRef, useTransition, useCallback, useMemo } from 'react';
+import { useState, useEffect, useRef, useTransition, useCallback, useMemo, useContext } from 'react';
 import { getPosts } from '@/lib/getPosts';
 import 'suneditor/dist/css/suneditor.min.css';
 import UpdatePost from './UpdatePost';
 import axios from 'axios';
 import { ToastContainer, toast } from 'react-toastify';
+import { GetPostsContext } from '@/components/context/PostContext';
 
 export interface Post {
     id?: string;
@@ -37,7 +38,7 @@ const deletePost = async (id: string) => {
 };
 
 const DashboardPost = () => {
-    const [posts, setPosts] = useState<Post[]>([]);
+    const { posts, getAllPosts } = useContext(GetPostsContext);
     const [updatePost, setUpdatePost] = useState(false);
     const postUpdateRef = useRef<HTMLDivElement | null>(null);
 
@@ -51,26 +52,7 @@ const DashboardPost = () => {
     const memoizedSelectedPost = useMemo(() => selectedPost, [selectedPost]);
 
     useEffect(() => {
-        const fetchPosts = async () => {
-            try {
-                const fetchedPosts = await getPosts();
-                setPosts(fetchedPosts);
-            } catch (error) {
-                const notify = () => toast.error("unable to get posts!", {
-                    position: "top-right",
-                    autoClose: 5000,
-                    hideProgressBar: false,
-                    closeOnClick: true,
-                    pauseOnHover: true,
-                    draggable: true,
-                    progress: undefined,
-                    theme: "colored",
-                });
-                notify();
-            }
-        };
-
-        fetchPosts();
+        getAllPosts();
     }, []);
 
     const handleDelete = useCallback(async (id: string) => {
@@ -79,6 +61,7 @@ const DashboardPost = () => {
         try {
             await deletePost(post?.id!);
             const notify = () => toast.success("Post Deleted!");
+            getAllPosts()
             notify();
         } catch (error) {
             const notify = () => toast.error("Something went wrong!", {

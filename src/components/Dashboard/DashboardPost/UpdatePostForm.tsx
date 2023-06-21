@@ -1,12 +1,13 @@
 
 'use client'
 import dynamic from "next/dynamic";
-import { FC, useState } from "react";
+import { FC, useContext, useState } from "react";
 import "suneditor/dist/css/suneditor.min.css"; // Import SunEditor CSS
 import { toast } from 'react-toastify';
 import { Post } from "./DashboardPost";
 import { updatePOST } from "@/lib/getPosts";
 import "react-toastify/ReactToastify.min.css";
+import { GetPostsContext } from "@/components/context/PostContext";
 
 interface FormProps {
     id?: string;
@@ -30,7 +31,7 @@ const SunEditor = dynamic(() => import("suneditor-react"), {
 
 
 const UpdatePostForm: FC<AddPostProp> = ({ onClose, post }) => {
-
+    const { posts, getAllPosts } = useContext(GetPostsContext);
     const [postInputs, setPostInputs] = useState<FormProps>({
         id: post.id,
         title: post.title,
@@ -61,7 +62,7 @@ const UpdatePostForm: FC<AddPostProp> = ({ onClose, post }) => {
                 imageUrl,
                 published,
             )
-
+            getAllPosts();
             setPostInputs({
                 id: "",
                 title: "",
@@ -71,10 +72,9 @@ const UpdatePostForm: FC<AddPostProp> = ({ onClose, post }) => {
                 published: false,
             })
             const notify = () => toast.success("Post Updated!");
+
             notify()
-            // post && onClose()
         } catch (error) {
-            console.log(error, 'error')
             //@ts-ignore
             const notify = () => toast.error(error?.message ? error?.message : "Something went wrong!", {
                 position: "top-right",

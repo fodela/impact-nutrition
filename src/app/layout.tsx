@@ -5,6 +5,7 @@ import Header from "../components/Header";
 import { NextAuthProvider } from "../components/NextAuthProvider";
 import "./globals.css";
 import { ToastContainer } from "react-toastify";
+import GetPostsProvider from "@/components/context/PostContext";
 
 const Hero = dynamic(() => import("@/components/Hero"))
 
@@ -35,10 +36,12 @@ export default function RootLayout({
         />
         <div className="relative dark:bg-black">
           <NextAuthProvider>
-            <Header />
-            <Hero />
-            {children}
-            <Footer />
+            <GetPostsProvider>
+              <Header />
+              <Hero />
+              {children}
+              <Footer />
+            </GetPostsProvider>
           </NextAuthProvider>
         </div>
       </body>
