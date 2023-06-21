@@ -4,7 +4,7 @@ import { getPosts } from '@/lib/getPosts';
 import 'suneditor/dist/css/suneditor.min.css';
 import UpdatePost from './UpdatePost';
 import axios from 'axios';
-import { toast } from 'react-toastify';
+import { ToastContainer, toast } from 'react-toastify';
 
 export interface Post {
     id?: string;
@@ -105,6 +105,7 @@ const DashboardPost = () => {
 
     return (
         <div className="p-4 max-w-screen-xl mx-auto">
+            <ToastContainer />
             <div className="relative flex justify-end">
                 <a href="/dashboard/posts/addpost" className='p-3 rounded-lg bg-colorPrimary'> Add post</a>
             </div>

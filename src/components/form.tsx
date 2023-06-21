@@ -5,7 +5,7 @@ import { signIn } from "next-auth/react";
 import Link from "next/link";
 import { ChangeEvent, useState } from "react";
 import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 import "react-toastify/ReactToastify.min.css";
 
 export const RegisterForm = () => {
@@ -80,18 +80,6 @@ export const RegisterForm = () => {
 
   return (
     <div className="flex my-8 flex-col justify-center items-center h-screen">
-      <ToastContainer
-        position="top-right"
-        autoClose={5000}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-        theme="colored"
-      />
       <h1 className="text-3xl font-bold mb-6">Create a new account</h1>
       <form
         className="max-w-md"

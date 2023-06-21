@@ -133,6 +133,7 @@ export async function DELETE(req: Request) {
       { status: 200 }
     );
   } catch (error) {
+    console.log(error, "err");
     //@ts-ignore
     const message = error?.message ? error?.message : "something went wrong!";
     return NextResponse.json({ message }, { status: 500 });

@@ -78,18 +78,6 @@ const LoginForm = () => {
 
     return (
         <div className="h-full">
-            <ToastContainer
-                position="top-right"
-                autoClose={5000}
-                hideProgressBar={false}
-                newestOnTop={false}
-                closeOnClick
-                rtl={false}
-                pauseOnFocusLoss
-                draggable
-                pauseOnHover
-                theme="colored"
-            />
             <h1 className="text-3xl text-center font-bold mb-6">Login</h1>
             <div>
                 {/* <button onClick={() => signIn("google")}>Sign in with Google</button> */}

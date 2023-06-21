@@ -6,7 +6,7 @@ import { Event } from "@prisma/client";
 import { useParams } from "next/navigation";
 import Loading from "../loading";
 import { addEventAttendee, getEventById } from "@/lib/getEvents";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 const EventPage = () => {
@@ -75,19 +75,6 @@ const EventPage = () => {
 
     return (
         <div>
-            <ToastContainer
-                position="top-right"
-                autoClose={5000}
-                hideProgressBar={false}
-                newestOnTop={false}
-                closeOnClick
-                rtl={false}
-                pauseOnFocusLoss
-                draggable
-                pauseOnHover
-                theme="colored"
-            />
-
             <main className="main">
                 <section className="max-w-screen-xl px-4 md:mx-auto">
                     <h2 className="heading_secondary">{title}</h2>

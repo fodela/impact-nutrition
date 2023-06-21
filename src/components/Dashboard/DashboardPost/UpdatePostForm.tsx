@@ -3,7 +3,7 @@
 import dynamic from "next/dynamic";
 import { FC, useState } from "react";
 import "suneditor/dist/css/suneditor.min.css"; // Import SunEditor CSS
-import { ToastContainer, toast } from 'react-toastify';
+import { toast } from 'react-toastify';
 import { Post } from "./DashboardPost";
 import { updatePOST } from "@/lib/getPosts";
 import "react-toastify/ReactToastify.min.css";
@@ -100,7 +100,6 @@ const UpdatePostForm: FC<AddPostProp> = ({ onClose, post }) => {
 
     return (
         <div>
-            <ToastContainer />
             <form className="p-4" onSubmit={handleSubmit}>
                 <div className="mb-4">
                     <label htmlFor="title" className="block mb-2 font-bold">

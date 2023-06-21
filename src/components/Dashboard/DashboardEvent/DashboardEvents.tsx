@@ -1,8 +1,7 @@
+'use client'
 import { useState, useEffect, useRef, useTransition, useCallback, useMemo } from 'react';
-import { getPosts } from '@/lib/getPosts';
 import 'suneditor/dist/css/suneditor.min.css';
-import axios from 'axios';
-import { toast } from 'react-toastify';
+import { ToastContainer, toast } from 'react-toastify';
 import { Event } from '@prisma/client';
 import { deleteEvent, getEvents } from '@/lib/getEvents';
 import UpdateEvent from './UpdateEvent';
@@ -78,6 +77,10 @@ const DashboardEvents = () => {
 
     return (
         <div className="p-4 max-w-screen-xl mx-auto">
+            <ToastContainer />
+            <div className="relative mb-2 flex justify-end">
+                <a href="/dashboard/events/addevent" className='p-3 rounded-lg bg-colorPrimary'> Add event</a>
+            </div>
             {events.length === 0 && <div>No events!</div>}
             <table className="w-full">
                 <thead className="p-4 m-4 bg-slate-300 rounded-xl border">
@@ -90,48 +93,39 @@ const DashboardEvents = () => {
 
                 <tbody>
                     {events.map(event => (
-                        <tr key={event.id}>
-                            <tr className="p-4 m-4" >
-                                <UpdateEvent
-                                    isOpen={updateEvent}
-                                    onClose={toggleUpdateEvent}
-                                    //@ts-ignore
-                                    event={memoizedSelectedEvent}
-                                    //@ts-ignore
-                                    eventUpdateRoot={eventUpdateRef}
-                                />
-                                <td>{event.title}</td>
-                                <td>
-                                    <div dangerouslySetInnerHTML={{ __html: event.details }} />
-                                </td>
-                                <td>
-                                    <div className="flex justify-end">
-                                        <button
-                                            onClick={() => handleDelete(event.id!)}
-                                            className="text-red-500  px-4 py-2 mr-2 rounded-md"
-                                        >
-                                            Delete
-                                        </button>
-                                        <button
-                                            id={event.id}
-                                            onClick={() => handleUpdate(event.id!)}
-                                            className="text-blue-500 px-4 py-2 rounded-md"
-                                        >
-                                            Update
-                                        </button>
-                                    </div>
-                                </td>
 
-                            </tr>
-                            {
-                                event?.attendee.map(att => (<tr key={att.id}><details >
-                                    <summary>Attendees</summary>
-                                    <span>{att.name}</span>
-                                </details>
-                                </tr>))
-                            }
+                        <tr className="p-4 m-4" key={event.id}>
+                            <UpdateEvent
+                                isOpen={updateEvent}
+                                onClose={toggleUpdateEvent}
+                                //@ts-ignore
+                                event={memoizedSelectedEvent}
+                                //@ts-ignore
+                                eventUpdateRoot={eventUpdateRef}
+                            />
+                            <td>{event.title}</td>
+                            <td>
+                                <div dangerouslySetInnerHTML={{ __html: event.details }} />
+                            </td>
+                            <td>
+                                <div className="flex justify-end">
+                                    <button
+                                        onClick={() => handleDelete(event.id!)}
+                                        className="text-red-500  px-4 py-2 mr-2 rounded-md"
+                                    >
+                                        Delete
+                                    </button>
+                                    <button
+                                        id={event.id}
+                                        onClick={() => handleUpdate(event.id!)}
+                                        className="text-blue-500 px-4 py-2 rounded-md"
+                                    >
+                                        Update
+                                    </button>
+                                </div>
+                            </td>
+
                         </tr>
-
                     ))}
                 </tbody>
             </table>

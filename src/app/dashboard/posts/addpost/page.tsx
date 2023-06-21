@@ -1,12 +1,10 @@
 'use client'
 import AddPostForm from "@/components/Dashboard/DashboardPost/AddPostForm";
-import { ToastContainer } from "react-toastify";
 
 
 const AddPost = () => {
     return (
         <>
-            <ToastContainer />
             <div
                 className="post"
             >

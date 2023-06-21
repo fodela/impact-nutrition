@@ -1,3 +1,4 @@
+import { EventFormProps } from "@/components/Dashboard/DashboardEvent/AddEventForm";
 import axios from "axios";
 
 const getEvents = async () => {
@@ -76,6 +77,17 @@ const getEventAttendees = async (id: string) => {
   };
 
   let response = await axios.request(reqOptions);
+  return response.data;
+};
+
+export const createEvent = async (formData: EventFormProps) => {
+  const headers = {
+    Accept: "*/*",
+    "Content-Type": "application/json",
+  };
+  const response = await axios.post(`/api/events`, formData, {
+    headers,
+  });
   return response.data;
 };
 
