@@ -2,10 +2,10 @@
 
 import { SessionProvider } from "next-auth/react";
 
-type Props = {
+export interface ChildrenProps {
   children?: React.ReactNode;
 };
 
-export const NextAuthProvider = ({ children }: Props) => {
+export const NextAuthProvider = ({ children }: ChildrenProps) => {
   return <SessionProvider>{children}</SessionProvider>;
 };

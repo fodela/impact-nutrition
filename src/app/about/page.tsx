@@ -1,22 +1,21 @@
 "use client";
-
-import Hero from "@/components/Hero";
+import dynamic from "next/dynamic";
 import { FaBullseye, FaEye, FaFlag } from "react-icons/fa";
 
 const about = () => {
   return (
     <main>
-      <Hero />
       <section
-        className="my-24 mx-auto flex flex-col gap-12 max-w-screen-xl text-center text-xl
+        className="my-24 mx-auto m-4 flex flex-col gap-12 max-w-screen-xl text-center text-xl
       "
       >
-        <article className="flex flex-col items-center">
-          <header>
-            <FaBullseye size={45} />
-            <h6 className="text-2xl font-bold">Goal</h6>
+        <h1 className="text-2xl md:text-4xl font-bold">Get to know more about us!</h1>
+        <article className="flex max-w-screen-lg mx-auto flex-col items-center">
+          <header className="text-center">
+            <FaBullseye size={100} />
+            <h6 className="text-4xl my-6 font-bold">Goal</h6>
           </header>
-          <p>
+          <p className="text-xl max-w-screen-lg mx-auto md:text-2xl">
             To provide a comprehensive and holistic counseling on food and
             nutrition and their link with health in a sustainable manner to our
             societies. We seek to research into and promote awareness on the
@@ -26,12 +25,12 @@ const about = () => {
           </p>
         </article>
 
-        <article className="flex flex-col items-center">
+        <article className="flex max-w-screen-lg mx-auto flex-col items-center">
           <header className="text-center">
-            <FaEye size={45} className="mx-auto" />
-            <h6 className="text-2xl font-bold">Vision</h6>
+            <FaEye size={100} className="mx-auto" />
+            <h6 className="text-4xl my-6 font-bold">Vision</h6>
           </header>
-          <p>
+          <p className="text-xl max-w-screen-lg mx-auto md:text-2xl">
             To provide a broad based nutrition and diets related services in an
             effective way to combat the emergence of non-communicable diseases
             in recent times. To be agent of nutrition promotion and advocacy for
@@ -39,32 +38,31 @@ const about = () => {
           </p>
         </article>
 
-        <article className="flex flex-col items-center">
-          <header>
-            <FaFlag size={45} className="mx-auto" />
-            <h6 className="text-2xl font-bold">Mission</h6>
+        <article className="flex max-w-screen-lg mx-auto flex-col items-center">
+          <header className="text-center">
+            <FaFlag size={100} className="mx-auto" />
+            <h6 className="text-4xl my-6 font-bold">Mission</h6>
           </header>
-          <p>
+          <p className="text-xl max-w-screen-lg mx-auto md:text-2xl">
             To establish a suitable and an effective nutrition education and
             counseling system in Ghana and to be projected on the global map.
           </p>
-          <p>
-            {" "}
+          <p className="text-xl max-w-screen-lg mx-auto md:text-2xl">
             We anticipate that in the near future IMPACT NUTRITION CONSULT will
             be placed on top of a pedestal as one of the leading nutrition
             consulting mediums globally.
           </p>
         </article>
-        <figure className="md:flex bg-slate-100 rounded-xl p-8 md:p-0 dark:bg-slate-800">
+        <figure className="md:flex mx-auto bg-slate-100 rounded-xl p-8 md:p-0 dark:bg-slate-800">
           <img
             className="w-24 h-24 md:w-48 md:h-auto md:rounded-none rounded-full mx-auto"
-            src="https://images.unsplash.com/photo-1487222477894-8943e31ef7b2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=495&q=80"
+            src="assets/Saadong.jpg"
             alt="executive director's image"
             width="484"
             height="612"
           />
-          <div className="pt-6 md:p-8 text-center md:text-left space-y-4">
-            <h3 className="text-2xl font-bold">Executive Director's Message</h3>
+          <div className="pt-6 mx-auto md:p-8 text-center md:text-left space-y-4">
+            <h3 className="text-2xl md:text-4xl font-bold">Executive Director&apos;s Message</h3>
             <blockquote>
               <p className="text-lg font-medium">
                 “As professionals we believe in our capabilities and we cannot

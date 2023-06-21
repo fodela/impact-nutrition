@@ -1,67 +1,32 @@
-import { verifyUserRole } from "@/lib/verifyUserRole";
-import { getServerSession } from "next-auth";
-import { NextResponse } from "next/server";
-import { authOptions } from "../../auth/[...nextauth]/route";
 import prisma from "@/lib/prisma";
+import { NextResponse } from "next/server";
+import { paramsProp } from "../../users/[id]/route";
 
-type Params = {
-    params: {
-        id: string
+export async function GET(req: Request, { params: { id } }: paramsProp) {
+  try {
+    if (!id) {
+      return NextResponse.json({ error: "Id missing" }, { status: 404 });
     }
-}
 
-export async function GET({ params: { id } }: any) {
+    const event = await prisma.event.findUnique({
+      where: {
+        id: id,
+      },
+      include: {
+        attendees: {
+          include: {
+            user: true, // Include the user details of attendees
+          },
+        },
+      },
+    });
 
-    try {
-        const post = await prisma.post.findUnique({
-            where: {
-                id: id,
-            },
-        });
-
-        if (!post) {
-            return NextResponse.json({ message: "Post not found" }, { status: 404 });
-        }
-
-        return NextResponse.json(post, { status: 200 });
-    } catch (error) {
-        return NextResponse.json(error, { status: 500 });
+    if (!event) {
+      return NextResponse.json({ message: "Post not found" }, { status: 404 });
     }
-}
 
-export async function PATCH(req: Request, { params: { id } }: Params) {
-    const session = await getServerSession(authOptions);
-    if (!session) return NextResponse.json({ error: "You are not authenticated" }, { status: 401 })
-    //@ts-ignore
-    if (!verifyUserRole(session.user.role, 'POSTS')) return NextResponse.json({ error: "You are not authorized!" }, { status: 401 })
-}
-
-
-
-export async function DELETE(req: Request, { params: { id } }: Params) {
-    const session = await getServerSession(authOptions);
-    if (!session) return NextResponse.json({ error: "You are not authenticated" }, { status: 401 })
-    //@ts-ignore
-    if (!verifyUserRole(session.user.role, 'POSTS')) return NextResponse.json({ error: "You are not authorized!" }, { status: 401 })
-    try {
-        const post = await prisma.post.findUnique({
-            where: {
-                id: id,
-            },
-        });
-
-        if (!post) {
-            return NextResponse.json({ message: "Post not found" }, { status: 404 });
-        }
-
-        await prisma.post.delete({
-            where: {
-                id: id,
-            },
-        });
-
-        return NextResponse.json({ message: "Post deleted successfully" }, { status: 200 });
-    } catch (error) {
-        return NextResponse.json(error, { status: 500 });
-    }
+    return NextResponse.json(event);
+  } catch (error) {
+    NextResponse.json(error, { status: 500 });
+  }
 }

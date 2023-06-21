@@ -3,8 +3,7 @@ import { RegisterForm } from "../../components/form";
 export default function RegisterPage() {
   return (
     <div>
-      <div>
-        <h1>Register</h1>
+      <div className="m-4">
         <RegisterForm />
       </div>
     </div>

@@ -1,18 +1,44 @@
 "use client"
 import Image from "next/image";
+import { BsTelephone } from "react-icons/bs";
+import { FiMail } from "react-icons/fi";
+import { ImLocation } from "react-icons/im";
 
 const SectionNewsLetter = () => {
   return (
-    <section className="max-w-screen-xl px-4 my-18 md:mx-auto">
-      <h2 className="heading_secondary">Subscribe for our newsletters</h2>
-      <div className="section_grid">
-        <Image src="assets/newsletter_image.svg" width={600} height={400} alt="newsletter image" />
-        <p className="text-2xl">
-          We organize multiple CPD programs every year to keep our professionals
-          up to and well informed We organize multiple CPD programs every year
-          to keep our professionals up to and well informe
-        </p>
+    <section className="max-w-screen-md md:flex justify-center md:mx-auto">
+      <div className="flex flex-col items-center justify-center">
+        <div className="rounded-full mb-4 shadow-md max-w-fit bg-gray-100 p-6">
+          <FiMail className="text-colorPrimary" size={80} />
+        </div>
+        <div className="font-bold text-xl my-4">Email Address:</div>
+        <div>info@impactnutritionconsult.com</div>
+        <div>support@impactnutritionconsult.com</div>
       </div>
+
+      <div className="flex m-4 flex-col items-center justify-center">
+        <div className="rounded-full mb-4 shadow-md max-w-fit bg-gray-100 p-6">
+          <BsTelephone className="text-colorPrimary" size={80} />
+        </div>
+        <div className="font-bold text-xl my-4">Call us:</div>
+        <a href="+233 55 007 9311">
+          <span className="text-blue-700 underline hover:text-blue-900">+233 55 007 9311</span>
+        </a>
+        <a href="+233 20 420 0659">
+          <span className="text-blue-700 underline hover:text-blue-900"> +233 20 420 0659</span>
+        </a>
+      </div>
+
+      <div className="flex m-4 flex-col items-center justify-center">
+        <div className="rounded-full mb-4 shadow-md max-w-fit bg-gray-100 p-6">
+          <ImLocation className="text-colorPrimary" size={80} />
+        </div>
+        <div className="font-bold text-xl my-4">Email Address:</div>
+        <div className="text-lg">Suncity-Tema West</div>
+        <div className="text-lg">    Spring Onion Street</div>
+        <div className="text-lg"> Accra Ghana</div>
+      </div>
+
     </section>
   );
 };

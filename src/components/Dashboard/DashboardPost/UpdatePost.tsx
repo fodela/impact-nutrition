@@ -1,6 +1,6 @@
 import dynamic from "next/dynamic";
 import { FC, memo } from "react";
-import { Post } from ".";
+import { Post } from "./DashboardPost";
 
 type UpdatePostProp = {
     isOpen: boolean;
@@ -31,7 +31,7 @@ const UpdatePost: FC<UpdatePostProp> = ({
         >
             <div
                 onClick={handleSubElementClick}
-                className={`max-w-lg bg-white lg:m-6 rounded-lg lg:p-6 z-20 transform ${isOpen ? "translate-x-0" : "-translate-x-full"
+                className={`max-w-xl bg-white text-black dark:bg-black dark:text-white lg:m-6 rounded-lg lg:p-6 z-20 transform ${isOpen ? "translate-x-0" : "-translate-x-full"
                     } transition-transform duration-1000 ease-linear`}
             >
                 <h1 className="font-bold text-center uppercase text-2xl">

@@ -5,8 +5,8 @@ const TableHeader = () => {
   return (
     <thead>
       <tr>
-        {headings.map((heading) => (
-          <th scope="col" className="px-6 py-4 font-medium ">
+        {headings.map((heading, index) => (
+          <th key={index} scope="col" className="px-6 py-4 font-medium ">
             {capitalizeWord(heading)}
           </th>
         ))}

@@ -12,11 +12,14 @@ type SidebarProps = {
 };
 
 const Sidebar: FC<SidebarProps> = ({ isOpen, onClose, sidebarRoot }) => {
+    const handleSubElementClick = (e: any) => {
+        e.stopPropagation();
+    };
     if (!isOpen || !sidebarRoot) return null;
 
     return createPortal(
-        <div className="fixed inset-0 bg-gray-800 bg-opacity-50">
-            <div className={`fixed top-0 left-0 flex flex-col w-64 bg-white h-full transform ${isOpen ? 'translate-x-0' : '-translate-x-full'} transition-transform duration-1000 ease-linear`}>
+        <div className="fixed inset-0 bg-gray-800 bg-opacity-50" onClick={onClose} >
+            <div onClick={handleSubElementClick} className={`fixed top-0 left-0 flex flex-col w-64 bg-white dark:bg-black h-full transform ${isOpen ? 'translate-x-0' : '-translate-x-full'} transition-transform duration-1000 ease-linear`}>
                 <div className="flex justify-between">
                     <Logo />
                     <button
@@ -28,19 +31,22 @@ const Sidebar: FC<SidebarProps> = ({ isOpen, onClose, sidebarRoot }) => {
                 </div>
 
                 <ul className="mt-8">
-                    <li className="py-2 px-4 text-gray-600 hover:bg-gray-200">
+                    <li className="py-2 px-4 text-gray-600 hover:bg-gray-200 dark:text-white">
                         <Link href="/">Home</Link>
                     </li>
-                    <li className="py-2 px-4 text-gray-600 hover:bg-gray-200">
+                    <li className="py-2 px-4 text-gray-600 hover:bg-gray-200 dark:text-white">
                         <Link href="/about">About</Link>
                     </li>
-                    <li className="py-2 px-4 text-gray-600 hover:bg-gray-200">
+                    {/* <li className="py-2 px-4 text-gray-600 hover:bg-gray-200">
                         <Link href="/services">Services</Link>
-                    </li>
-                    <li className="py-2 px-4 text-gray-600 hover:bg-gray-200">
+                    </li> */}
+                    <li className="py-2 px-4 text-gray-600 hover:bg-gray-200 dark:text-white">
                         <Link href="/blog">Blog</Link>
                     </li>
-                    <li className="py-2 px-4 text-gray-600 hover:bg-gray-200">
+                    <li className="py-2 px-4 text-gray-600 hover:bg-gray-200 dark:text-white">
+                        <Link href="/events">Events</Link>
+                    </li>
+                    <li className="py-2 px-4 text-gray-600 hover:bg-gray-200 dark:text-white">
                         <Link href="/contact_us">Contact Us</Link>
                     </li>
                     <SessionButtons />
