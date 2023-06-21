@@ -99,8 +99,7 @@ model Attendee {
   updatedAt    DateTime @updatedAt @map(name: "updated_at")
   event        Event    @relation(fields: [eventId], references: [id])
   eventId      String
-  user         User     @relation("registrant", fields: [userId], references: [id])
-  userId       String
+  user         User     @relation("registrant", fields: [registrantId], references: [id])
   registrantId String   @default(cuid())
 }
 

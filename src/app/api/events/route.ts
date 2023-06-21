@@ -118,13 +118,26 @@ export async function DELETE(req: Request) {
     if (!event) {
       return NextResponse.json({ message: "event not found" }, { status: 404 });
     }
-    try {
-      //@ts-ignore
-      await validateAuthorization(session, userId, "EVENTS");
-    } catch (error) {
-      //@ts-ignore
-      return NextResponse.json({ message: error?.message }, { status: 401 });
+
+    // Check if the user is authorized to delete the event.
+    //@ts-ignore
+    await validateAuthorization(session, userId, "EVENTS");
+
+    // Delete the attendees associated with the event.
+    const attendees = await prisma.attendee.findMany({
+      where: {
+        eventId: event.id,
+      },
+    });
+    for (const attendee of attendees) {
+      await prisma.attendee.delete({
+        where: {
+          id: attendee.id,
+        },
+      });
     }
+
+    // Delete the event.
     //@ts-ignore
     await prisma.event.delete({ where: { id } });
 
@@ -133,9 +146,6 @@ export async function DELETE(req: Request) {
       { status: 200 }
     );
   } catch (error) {
-    console.log(error, "err");
-    //@ts-ignore
-    const message = error?.message ? error?.message : "something went wrong!";
-    return NextResponse.json({ message }, { status: 500 });
+    return NextResponse.json({ error }, { status: 500 });
   }
 }

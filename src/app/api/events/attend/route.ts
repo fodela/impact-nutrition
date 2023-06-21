@@ -34,12 +34,10 @@ export async function POST(req: Request) {
     // Check if the user is already registered for the event
     const existingAttendee = await prisma.attendee.findFirst({
       where: {
-        userId: userId,
+        registrantId: userId,
         eventId: eventId,
       },
     });
-
-    console.log(existingAttendee, "exit");
 
     if (existingAttendee) {
       return NextResponse.json(
@@ -47,11 +45,9 @@ export async function POST(req: Request) {
         { status: 400 }
       );
     }
-
     const attendee = await prisma.attendee.create({
       data: {
         eventId,
-        userId,
         registrantId: userId,
         amount_paid: 0,
         amount_due: event?.price,

@@ -13,7 +13,6 @@ export async function GET(req: Request, { params: { id } }: paramsProp) {
       },
     });
 
-    console.log(event.attendee, "attn");
     if (!event) {
       return NextResponse.json({ message: "Event not found" }, { status: 404 });
     }

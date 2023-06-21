@@ -2,11 +2,11 @@
 'use client'
 /* eslint-disable @next/next/no-img-element */
 import React, { useEffect, useState } from "react";
-import { Event } from "@prisma/client";
+import { Attendee, Event } from "@prisma/client";
 import { useParams } from "next/navigation";
 import Loading from "../loading";
 import { addEventAttendee, getEventById } from "@/lib/getEvents";
-import { toast } from "react-toastify";
+import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 const EventPage = () => {
@@ -23,7 +23,6 @@ const EventPage = () => {
                 theme: "colored"
             });
         } catch (error) {
-            console.log("error", error);
             //@ts-ignore
             toast.error(error?.response.data.message ? error?.response.data.message : "We were unable to add you to the event!", {
                 position: "top-right",
@@ -42,7 +41,8 @@ const EventPage = () => {
 
     const [event, setEvent] = useState<Event | null>(null);
     const [isLoading, setIsLoading] = useState(true);
-
+    //@ts-expect-error
+    const { attendees } = event
     useEffect(() => {
         const fetchEvent = async () => {
             try {
@@ -107,14 +107,19 @@ const EventPage = () => {
                         </div>
 
                         <div className="max-w-md my-4 mx-auto rounded-md">
+                            <ToastContainer />
                             <h3 className="text-xl font-bold">List of Event attendees</h3>
                             <ul>
-                                {event?.attendees?.length ? (
-                                    event.attendees.map((att) => (
-                                        <li className="font-bold" key={att.id}>
-                                            {att.user.name}
-                                        </li>
-                                    ))
+                                {attendees?.length ? (
+                                    attendees.map((att: Attendee) => {
+                                        //@ts-ignore
+                                        const { user } = att
+                                        return (
+                                            <li className="font-bold" key={att.id}>
+                                                {user.name}
+                                            </li>
+                                        )
+                                    })
                                 ) : (
                                     <li>No one has registered yet</li>
                                 )}
