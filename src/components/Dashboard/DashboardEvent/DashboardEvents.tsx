@@ -1,13 +1,15 @@
 'use client'
-import { useState, useEffect, useRef, useTransition, useCallback, useMemo } from 'react';
+import { useState, useEffect, useRef, useTransition, useCallback, useMemo, useContext } from 'react';
 import 'suneditor/dist/css/suneditor.min.css';
 import { ToastContainer, toast } from 'react-toastify';
 import { Event } from '@prisma/client';
-import { deleteEvent, getEvents } from '@/lib/getEvents';
+import { deleteEvent } from '@/lib/getEvents';
 import UpdateEvent from './UpdateEvent';
+import { GetEventContext } from '@/components/context/EventContext';
 
 const DashboardEvents = () => {
-    const [events, setEvents] = useState<Event[]>([]);
+    const { events, getAllEvents } = useContext(GetEventContext);
+
     const [updateEvent, setUpdateEvent] = useState(false);
     const eventUpdateRef = useRef<HTMLDivElement | null>(null);
 
@@ -21,27 +23,7 @@ const DashboardEvents = () => {
     const memoizedSelectedEvent = useMemo(() => selectedEvent, [selectedEvent]);
 
     useEffect(() => {
-        const fetchEvents = async () => {
-            try {
-                const fetchedEvents = await getEvents();
-                setEvents(fetchedEvents);
-            } catch (error) {
-                const notify = () =>
-                    toast.error('Unable to get events! Check your internet', {
-                        position: 'top-right',
-                        autoClose: 5000,
-                        hideProgressBar: false,
-                        closeOnClick: true,
-                        pauseOnHover: true,
-                        draggable: true,
-                        progress: undefined,
-                        theme: 'colored',
-                    });
-                notify();
-            }
-        };
-
-        fetchEvents();
+        getAllEvents()
     }, []);
 
     const handleDelete = useCallback(async (id: string) => {

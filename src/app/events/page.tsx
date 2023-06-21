@@ -1,42 +1,17 @@
 'use client'
-import React, { Suspense, useEffect, useState } from "react";
-import { Event, Post } from "@prisma/client";
+import React, { Suspense, useContext, useEffect, useState } from "react";
 import Loading from "./loading";
 import dynamic from "next/dynamic";
-import { toast } from "react-toastify";
-import { getEvents } from "@/lib/getEvents";
+import { GetEventContext } from "@/components/context/EventContext";
 
 
 
 const EventDisplay = dynamic(() => import("@/components/EventDisplay/EventDisplay"));
 
 const Events = () => {
-  const [events, setEvents] = useState<Event[]>([]);
+  const { events, getAllEvents } = useContext(GetEventContext);
   useEffect(() => {
-    const fetchEvents = async () => {
-      try {
-        const fetchedEvents: Event[] = await getEvents();
-        // const publishedPosts: Post[] = fetchedEvents.filter((post) => post.published);
-        setEvents(fetchedEvents);
-      } catch (error) {
-        const notify = () => {
-          //@ts-ignore
-          toast.error(error?.message ? error.message : "Something went wrong!", {
-            position: "top-right",
-            autoClose: 5000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "colored",
-          });
-          notify();
-        }
-      }
-    };
-
-    fetchEvents();
+    getAllEvents()
   }, []);
 
   return (

@@ -74,6 +74,7 @@ const UpdatePostForm: FC<AddPostProp> = ({ onClose, post }) => {
             const notify = () => toast.success("Post Updated!");
 
             notify()
+            post && onClose()
         } catch (error) {
             //@ts-ignore
             const notify = () => toast.error(error?.message ? error?.message : "Something went wrong!", {

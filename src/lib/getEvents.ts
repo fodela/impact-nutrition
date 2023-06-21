@@ -65,6 +65,36 @@ const deleteEvent = async (id: string) => {
   }
 };
 
+export const updateEvent = async (
+  id: string,
+  title: string,
+  details: string,
+  image: string,
+  location: string,
+  price: string,
+  organizers: string
+) => {
+  const headers = {
+    Accept: "*/*",
+    "Content-Type": "application/json",
+  };
+
+  const body = JSON.stringify({
+    id,
+    title,
+    details,
+    image,
+    location,
+    price,
+    organizers,
+  });
+
+  const response = await axios.put(`/api/events`, body, {
+    headers,
+  });
+  return response.data;
+};
+
 const getEventAttendees = async (id: string) => {
   let headersList = {
     Accept: "*/*",

@@ -1,10 +1,12 @@
 
 import dynamic from "next/dynamic";
-import { FC, useState } from "react";
+import { FC, useContext, useState } from "react";
 import "suneditor/dist/css/suneditor.min.css"; // Import SunEditor CSS
 import axios from "axios";
 import { toast } from 'react-toastify';
 import { Event } from "@prisma/client";
+import { getEvents, updateEvent } from "@/lib/getEvents";
+import { GetEventContext } from "@/components/context/EventContext";
 
 interface FormProps {
     id: string;
@@ -25,36 +27,9 @@ const SunEditor = dynamic(() => import("suneditor-react"), {
 });
 
 
-export const updateEvent = async (id: string, title: string, details: string, image: string, location: string, price: string, organizers: string) => {
-    const headers = {
-        Accept: "*/*",
-        "Content-Type": "application/json",
-    };
-
-
-    const body = JSON.stringify({
-        id,
-        title,
-        details,
-        image,
-        location,
-        price,
-        organizers,
-    });
-    try {
-        const response = await axios.put(`/api/events`, body, {
-            headers,
-        });
-        return response.data;
-    } catch (error) {
-        throw error;
-    }
-};
-
-
 
 const UpdateEventForm: FC<AddEventProp> = ({ onClose, event }) => {
-
+    const { events, getAllEvents } = useContext(GetEventContext);
     const [eventInputs, setEventInputs] = useState<FormProps>({
         id: event.id,
         title: event.title,
@@ -77,10 +52,8 @@ const UpdateEventForm: FC<AddEventProp> = ({ onClose, event }) => {
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-        console.log(eventInputs, 'evv')
         try {
-
-            const event = await updateEvent(
+            const newEvent = await updateEvent(
                 id,
                 title,
                 details,
@@ -89,7 +62,7 @@ const UpdateEventForm: FC<AddEventProp> = ({ onClose, event }) => {
                 price,
                 organizers
             )
-
+            getAllEvents();
             setEventInputs({
                 id: "",
                 title: "",
@@ -101,9 +74,8 @@ const UpdateEventForm: FC<AddEventProp> = ({ onClose, event }) => {
             })
             const notify = () => toast.success("Event Updated!");
             notify()
-            onClose()
+            newEvent?.id && onClose()
         } catch (error) {
-            console.log(error, 'err')
             //@ts-ignore
             const notify = () => toast.error(error?.message ? error?.message : "Something went wrong!", {
                 position: "top-right",
