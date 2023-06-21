@@ -1,13 +1,16 @@
 
+import dynamic from "next/dynamic";
 import Footer from "../components/Footer/Footer";
 import Header from "../components/Header";
 import { NextAuthProvider } from "../components/NextAuthProvider";
 import "./globals.css";
+import { ToastContainer } from "react-toastify";
+import GetPostsProvider from "@/components/context/PostContext";
 
-
+const Hero = dynamic(() => import("@/components/Hero"))
 
 export const metadata = {
-  title: "Impact Nutrition",
+  title: "Impact Nutrition Consult",
   description: "The place where we grow expert in Nutrition",
 };
 
@@ -19,14 +22,28 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        <div className="content">
+        <ToastContainer
+          position="top-right"
+          autoClose={5000}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+          theme="colored"
+        />
+        <div className="relative dark:bg-black">
           <NextAuthProvider>
-            <Header />
-            {children}
-            <Footer />
+            <GetPostsProvider>
+              <Header />
+              <Hero />
+              {children}
+              <Footer />
+            </GetPostsProvider>
           </NextAuthProvider>
         </div>
-
       </body>
     </html>
   );

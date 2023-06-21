@@ -1,9 +1,11 @@
-import { useState, useEffect, useRef, useTransition, useCallback, useMemo } from 'react';
+'use client'
+import { useState, useEffect, useRef, useTransition, useCallback, useMemo, useContext } from 'react';
 import { getPosts } from '@/lib/getPosts';
 import 'suneditor/dist/css/suneditor.min.css';
 import UpdatePost from './UpdatePost';
 import axios from 'axios';
-import { toast } from 'react-toastify';
+import { ToastContainer, toast } from 'react-toastify';
+import { GetPostsContext } from '@/components/context/PostContext';
 
 export interface Post {
     id?: string;
@@ -22,7 +24,7 @@ const deletePost = async (id: string) => {
     };
 
     const reqOptions = {
-        url: `http://localhost:3000/api/blog?id=${id}`,
+        url: `/api/blog?id=${id}`,
         method: "DELETE",
         headers: headersList,
     };
@@ -35,8 +37,8 @@ const deletePost = async (id: string) => {
     }
 };
 
-const Index = () => {
-    const [posts, setPosts] = useState<Post[]>([]);
+const DashboardPost = () => {
+    const { posts, getAllPosts } = useContext(GetPostsContext);
     const [updatePost, setUpdatePost] = useState(false);
     const postUpdateRef = useRef<HTMLDivElement | null>(null);
 
@@ -50,26 +52,7 @@ const Index = () => {
     const memoizedSelectedPost = useMemo(() => selectedPost, [selectedPost]);
 
     useEffect(() => {
-        const fetchPosts = async () => {
-            try {
-                const fetchedPosts = await getPosts();
-                setPosts(fetchedPosts);
-            } catch (error) {
-                const notify = () => toast.error("unable to get posts!", {
-                    position: "top-right",
-                    autoClose: 5000,
-                    hideProgressBar: false,
-                    closeOnClick: true,
-                    pauseOnHover: true,
-                    draggable: true,
-                    progress: undefined,
-                    theme: "colored",
-                });
-                notify();
-            }
-        };
-
-        fetchPosts();
+        getAllPosts();
     }, []);
 
     const handleDelete = useCallback(async (id: string) => {
@@ -78,6 +61,7 @@ const Index = () => {
         try {
             await deletePost(post?.id!);
             const notify = () => toast.success("Post Deleted!");
+            getAllPosts()
             notify();
         } catch (error) {
             const notify = () => toast.error("Something went wrong!", {
@@ -104,7 +88,12 @@ const Index = () => {
 
     return (
         <div className="p-4 max-w-screen-xl mx-auto">
-            {(!posts.length) && <div>Loading!</div>}
+            <ToastContainer />
+            <div className="relative flex justify-end">
+                <a href="/dashboard/posts/addpost" className='p-3 rounded-lg bg-colorPrimary'> Add post</a>
+            </div>
+
+            {(!posts.length) && <div className='text-center'>Loading! posts</div>}
             <table className="w-full">
                 <thead className='p-4 m-4 bg-slate-300 rounded-xl border'>
                     <tr>
@@ -129,14 +118,14 @@ const Index = () => {
                                 <div className="flex justify-end">
                                     <button
                                         onClick={() => handleDelete(post.id!)}
-                                        className="bg-red-500 text-white px-4 py-2 mr-2 rounded-md"
+                                        className="text-red-500 px-4 py-2 mr-2 rounded-md"
                                     >
                                         Delete
                                     </button>
                                     <button
                                         id={post.id}
                                         onClick={() => handleUpdate(post.id!)}
-                                        className="bg-blue-500 text-white px-4 py-2 rounded-md"
+                                        className="text-blue-500 px-4 py-2 rounded-md"
                                     >
                                         Update
                                     </button>
@@ -150,4 +139,4 @@ const Index = () => {
     );
 };
 
-export default Index;
+export default DashboardPost;

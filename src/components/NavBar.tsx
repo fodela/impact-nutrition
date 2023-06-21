@@ -9,12 +9,14 @@ const NavBar = () => {
   const pathname = usePathname();
   const sidebarRootRef = useRef<HTMLDivElement | null>(null);
 
-  // Define an array of link objects with href and label properties
+  // Define an array of link objects with href and label properties   
+  // { href: '/services', label: 'Services' },
+
   const links = [
     { href: '/', label: 'Home' },
+    { href: '/blog', label: 'Blogs' },
+    { href: '/events', label: 'Events' },
     { href: '/about', label: 'About' },
-    { href: '/services', label: 'Services' },
-    { href: '/blog', label: 'Blog' },
     { href: '/contact_us', label: 'Contact Us' },
   ];
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
@@ -29,7 +31,7 @@ const NavBar = () => {
       <div ref={sidebarRootRef} id="sidebar-root" />
       <Sidebar isOpen={isSidebarOpen} onClose={() => { toggleSidebar() }} sidebarRoot={sidebarRootRef.current} />
       <div className="hidden md:block">
-        <ul className="flex justify-center text-xl items-center gap-4">
+        <ul className="flex text-white justify-center text-xl items-center gap-4">
           {links.map(({ href, label }) => (
             <li key={href}>
               <Link href={href} legacyBehavior>
@@ -45,8 +47,6 @@ const NavBar = () => {
         </ul>
       </div>
     </div>
-
-
   );
 };
 
