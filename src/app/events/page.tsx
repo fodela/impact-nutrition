@@ -4,8 +4,6 @@ import Loading from "./loading";
 import dynamic from "next/dynamic";
 import { GetEventContext } from "@/components/context/EventContext";
 
-
-
 const EventDisplay = dynamic(() => import("@/components/EventDisplay/EventDisplay"));
 
 const Events = () => {

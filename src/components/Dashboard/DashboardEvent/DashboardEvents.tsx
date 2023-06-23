@@ -6,6 +6,7 @@ import { Event } from '@prisma/client';
 import { deleteEvent } from '@/lib/getEvents';
 import UpdateEvent from './UpdateEvent';
 import { GetEventContext } from '@/components/context/EventContext';
+import Link from 'next/link';
 
 const DashboardEvents = () => {
     const { events, getAllEvents } = useContext(GetEventContext);
@@ -65,7 +66,7 @@ const DashboardEvents = () => {
             </div>
             {events.length === 0 && <div>No events!</div>}
             <table className="w-full">
-                <thead className="p-4 m-4 bg-slate-300 rounded-xl border">
+                <thead className="p-4 m-4 text-dark bg-slate-300 rounded-xl border">
                     <tr>
                         <th>Title</th>
                         <th>Details</th>
@@ -91,6 +92,9 @@ const DashboardEvents = () => {
                             </td>
                             <td>
                                 <div className="flex justify-end">
+                                    <Link className="btn_primary" href={`/dashboard/events/${event.id}`} legacyBehavior>
+                                        <a className="btn_primary font-bold">Open</a>
+                                    </Link>
                                     <button
                                         onClick={() => handleDelete(event.id!)}
                                         className="text-red-500  px-4 py-2 mr-2 rounded-md"

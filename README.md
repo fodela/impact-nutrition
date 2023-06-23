@@ -28,7 +28,14 @@ This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-opti
 // include payment method
 // Add dashboard responsiveness
 //Add payment method
-use proper state management system
+// use proper state management system done
+
+// send an email to the user when they decide to attend an event letting them know that they have registered
+// Allow a user to delete the registration for an event.
+// only events that are not done should be attended
+// allow admins to update the system to make a user pay for an event
+// add a temporary payment method where the admins validate the user's payment
+// add a chat system for the page users to communicate directly with the admins.
 
 ## Learn More
 

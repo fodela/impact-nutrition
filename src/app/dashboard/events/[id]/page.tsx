@@ -3,13 +3,10 @@
 import React, { useEffect, useState } from "react";
 import { Attendee, Event } from "@prisma/client";
 import { useParams } from "next/navigation";
-import Loading from "../loading";
 import { addEventAttendee, getEventById } from "@/lib/getEvents";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useSession } from "next-auth/react";
-import { getMyEvents } from "@/lib/getEvents";
-import { checkIdExists } from "@/lib/tokenUtils";
 
 const EventPage = () => {
     const { data: session, status } = useSession()
@@ -43,7 +40,6 @@ const EventPage = () => {
     const { id } = useParams();
 
     const [event, setEvent] = useState<Event | null>(null);
-    const [myevents, setMyevents] = useState<Event[]>([])
     const [isLoading, setIsLoading] = useState(true);
 
 
@@ -58,21 +54,8 @@ const EventPage = () => {
             }
         };
 
-        const getAllMyEvents = async () => {
-            try {
-                const allmyEvents = await getMyEvents(id)
-                console.log(checkIdExists(allmyEvents, id), 'allevetns')
-                setMyevents(allmyEvents);
-            } catch (error) {
-                console.log('myeventserr', error)
-            }
-        }
-
-
-
         if (id) {
             fetchEvent();
-            getAllMyEvents();
         }
 
         return () => {
@@ -81,7 +64,7 @@ const EventPage = () => {
     }, [id]);
 
     if (isLoading) {
-        return <Loading />;
+        return <h1>Loading...</h1>;
     }
 
     if (!event) {
@@ -114,41 +97,27 @@ const EventPage = () => {
                             {details && (
                                 <div dangerouslySetInnerHTML={{ __html: details }} />
                             )}
-                            <div className="inline-flex border-b-2 my-4 border-b-green-700">Price: {event.price}</div>
-                        </div><div className="max-w-md my-4 mx-auto rounded-md">
-                            {
-                                !checkIdExists(myevents, id) ?
-                                    <button
-                                        className="p-3 bg-colorPrimary rounded-md text-white"
-                                        onClick={() => {
-                                            eventAddAttendee(id);
-                                        }}
-                                    >
-                                        Attend Event
-                                    </button>
-                                    : (!session ? <a className="p-3 bg-colorPrimary rounded-md text-white" href="/login">Login to attend event</a> : <p>You have already registerd for this event</p>)
-
-                            }
                         </div>
 
                         <div className="max-w-md my-4 mx-auto rounded-md">
                             <ToastContainer />
                             <h3 className="text-xl font-bold">List of Event attendees</h3>
-                            <ul>
+                            <div className="flex mt-6 flex-col">
                                 {attendees?.length ? (
                                     attendees.map((att: Attendee) => {
                                         //@ts-ignore
                                         const { user } = att
                                         return (
-                                            <li className="font-bold" key={att.id}>
-                                                {user.name}
-                                            </li>
+                                            <div className="mt-3 flex justify-between" key={att.id}>
+                                                <div className="font-bold">Name: <span className="text-green-700">{user.name}</span></div>
+                                                <div className="font-bold">Payment Status: <span className="text-green-700">{att.paid ? "Paid" : 'Unpaid'}</span> </div>
+                                            </div>
                                         )
                                     })
                                 ) : (
-                                    <li>No one has registered yet</li>
+                                    <div>No one has registered yet</div>
                                 )}
-                            </ul>
+                            </div>
                         </div>
                     </article>
                 </section>

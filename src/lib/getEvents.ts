@@ -95,13 +95,13 @@ export const updateEvent = async (
   return response.data;
 };
 
-const getEventAttendees = async (id: string) => {
+const getMyEvents = async (id: string) => {
   let headersList = {
     Accept: "*/*",
   };
 
   let reqOptions = {
-    url: `/api/events/attend/${id}`,
+    url: `/api/events/attend/${id}/myevents`,
     method: "GET",
     headers: headersList,
   };
@@ -121,4 +121,4 @@ export const createEvent = async (formData: EventFormProps) => {
   return response.data;
 };
 
-export { getEvents, getEventById, addEventAttendee, deleteEvent };
+export { getEvents, getEventById, addEventAttendee, deleteEvent, getMyEvents };
