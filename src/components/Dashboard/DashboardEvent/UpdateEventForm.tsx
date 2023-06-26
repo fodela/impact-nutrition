@@ -34,7 +34,9 @@ const UpdateEventForm: FC<AddEventProp> = ({ onClose, event }) => {
         id: event.id,
         title: event.title,
         details: event.details,
+        //@ts-ignore
         image: event.image,
+        //@ts-ignore
         price: event.price,
         location: event.location,
         organizers: event.organizers,
@@ -57,21 +59,24 @@ const UpdateEventForm: FC<AddEventProp> = ({ onClose, event }) => {
                 id,
                 title,
                 details,
+                //@ts-ignore
                 image,
                 location,
                 price,
                 organizers
             )
             getAllEvents();
-            setEventInputs({
-                id: "",
-                title: "",
-                details: "",
-                location: "",
-                image: "",
-                price: "",
-                organizers: "",
-            })
+            setEventInputs(
+                //@ts-ignore
+                {
+                    id: "",
+                    title: "",
+                    details: "",
+                    location: "",
+                    image: "",
+                    price: "",
+                    organizers: "",
+                })
             const notify = () => toast.success("Event Updated!");
             notify()
             newEvent?.id && onClose()

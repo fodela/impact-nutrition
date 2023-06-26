@@ -46,6 +46,27 @@ const addEventAttendee = async (eventId: string) => {
   return response.data;
 };
 
+const addEventPayment = async (
+  eventId: string,
+  userId: string,
+  amount: number
+) => {
+  const headers = {
+    Accept: "*/*",
+    "Content-Type": "application/json",
+  };
+
+  const body = JSON.stringify({
+    eventId,
+    amount,
+    userId,
+  });
+  const response = await axios.post(`/api/events/attend/payment`, body, {
+    headers,
+  });
+  return response.data;
+};
+
 const deleteEvent = async (id: string) => {
   const headersList = {
     Accept: "*/*",
@@ -121,4 +142,11 @@ export const createEvent = async (formData: EventFormProps) => {
   return response.data;
 };
 
-export { getEvents, getEventById, addEventAttendee, deleteEvent, getMyEvents };
+export {
+  getEvents,
+  getEventById,
+  addEventAttendee,
+  deleteEvent,
+  getMyEvents,
+  addEventPayment,
+};

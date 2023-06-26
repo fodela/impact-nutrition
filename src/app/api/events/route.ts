@@ -92,6 +92,21 @@ export async function PUT(req: Request) {
       data: { title, details, location, organizers, image, price: evPrice },
     });
 
+    //update the event price for each of the attendees
+
+    const attendees = await prisma.attendee.findMany({
+      where: {
+        eventId: event.id,
+      },
+    });
+    for (const attendee of attendees) {
+      await prisma.attendee.update({
+        where: { id: attendee.id },
+        data: {
+          amount_due: evPrice,
+        },
+      });
+    }
     return NextResponse.json(updatedevent, { status: 200 });
   } catch (error) {
     //@ts-ignore
