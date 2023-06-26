@@ -1,10 +1,11 @@
-"use client"
+"use client";
 import Image from "next/image";
+import { useRef } from "react";
 import { BsTelephone } from "react-icons/bs";
 import { FiMail } from "react-icons/fi";
 import { ImLocation } from "react-icons/im";
 
-const SectionNewsLetter = () => {
+const SectionAddress = () => {
   return (
     <section className="max-w-screen-md md:flex justify-center md:mx-auto">
       <div className="flex flex-col items-center justify-center">
@@ -22,10 +23,15 @@ const SectionNewsLetter = () => {
         </div>
         <div className="font-bold text-xl my-4">Call us:</div>
         <a href="+233 55 007 9311">
-          <span className="text-blue-700 underline hover:text-blue-900">+233 55 007 9311</span>
+          <span className="text-blue-700 underline hover:text-blue-900">
+            +233 55 007 9311
+          </span>
         </a>
         <a href="+233 20 420 0659">
-          <span className="text-blue-700 underline hover:text-blue-900"> +233 20 420 0659</span>
+          <span className="text-blue-700 underline hover:text-blue-900">
+            {" "}
+            +233 20 420 0659
+          </span>
         </a>
       </div>
 
@@ -35,12 +41,10 @@ const SectionNewsLetter = () => {
         </div>
         <div className="font-bold text-xl my-4">Email Address:</div>
         <div className="text-lg">Suncity-Tema West</div>
-        <div className="text-lg">    Spring Onion Street</div>
-        <div className="text-lg"> Accra Ghana</div>
+        <div className="text-lg"> Spring Onion Street</div>
       </div>
-
     </section>
   );
 };
 
-export default SectionNewsLetter;
+export default SectionAddress;

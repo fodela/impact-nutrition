@@ -25,19 +25,18 @@ body {
       rgb(var(--background-end-rgb))
     )
     rgb(var(--background-start-rgb));
-    /* font-family: "Montserrat, sans-serif"; */
 }
 /* main{
   min-height: calc(100svh - 635px);
   @apply max-w-screen-xl mx-auto my-5 sm:my-10 sm:block
 } */
 
-.background-image {
-  background-image: url("/assets/Images/salad.jpg");
+/* .background-image { */
+  /* background-image: url("/assets/Images/salad.jpg");
   background-size: cover;
-  background-repeat: no-repeat;
+  background-repeat: no-repeat; */
   /* Add additional CSS properties as needed */
-}
+/* } */
 
 .content {
 @apply mx-auto my-5 sm:my-10 sm:block
@@ -104,4 +103,86 @@ body {
    color: white;
    padding: 1rem;
    border-radius: 1.5rem;
+ }
+
+ .revealFromDown{
+animation: revealFromDown .5s ease-out;
+ }
+
+ .revealFromTop{
+animation: revealFromTop .5s ease-out;
+ }
+ .revealFromLeft{
+animation: revealFromLeft 1s  ease-in-out;
+ }
+ .revealFromRight{
+animation: revealFromRight .5s ease-out;
+ }
+.popUp{
+  animation: popUp .5s ease-out ;
+}
+
+ .ani-delay_500ms{
+  animation-delay: .5s;
+ }
+ .ani-delay_1s{
+   animation-delay: 1s;
+  }
+  .ani-delay_1500ms{
+   animation-delay: 1.5s;
+  }
+ .ani-delay_2s{
+  animation-delay: 2s;
+ }
+ .ani-delay_3s{
+  animation-delay: 3s;
+ }
+ .ani-delay_4s{
+  animation-delay: 4s;
+ }
+ .ani-delay_5s{
+  animation-delay: 5s;
+ }
+
+
+
+ @keyframes revealFromDown {
+  from{
+    opacity:0;
+    transform: translateY(100%);
+  }
+  to{
+    opacity:1;
+    transform: translateY(0);
+  }
+ }
+ @keyframes revealFromTop {
+  from{
+    opacity:0;
+    transform: translateY(-100%);
+  }
+  to{
+    opacity:1;
+    transform: translateY(0);
+  }
+ }
+ @keyframes revealFromLeft {
+  from{
+    opacity:0;
+    transform: translateX(-100vw);
+  }
+  to{
+    opacity:1;
+    transform: translateX(0);
+  }
+ }
+ @keyframes revealFromRight {
+  from{
+    opacity:0;
+    transform: translateX(100vw);
+  }
+  to{
+    opacity:1;
+    transform: translateX(0);
+  }
  }

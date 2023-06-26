@@ -1,17 +1,14 @@
-'use client'
-import SectionAnalytics from "../components/Home/SectionAnalytics";
 import SectionServices from "../components/Home/SectionServices";
-import SectionNewsLetter from "../components/Home/SectionNewsLetter";
+import SectionCTA from "@/components/Home/SectionCTA";
 import SectionTestimonial from "../components/Home/SectionTestimonial";
-
-
+import SectionAddress from "../components/Home/SectionAddress";
 
 export default async function Home() {
   return (
     <main className="main">
-      <SectionAnalytics />
       <SectionServices />
-      <SectionNewsLetter />
+      <SectionCTA />
+      <SectionAddress />
       <SectionTestimonial />
     </main>
   );
