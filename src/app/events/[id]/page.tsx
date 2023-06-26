@@ -1,51 +1,20 @@
 'use client'
-/* eslint-disable @next/next/no-img-element */
 import React, { useEffect, useState } from "react";
 import { Attendee, Event } from "@prisma/client";
 import { useParams } from "next/navigation";
 import Loading from "../loading";
-import { addEventAttendee, getEventById } from "@/lib/getEvents";
+import { addEventAttendee, getEventById, getMyEvents } from "@/lib/getEvents";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useSession } from "next-auth/react";
-import { getMyEvents } from "@/lib/getEvents";
 import { checkIdExists } from "@/lib/tokenUtils";
 
 const EventPage = () => {
-    const { data: session, status } = useSession()
-    const eventAddAttendee = async (id: string) => {
-        try {
-            await addEventAttendee(id);
-            toast.success("Awesome! you are registered to attend this event", {
-                autoClose: 5000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-                theme: "colored"
-            });
-        } catch (error) {
-            //@ts-ignore
-            toast.error(error?.response.data.message ? error?.response.data.message : "We were unable to add you to the event!", {
-                position: "top-right",
-                autoClose: 5000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-                theme: "colored"
-            });
-        }
-    };
-
+    const { data: session, status } = useSession();
     const { id } = useParams();
-
     const [event, setEvent] = useState<Event | null>(null);
-    const [myevents, setMyevents] = useState<Event[]>([])
+    const [myEvents, setMyEvents] = useState<Event[]>([]);
     const [isLoading, setIsLoading] = useState(true);
-
 
     useEffect(() => {
         const fetchEvent = async () => {
@@ -60,15 +29,13 @@ const EventPage = () => {
 
         const getAllMyEvents = async () => {
             try {
-                const allmyEvents = await getMyEvents(id)
-                console.log(checkIdExists(allmyEvents, id), 'allevetns')
-                setMyevents(allmyEvents);
+                const allMyEvents = await getMyEvents(id);
+                console.log(checkIdExists(allMyEvents, id), "allEvents");
+                setMyEvents(allMyEvents);
             } catch (error) {
-                console.log('myeventserr', error)
+                console.log("myeventserr", error);
             }
-        }
-
-
+        };
 
         if (id) {
             fetchEvent();
@@ -80,6 +47,34 @@ const EventPage = () => {
         };
     }, [id]);
 
+    const eventAddAttendee = async (id: string) => {
+        try {
+            await addEventAttendee(id);
+            toast.success("Awesome! you are registered to attend this event", {
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "colored",
+            });
+        } catch (error) {
+            //@ts-ignore
+            const errorMessage = error?.response?.data?.message || "We were unable to add you to the event!";
+            toast.error(errorMessage, {
+                position: "top-right",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "colored",
+            });
+        }
+    };
+
     if (isLoading) {
         return <Loading />;
     }
@@ -87,11 +82,8 @@ const EventPage = () => {
     if (!event) {
         return <p>Event not found.</p>;
     }
-
-    //@ts-expect-error
-    const { attendees } = event
-    const { title, image, location, details } = event;
-
+    //@ts-ignore
+    const { attendees, title, image, location, details, price } = event;
 
     return (
         <div>
@@ -100,51 +92,38 @@ const EventPage = () => {
                     <h2 className="heading_secondary">{title}</h2>
                     <article className="block mx-auto">
                         <div className="flex max-h-96 max-w-md mx-auto">
-                            {image && (
-                                <img
-                                    className="rounded-md"
-                                    src={image.toString()}
-                                    alt="post image"
-                                />
-                            )}
+                            {image && <img className="rounded-md" src={image.toString()} alt="post image" />}
                         </div>
-
                         <div className="max-w-md my-4 mx-auto rounded-md">
                             <p className="py-4">{location}</p>
-                            {details && (
-                                <div dangerouslySetInnerHTML={{ __html: details }} />
-                            )}
-                            <div className="inline-flex border-b-2 my-4 border-b-green-700">Price: {event.price}</div>
-                        </div><div className="max-w-md my-4 mx-auto rounded-md">
-                            {
-                                !checkIdExists(myevents, id) ?
-                                    <button
-                                        className="p-3 bg-colorPrimary rounded-md text-white"
-                                        onClick={() => {
-                                            eventAddAttendee(id);
-                                        }}
-                                    >
-                                        Attend Event
-                                    </button>
-                                    : (!session ? <a className="p-3 bg-colorPrimary rounded-md text-white" href="/login">Login to attend event</a> : <p>You have already registerd for this event</p>)
-
-                            }
+                            {details && <div dangerouslySetInnerHTML={{ __html: details }} />}
+                            <div className="inline-flex border-b-2 my-4 border-b-green-700">Price: {price}</div>
                         </div>
-
+                        <div className="max-w-md my-4 mx-auto rounded-md">
+                            {!checkIdExists(myEvents, id) ? (
+                                <button className="p-3 bg-colorPrimary rounded-md text-white" onClick={() => eventAddAttendee(id)}>
+                                    Attend Event
+                                </button>
+                            ) : !session ? (
+                                <a className="p-3 bg-colorPrimary rounded-md text-white" href="/login">
+                                    Login to attend event
+                                </a>
+                            ) : (
+                                <p>You have already registered for this event</p>
+                            )}
+                        </div>
                         <div className="max-w-md my-4 mx-auto rounded-md">
                             <ToastContainer />
                             <h3 className="text-xl font-bold">List of Event attendees</h3>
                             <ul>
                                 {attendees?.length ? (
-                                    attendees.map((att: Attendee) => {
-                                        //@ts-ignore
-                                        const { user } = att
-                                        return (
-                                            <li className="font-bold" key={att.id}>
-                                                {user.name}
-                                            </li>
-                                        )
-                                    })
+                                    attendees.map((att: Attendee) => (
+                                        <li className="font-bold" key={att.id}>
+                                            {
+                                                //@ts-ignore
+                                                att.user.name}
+                                        </li>
+                                    ))
                                 ) : (
                                     <li>No one has registered yet</li>
                                 )}
