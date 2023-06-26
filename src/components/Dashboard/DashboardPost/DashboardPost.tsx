@@ -57,6 +57,7 @@ const DashboardPost = () => {
 
     const handleDelete = useCallback(async (id: string) => {
         const post = posts.find(pst => pst.id === id);
+        //@ts-ignore
         setSelectedPost(post!);
         try {
             await deletePost(post?.id!);
@@ -81,6 +82,7 @@ const DashboardPost = () => {
     const handleUpdate = useCallback((id: string) => {
         const post = posts.find(pst => pst.id === id);
         if (post?.title) {
+            //@ts-ignore
             setSelectedPost(post);
             toggleUpdatePost();
         }
@@ -113,7 +115,11 @@ const DashboardPost = () => {
                                 //@ts-ignore
                                 postUpdateRoot={postUpdateRef} />
                             <td>{post.title}</td>
-                            <td> <div dangerouslySetInnerHTML={{ __html: post.content }} /></td>
+
+                            <td>
+                                <div
+                                    //@ts-ignore
+                                    dangerouslySetInnerHTML={{ __html: post.content }} /></td>
                             <td>
                                 <div className="flex justify-end">
                                     <button

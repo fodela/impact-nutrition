@@ -7,7 +7,7 @@ import Link from "next/link";
 import { usePathname } from 'next/navigation';
 
 const DashboardNav = () => {
-  const [tabs] = useState(['Dashboard', 'Users', 'Posts', 'Comments', 'Events', 'Categories']);
+  const [tabs] = useState(['Dashboard', 'Posts', 'Events']);
 
   const pathname = usePathname();
   const { data: session, status } = useSession()
@@ -29,7 +29,7 @@ const DashboardNav = () => {
         {
           tabs.map((tab) => {
             if (verifyUserRole(role, tab)) {
-              return (<li key={tab}><Link className={`px-2 lg:px-4 ${pathname === `/dashboard/${tab.toLocaleLowerCase()}` ? "border-b-2 border-white dark-black" : ""}`} href={`/dashboard/${tab.toLowerCase()}`}>{tab}</Link></li>)
+              return (<li key={tab}><Link className={`px-2 lg:px-4 font-bold ${pathname === `/dashboard/${tab.toLocaleLowerCase()}` ? "border-b-2 border-white dark-black" : ""}`} href={`/dashboard/${tab.toLowerCase()}`}>{tab}</Link></li>)
             }
           })
         }

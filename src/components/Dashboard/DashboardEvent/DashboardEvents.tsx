@@ -1,13 +1,16 @@
 'use client'
-import { useState, useEffect, useRef, useTransition, useCallback, useMemo } from 'react';
+import { useState, useEffect, useRef, useTransition, useCallback, useMemo, useContext } from 'react';
 import 'suneditor/dist/css/suneditor.min.css';
 import { ToastContainer, toast } from 'react-toastify';
 import { Event } from '@prisma/client';
-import { deleteEvent, getEvents } from '@/lib/getEvents';
+import { deleteEvent } from '@/lib/getEvents';
 import UpdateEvent from './UpdateEvent';
+import { GetEventContext } from '@/components/context/EventContext';
+import Link from 'next/link';
 
 const DashboardEvents = () => {
-    const [events, setEvents] = useState<Event[]>([]);
+    const { events, getAllEvents } = useContext(GetEventContext);
+
     const [updateEvent, setUpdateEvent] = useState(false);
     const eventUpdateRef = useRef<HTMLDivElement | null>(null);
 
@@ -21,27 +24,7 @@ const DashboardEvents = () => {
     const memoizedSelectedEvent = useMemo(() => selectedEvent, [selectedEvent]);
 
     useEffect(() => {
-        const fetchEvents = async () => {
-            try {
-                const fetchedEvents = await getEvents();
-                setEvents(fetchedEvents);
-            } catch (error) {
-                const notify = () =>
-                    toast.error('Unable to get events! Check your internet', {
-                        position: 'top-right',
-                        autoClose: 5000,
-                        hideProgressBar: false,
-                        closeOnClick: true,
-                        pauseOnHover: true,
-                        draggable: true,
-                        progress: undefined,
-                        theme: 'colored',
-                    });
-                notify();
-            }
-        };
-
-        fetchEvents();
+        getAllEvents()
     }, []);
 
     const handleDelete = useCallback(async (id: string) => {
@@ -83,7 +66,7 @@ const DashboardEvents = () => {
             </div>
             {events.length === 0 && <div>No events!</div>}
             <table className="w-full">
-                <thead className="p-4 m-4 bg-slate-300 rounded-xl border">
+                <thead className="p-4 m-4 text-dark bg-slate-300 rounded-xl border">
                     <tr>
                         <th>Title</th>
                         <th>Details</th>
@@ -109,6 +92,9 @@ const DashboardEvents = () => {
                             </td>
                             <td>
                                 <div className="flex justify-end">
+                                    <Link className="btn_primary" href={`/dashboard/events/${event.id}`} legacyBehavior>
+                                        <a className="btn_primary font-bold">Open</a>
+                                    </Link>
                                     <button
                                         onClick={() => handleDelete(event.id!)}
                                         className="text-red-500  px-4 py-2 mr-2 rounded-md"

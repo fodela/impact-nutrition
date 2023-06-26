@@ -29,7 +29,7 @@ const AddPost: FC<AddPostProp> = ({ isOpen, onClose, addPostRoot }) => {
                     <h1 className="font-bold text-center uppercase text-2xl">
                         Add new Post
                     </h1>
-                    <AddPostForm onClose={onClose} />
+                    <AddPostForm />
                 </div>
             </div>
             )

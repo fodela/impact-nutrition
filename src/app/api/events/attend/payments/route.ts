@@ -1,7 +1,7 @@
 import { getServerSession } from "next-auth";
-import { authOptions } from "../../auth/[...nextauth]/route";
 import { NextResponse } from "next/server";
 import prisma from "@/lib/prisma";
+import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 
 export async function POST(req: Request) {
   const session = await getServerSession(authOptions);
@@ -15,46 +15,40 @@ export async function POST(req: Request) {
   //@ts-ignore
   const userId = session?.user?.id;
   try {
-    const { eventId } = await req.json();
-    if (!eventId) {
-      return NextResponse.json(
-        { message: "Missing required data" },
-        { status: 400 }
-      );
-    }
-
-    const event = await prisma.event.findUnique({
-      where: { id: eventId },
-    });
-
-    if (!event) {
-      return NextResponse.json({ message: "Event not found" }, { status: 404 });
-    }
+    const { id, eventId, amount } = await req.json();
 
     // Check if the user is already registered for the event
     const existingAttendee = await prisma.attendee.findFirst({
       where: {
-        registrantId: userId,
+        registrantId: id,
         eventId: eventId,
       },
     });
 
-    if (existingAttendee) {
+    if (!existingAttendee) {
       return NextResponse.json(
-        { message: "You are already registered for this event" },
+        { message: "This user is not registered for this event" },
         { status: 400 }
       );
     }
-    const attendee = await prisma.attendee.create({
+    const payment = await prisma.payment.create({
       data: {
-        eventId,
-        registrantId: userId,
-        amount_paid: 0,
-        amount_due: event?.price,
+        receipt: eventId,
+        amount: amount,
+        userId: id,
       },
     });
 
-    return NextResponse.json(attendee, { status: 200 });
+    await prisma.attendee.update({
+      where: {
+        id,
+      },
+      data: {
+        amount_paid: amount + existingAttendee.amount_paid,
+      },
+    });
+
+    return NextResponse.json(payment, { status: 200 });
   } catch (error) {
     return NextResponse.json("Something went wrong!", { status: 500 });
   }

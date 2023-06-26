@@ -29,7 +29,8 @@ const AddEvent: FC<AddEventProp> = ({ isOpen, onClose, addEventRoot }) => {
                     <h1 className="font-bold text-center uppercase text-2xl">
                         Add new Event
                     </h1>
-                    <AddEventForm onClose={onClose} />
+
+                    <AddEventForm />
                 </div>
             </div>
             )
