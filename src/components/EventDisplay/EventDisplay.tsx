@@ -1,13 +1,16 @@
 import React, { FC } from "react";
 import Link from "next/link";
 import { Event } from "@prisma/client";
+import Image from "next/image";
 type eventProps = {
   event: Event;
 };
 const EventDisplay: FC<eventProps> = ({ event }) => {
   return (
     <article key={event.id} className="flex flex-col gap-4">
-      {event.image && <img
+      {event.image && <Image
+        width={1000}
+        height={500}
         className="rounded-md max-h-96"
         src={event.image?.toString()}
         alt="post image"

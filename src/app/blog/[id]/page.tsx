@@ -5,13 +5,13 @@ import { getPostById } from "@/lib/getPosts";
 import { useParams } from "next/navigation";
 import Loading from "../loading";
 import dynamic from "next/dynamic";
+import Image from "next/image";
 
 
 const PostPage = () => {
     const { id } = useParams();
 
     const [post, setPost] = useState<Post | null>(null);
-
     useEffect(() => {
         const fetchPost = async () => {
             try {
@@ -25,7 +25,7 @@ const PostPage = () => {
         if (id) {
             fetchPost();
         }
-    }, []);
+    }, [id]);
 
     if (!post) {
         return <Loading />
@@ -38,7 +38,9 @@ const PostPage = () => {
                     <h2 className="heading_secondary">{post.title}</h2>
                     <article className="block mx-auto">
                         <div className="flex max-h-96 max-w-md mx-auto">
-                            <img
+                            <Image
+                                width={1000}
+                                height={500}
                                 className="rounded-md "
                                 src={post.imageUrl?.toString()}
                                 alt="post image"

@@ -19,11 +19,11 @@ const Sidebar: FC<SidebarProps> = ({ isOpen, onClose, sidebarRoot }) => {
 
     return createPortal(
         <div className="fixed inset-0 bg-gray-800 bg-opacity-50" onClick={onClose} >
-            <div onClick={handleSubElementClick} className={`fixed top-0 left-0 flex flex-col w-64 bg-white dark:bg-black h-full transform ${isOpen ? 'translate-x-0' : '-translate-x-full'} transition-transform duration-1000 ease-linear`}>
+            <div onClick={handleSubElementClick} className={`fixed top-0 left-0 flex flex-col w-64 bg-white dark:bg-black h-full revealFromLeft`}>
                 <div className="flex justify-between">
                     <Logo />
                     <button
-                        className="ml-auto mr-4 mt-4 text-gray-600 hover:text-gray-800"
+                        className="ml-auto mr-4 mt-4 hover:text-gray-800"
                         onClick={onClose}
                     >
                         <AiOutlineCloseCircle size={30} />

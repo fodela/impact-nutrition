@@ -26,7 +26,7 @@ const NavBar = () => {
   return (
     <div>
       <header className="flex justify-between sm:hidden">
-        <button className="pr-4" onClick={toggleSidebar}><AiOutlineMenu size={30} /></button>
+        <button className="pr-4  dark:text-white" onClick={toggleSidebar}><AiOutlineMenu className="dark:text-white" size={30} /></button>
       </header>
       <div ref={sidebarRootRef} id="sidebar-root" />
       <Sidebar isOpen={isSidebarOpen} onClose={() => { toggleSidebar() }} sidebarRoot={sidebarRootRef.current} />

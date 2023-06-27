@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 'use client'
 import React, { useContext, useEffect } from "react";
 import { GetPostsContext } from "@/components/context/PostContext";
@@ -9,6 +10,7 @@ const Blog = () => {
   useEffect(() => {
     // Fetch the posts when the component mounts
     getAllPubPosts();
+    console.log('runing')
   }, []);
 
   if (!pubPosts) {
