@@ -12,14 +12,13 @@ type ServiceCardProps = {
 
 const ServiceCard: FC<ServiceCardProps> = ({ service }) => {
   return (
-    <div className="flex flex-col items-center justify-between gap-5 rounded-lg shadow-lg p-4 bg-white dark:bg-inherit dark:border-2 border-slate-500 hover:border-colorPrimary text-center min-w-['299px'] hover:-translate-y-4 transition-all duration-300 ">
+    <div className="flex flex-col items-center justify-between gap-5 rounded-lg shadow-lg p-4 bg-white dark:bg-inherit dark:border-2 border-slate-500 hover:border-colorPrimary hover:shadow-xl text-center min-w-['299px'] hover:-translate-y-4 transition-all duration-300 ">
       <div className="h-20">
         <Image
           src={service.imageLink.toString()}
           alt="an illustration of a health of personnel teaching a group of people"
           width={94}
           height={96}
-
         />
       </div>
       <h2 className="text-xl font-bold">{service.title}</h2>
