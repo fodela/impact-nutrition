@@ -31,7 +31,6 @@ const EventPage = () => {
         const getAllMyEvents = async () => {
             try {
                 const allMyEvents = await getMyEvents(id);
-                console.log(checkIdExists(allMyEvents, id), "allEvents");
                 setMyEvents(allMyEvents);
             } catch (error) {
                 console.log("myeventserr", error);

@@ -51,7 +51,6 @@ const EventPage = () => {
         if (id) {
             fetchEvent();
         }
-        console.log('runinng')
         return () => {
             // Cleanup function to cancel any pending requests or subscriptions
         };

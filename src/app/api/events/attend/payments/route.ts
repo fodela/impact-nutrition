@@ -51,7 +51,6 @@ export async function POST(req: Request) {
 
     return NextResponse.json(payment, { status: 200 });
   } catch (error) {
-    console.log(error, "err");
     return NextResponse.json("Something went wrong!", { status: 500 });
   }
 }
