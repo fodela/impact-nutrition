@@ -10,7 +10,7 @@ const Blog = () => {
   useEffect(() => {
     // Fetch the posts when the component mounts
     getAllPubPosts();
-    console.log('runing')
+    console.log('runing', pubPosts)
   }, []);
 
   if (!pubPosts) {
