@@ -12,9 +12,9 @@ const SectionCTA = () => {
      bottom-10 shadow-sm  sm:rounded p-4 md:p-8 mx-auto
      sm:-translate-y-1/2
      "
-        //  relative
-        //  before:content-[''] before:p-16 before:rounded-full before:bg-white before:absolute before:-top-8 before:-left-8 before:-z-20
-        //  after:content-[''] after:p-16 after:rounded-full after:bg-white after:absolute after:-bottom-8 after:-right-8 after:-z-30
+      //  relative
+      //  before:content-[''] before:p-16 before:rounded-full before:bg-white before:absolute before:-top-8 before:-left-8 before:-z-20
+      //  after:content-[''] after:p-16 after:rounded-full after:bg-white after:absolute after:-bottom-8 after:-right-8 after:-z-30
       >
         <div
           className="max-w-screen-sm flex-col justify-center  md:flex 
@@ -27,12 +27,12 @@ const SectionCTA = () => {
         </div>
         <div className="flex gap-4 justify-end items-center justify-self-end">
           <button
-            className="text-white bg-white/10 rounded py-2 px-4 hover:bg-gray-800 "
+            className="text-white hover:border hover:border-[#EDF6EF] hover:text-colorPrimary rounded py-2 px-4 transition-all duration-500"
             onClick={() => signIn()}
           >
             Contact Us
           </button>
-          <button className="text-white bg-colorPrimary rounded py-2 px-4 hover:bg-blue-950 font-bold">
+          <button className="text-colorPrimary hover:bg-colorPrimary hover:text-white rounded py-2 px-4  font-bold border border-colorPrimary transition-all duration-500">
             Login / Register
           </button>
         </div>

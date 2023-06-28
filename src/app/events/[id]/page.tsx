@@ -8,6 +8,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useSession } from "next-auth/react";
 import { checkIdExists } from "@/lib/tokenUtils";
+import Image from "next/image";
 
 const EventPage = () => {
     const { data: session, status } = useSession();
@@ -92,7 +93,7 @@ const EventPage = () => {
                     <h2 className="heading_secondary">{title}</h2>
                     <article className="block mx-auto">
                         <div className="flex max-h-96 max-w-md mx-auto">
-                            {image && <img className="rounded-md" src={image.toString()} alt="post image" />}
+                            {image && <Image width={1000} height={500} className="rounded-md" src={image.toString()} alt="post image" />}
                         </div>
                         <div className="max-w-md my-4 mx-auto rounded-md">
                             <p className="py-4">{location}</p>

@@ -1,13 +1,16 @@
 import React, { FC } from 'react'
 import Link from 'next/link'
 import { Post } from '@prisma/client'
+import Image from 'next/image'
 type postProps = {
     post: Post
 }
 const PostComponent: FC<postProps> = ({ post }) => {
     return (
         <article key={post.id} className="flex flex-col gap-4">
-            <img
+            <Image
+                width={1000}
+                height={500}
                 className="rounded-md max-h-96"
                 src={post.imageUrl?.toString()}
                 alt="post image"

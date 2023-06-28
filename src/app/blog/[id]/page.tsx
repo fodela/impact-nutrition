@@ -4,14 +4,13 @@ import { Post } from "@prisma/client";
 import { getPostById } from "@/lib/getPosts";
 import { useParams } from "next/navigation";
 import Loading from "../loading";
-import dynamic from "next/dynamic";
+import Image from "next/image";
 
 
 const PostPage = () => {
     const { id } = useParams();
 
     const [post, setPost] = useState<Post | null>(null);
-
     useEffect(() => {
         const fetchPost = async () => {
             try {
@@ -25,7 +24,7 @@ const PostPage = () => {
         if (id) {
             fetchPost();
         }
-    }, []);
+    }, [id]);
 
     if (!post) {
         return <Loading />
@@ -37,15 +36,17 @@ const PostPage = () => {
                 <section className="max-w-screen-xl px-4 md:mx-auto">
                     <h2 className="heading_secondary">{post.title}</h2>
                     <article className="block mx-auto">
-                        <div className="flex max-h-96 max-w-md mx-auto">
-                            <img
+                        <div className="flex max-h-96 max-w-xl mx-auto">
+                            <Image
+                                width={1000}
+                                height={500}
                                 className="rounded-md "
                                 src={post.imageUrl?.toString()}
                                 alt="post image"
                             />
                         </div>
 
-                        <div className="max-w-md my-4 mx-auto rounded-md">
+                        <div className="max-w-xl my-4 mx-auto rounded-md">
                             <p className="py-4">{post.slug}</p>
                             {post.content ? (
                                 <div dangerouslySetInnerHTML={{ __html: post.content }} />

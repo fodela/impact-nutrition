@@ -19,12 +19,12 @@ const Testimony = () => {
         watch out for Impact Nutrition Consult.”
       </p>
       <div className="flex items-center gap-4 flex-nowrap">
-        <img
+        <Image
           className="w-24 h-24 rounded-full mx-auto"
           src="assets/Saadong.jpg"
           alt="executive director's image"
-          width="484"
-          height="612"
+          width={484}
+          height={612}
         />
         <div className="flex flex-col ">
           <p className="font-bold text-xl">Executive Director&apos;s Message</p>

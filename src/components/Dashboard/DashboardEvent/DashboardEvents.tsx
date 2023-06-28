@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 'use client'
 import { useState, useEffect, useRef, useTransition, useCallback, useMemo, useContext } from 'react';
 import 'suneditor/dist/css/suneditor.min.css';
