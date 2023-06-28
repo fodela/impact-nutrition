@@ -27,14 +27,14 @@ export default function SessionButtons() {
                 <Link className="btn-effect" href="/dashboard"> Profile
                   <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-green-400 transition-all duration-300 opacity-0"></span>
                 </Link></li>
-              <li className="mb-1 font-bold relative">
+              {/* <li className="mb-1 font-bold relative">
                 <Link className="btn-effect" href="/dashboard"> Create Post
                   <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-green-400 transition-all duration-300 opacity-0"></span>
                 </Link></li>
               <li className="mb-1 font-bold relative">
                 <Link className="btn-effect" href="/dashboard"> Add CPD event
                   <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-green-400 transition-all duration-300 opacity-0"></span>
-                </Link></li>
+                </Link></li> */}
             </ul>
             <button className="bg-colorPrimary hover:bg-green-900 px-4 rounded-xl text-white transition-colors duration-1200" onClick={() => signOut()}>Sign out</button>
           </div>

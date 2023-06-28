@@ -1,20 +1,23 @@
 import dynamic from "next/dynamic";
 import { FC, memo, useState } from "react";
-import { Attendee, Event } from "@prisma/client";
-import UpdateEventForm from "./UpdateEventForm";
+import { Attendee } from "@prisma/client";
 import { useSession } from "next-auth/react";
+import { addEventPayment } from "@/lib/getEvents";
+import { ToastContainer, toast } from "react-toastify";
 
 interface FormProps {
     id: string;
     amount: number;
     eventId: string;
     receipt: string;
+    paid: boolean
 }
 
 type AddPaymentProps = {
     isOpen: boolean;
     onClose: () => void;
-    attendee: Attendee
+    attendee: Attendee;
+    getEventAgain: () => void;
     eventId: string;
 };
 
@@ -27,27 +30,54 @@ const AddPayment: FC<AddPaymentProps> = ({
     isOpen,
     onClose,
     attendee,
+    getEventAgain,
     eventId
 }) => {
-    const { data: session, status } = useSession()
-    //@ts-ignore
-    const { user } = session
     const [paymentInputs, setPaymentInput] = useState<FormProps>({
-        id: user.id,
+        id: "",
         amount: 0,
         eventId,
-        receipt: ""
+        receipt: "",
+        paid: false
     });
 
     const {
         id,
         amount,
-        receipt
+        receipt,
+        paid
     } = paymentInputs;
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-        console.log(id, amount, eventId)
+
+        let userId = attendee.registrantId
+        try {
+            await addEventPayment(eventId, userId, amount, paid)
+            const notify = () => toast.success("Event created!",
+                {
+                    theme: "colored"
+                });
+            getEventAgain();
+            notify();
+            onClose()
+        } catch (error) {
+            const notify = () => {
+                //@ts-ignore
+                toast.error("Something went wrong!", {
+                    position: "top-right",
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "colored",
+                });
+
+            }
+            notify();
+        }
     }
 
     if (!isOpen) return null;
@@ -56,6 +86,7 @@ const AddPayment: FC<AddPaymentProps> = ({
             className="fixed dark:text-black flex justify-center items-center w-screen inset-0 bg-gray-800 bg-opacity-50"
             onClick={onClose}
         >
+            <ToastContainer />
             <div
                 onClick={handleSubElementClick}
                 className={`max-w-lg bg-white lg:m-6 rounded-lg lg:p-6 z-20 transform ${isOpen ? "translate-x-0" : "-translate-x-full"
@@ -87,7 +118,7 @@ const AddPayment: FC<AddPaymentProps> = ({
                         </div>
                         <div className="mb-4">
                             <label htmlFor="receipt" className="block mb-2 font-bold">
-                                Receipt
+                                Receipt No
                             </label>
                             <input
                                 type="text"
@@ -103,7 +134,22 @@ const AddPayment: FC<AddPaymentProps> = ({
                                 }
                             />
                         </div>
-
+                        <div className="mb-4">
+                            <label htmlFor="paid" className="flex justify-between mb-2 font-bold">
+                                <input
+                                    type="checkbox"
+                                    id="paid"
+                                    className="px-4 py-2 border rounded-lg"
+                                    checked={paid}
+                                    onChange={(e) =>
+                                        setPaymentInput((prevState) => ({
+                                            ...prevState,
+                                            paid: (e.target.checked),
+                                        }))
+                                    }
+                                />Payment completed
+                            </label>
+                        </div>
                         <button type="submit" className="bg-colorPrimary rounded-md text-white px-4 py-2">Submit</button>
                     </form>
                 </div>

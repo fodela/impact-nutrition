@@ -1,6 +1,8 @@
 import Image from "next/image";
+import { use, useState } from "react";
 import { BsQuote } from "react-icons/bs";
 const Testimony = () => {
+  const [isLoading, setIsLoading] = useState(true)
   return (
     <div className="p-10 max-w-md shadow-md md:shadow-xl dark:shadow-white relative my-8">
       <BsQuote className="absolute right-1 top-1 text-6xl text-black/50 dark:text-white/50 rotate-180" />
@@ -20,11 +22,14 @@ const Testimony = () => {
       </p>
       <div className="flex items-center gap-4 flex-nowrap">
         <Image
-          className="w-24 h-24 rounded-full mx-auto"
-          src="assets/Saadong.jpg"
+          className={`w-24 h-24 rounded-full mx-auto ${isLoading ? 'grayscale blur-2xl scale-110' : 'grayscale-0 blur-0 scale-100'}`}
+
+          src="https://impactnutritionconsult.com/assets/Saadong.jpg"
           alt="executive director's image"
           width={484}
           height={612}
+
+          onLoadingComplete={() => setIsLoading(false)}
         />
         <div className="flex flex-col ">
           <p className="font-bold text-xl">Executive Director&apos;s Message</p>

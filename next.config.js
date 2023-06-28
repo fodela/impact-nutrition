@@ -20,6 +20,12 @@ const nextConfig = {
       },
       {
         protocol: 'https',
+        hostname: 'impactnutritionconsult.com',
+        port: '',
+        pathname: '/**',
+      },
+      {
+        protocol: 'https',
         hostname: 'source.unsplash.com',
         port: '',
         pathname: '/**',

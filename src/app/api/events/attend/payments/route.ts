@@ -13,14 +13,14 @@ export async function POST(req: Request) {
     );
   }
   //@ts-ignore
-  const userId = session?.user?.id;
+
   try {
-    const { id, eventId, amount } = await req.json();
+    const { userId, eventId, amount, paid } = await req.json();
 
     // Check if the user is already registered for the event
     const existingAttendee = await prisma.attendee.findFirst({
       where: {
-        registrantId: id,
+        registrantId: userId,
         eventId: eventId,
       },
     });
@@ -35,21 +35,23 @@ export async function POST(req: Request) {
       data: {
         receipt: eventId,
         amount: amount,
-        userId: id,
+        userId,
       },
     });
 
     await prisma.attendee.update({
       where: {
-        id,
+        id: existingAttendee.id,
       },
       data: {
         amount_paid: amount + existingAttendee.amount_paid,
+        paid,
       },
     });
 
     return NextResponse.json(payment, { status: 200 });
   } catch (error) {
+    console.log(error, "err");
     return NextResponse.json("Something went wrong!", { status: 500 });
   }
 }
