@@ -26,17 +26,6 @@ body {
     )
     rgb(var(--background-start-rgb));
 }
-/* main{
-  min-height: calc(100svh - 635px);
-  @apply max-w-screen-xl mx-auto my-5 sm:my-10 sm:block
-} */
-
-/* .background-image { */
-  /* background-image: url("/assets/Images/salad.jpg");
-  background-size: cover;
-  background-repeat: no-repeat; */
-  /* Add additional CSS properties as needed */
-/* } */
 
 .content {
 @apply mx-auto my-5 sm:my-10 sm:block
@@ -65,7 +54,7 @@ body {
 }
 
 .section_grid{
-  @apply grid md:grid-cols-2 gap-10 items-center
+  @apply grid md:grid-cols-2 gap-5 lg:gap-10 items-center
 }
 
 .btn-active:hover .absolute,
@@ -113,7 +102,7 @@ animation: revealFromDown .5s ease-out;
 animation: revealFromTop .5s ease-out;
  }
  .revealFromLeft{
-animation: revealFromLeft 1s  ease-in-out;
+animation: revealFromLeft .5s  ease-in-out;
  }
  .revealFromRight{
 animation: revealFromRight .5s ease-out;

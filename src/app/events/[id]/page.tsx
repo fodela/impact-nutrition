@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 'use client'
 import React, { useEffect, useState } from "react";
 import { Attendee, Event } from "@prisma/client";
@@ -17,21 +18,22 @@ const EventPage = () => {
     const [myEvents, setMyEvents] = useState<Event[]>([]);
     const [isLoading, setIsLoading] = useState(true);
 
+    const fetchEvent = async () => {
+        try {
+            const fetchedEvent = await getEventById(id);
+            setEvent(fetchedEvent);
+            setIsLoading(false);
+        } catch (error) {
+            console.error("Unable to get event:", error);
+        }
+    };
+
     useEffect(() => {
-        const fetchEvent = async () => {
-            try {
-                const fetchedEvent = await getEventById(id);
-                setEvent(fetchedEvent);
-                setIsLoading(false);
-            } catch (error) {
-                console.error("Unable to get event:", error);
-            }
-        };
+
 
         const getAllMyEvents = async () => {
             try {
                 const allMyEvents = await getMyEvents(id);
-                console.log(checkIdExists(allMyEvents, id), "allEvents");
                 setMyEvents(allMyEvents);
             } catch (error) {
                 console.log("myeventserr", error);
@@ -60,6 +62,7 @@ const EventPage = () => {
                 progress: undefined,
                 theme: "colored",
             });
+            fetchEvent();
         } catch (error) {
             //@ts-ignore
             const errorMessage = error?.response?.data?.message || "We were unable to add you to the event!";
@@ -92,28 +95,28 @@ const EventPage = () => {
                 <section className="max-w-screen-xl px-4 md:mx-auto">
                     <h2 className="heading_secondary">{title}</h2>
                     <article className="block mx-auto">
-                        <div className="flex max-h-96 max-w-md mx-auto">
+                        <div className="flex max-h-96 max-w-xl mx-auto">
                             {image && <Image width={1000} height={500} className="rounded-md" src={image.toString()} alt="post image" />}
                         </div>
-                        <div className="max-w-md my-4 mx-auto rounded-md">
+                        <div className="max-w-xl my-4 mx-auto rounded-md">
                             <p className="py-4">{location}</p>
                             {details && <div dangerouslySetInnerHTML={{ __html: details }} />}
                             <div className="inline-flex border-b-2 my-4 border-b-green-700">Price: {price}</div>
                         </div>
-                        <div className="max-w-md my-4 mx-auto rounded-md">
-                            {!checkIdExists(myEvents, id) ? (
+                        <div className="max-w-xl my-4 mx-auto rounded-md">
+                            {!session ? (
+                                <a className="p-3 bg-colorPrimary rounded-md text-white" href="/signin">
+                                    Login to attend event
+                                </a>
+                            ) : !checkIdExists(myEvents, id) ? (
                                 <button className="p-3 bg-colorPrimary rounded-md text-white" onClick={() => eventAddAttendee(id)}>
                                     Attend Event
                                 </button>
-                            ) : !session ? (
-                                <a className="p-3 bg-colorPrimary rounded-md text-white" href="/login">
-                                    Login to attend event
-                                </a>
                             ) : (
                                 <p>You have already registered for this event</p>
                             )}
                         </div>
-                        <div className="max-w-md my-4 mx-auto rounded-md">
+                        <div className="max-w-xl my-4 mx-auto rounded-md">
                             <ToastContainer />
                             <h3 className="text-xl font-bold">List of Event attendees</h3>
                             <ul>

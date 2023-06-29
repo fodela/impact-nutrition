@@ -36,11 +36,13 @@ const SectionServices = () => {
         <h2 className="text-xl font-bold text-center mt-10 text-colorPrimary">
           Our Services
         </h2>
-        <h3 className="text-3xl font-bold text-center">What we offer</h3>
+        <h3 className="text-4xl sm:text-6xl font-bold text-center">
+          What we offer
+        </h3>
         <p className="text-center mx-auto my-4 max-w-screen-sm rounded-lg">
-          We are dedicated to offering comprehensive and holistic counseling
-          on food and nutrition, emphasizing their profound impact on health
-          in a sustainable manner for our communities.
+          We are dedicated to offering comprehensive and holistic counseling on
+          food and nutrition, emphasizing their profound impact on health in a
+          sustainable manner for our communities.
         </p>
       </div>
       <div className=" pt-8 py-5  px-10 grid md:grid-cols-2 lg:grid-cols-4 gap-5 max-w-screen-xl mx-auto">

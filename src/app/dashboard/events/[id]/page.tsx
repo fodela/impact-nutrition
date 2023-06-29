@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 'use client'
 /* eslint-disable @next/next/no-img-element */
 import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
@@ -29,29 +30,27 @@ const EventPage = () => {
     const handleAddPayment = useCallback((id: string) => {
         //@ts-ignore
         const attende = event?.attendees.find(att => att.id === id);
-        if (attende?.title) {
+        if (attende?.id) {
             setSelectedAttendee(attende);
             toggleUpdatePayment();
         }
         //@ts-ignore
     }, [event?.attendees, toggleUpdatePayment]);
 
+    const fetchEvent = async () => {
+        try {
+            const fetchedEvent = await getEventById(id);
+            setEvent(fetchedEvent);
+            setIsLoading(false);
+        } catch (error) {
+            console.error("Unable to get event:", error);
+        }
+    };
 
     useEffect(() => {
-        const fetchEvent = async () => {
-            try {
-                const fetchedEvent = await getEventById(id);
-                setEvent(fetchedEvent);
-                setIsLoading(false);
-            } catch (error) {
-                console.error("Unable to get event:", error);
-            }
-        };
-
         if (id) {
             fetchEvent();
         }
-
         return () => {
             // Cleanup function to cancel any pending requests or subscriptions
         };
@@ -111,9 +110,10 @@ const EventPage = () => {
                                                     <div className="font-bold">Amount Due: <span className="text-green-700">{att.amount_due}</span></div>
                                                     <div className="font-bold">Amount Paid: <span className="text-green-700">{att.amount_paid}</span></div>
                                                     <AddPayment isOpen={addPayment} onClose={toggleUpdatePayment}
+                                                        getEventAgain={fetchEvent}
                                                         //@ts-ignore
                                                         attendee={memoizedSelectedAttendee} eventId={id} addPaymentRoot={addPaymentRef} />
-                                                    <button className="bg-colorPrimary rounded-md text-white px-3 font-bold" onClick={toggleUpdatePayment}>Add payment</button>
+                                                    <button className="bg-colorPrimary rounded-md text-white px-3 font-bold" onClick={() => handleAddPayment(att.id)}>Add payment</button>
                                                 </div>
                                             )
                                         })
