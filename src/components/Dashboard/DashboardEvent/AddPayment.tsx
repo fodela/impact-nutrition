@@ -53,7 +53,7 @@ const AddPayment: FC<AddPaymentProps> = ({
 
         let userId = attendee.registrantId
         try {
-            await addEventPayment(eventId, userId, amount, paid)
+            await addEventPayment(eventId, userId, amount, paid, receipt)
             const notify = () => toast.success("Event created!",
                 {
                     theme: "colored"

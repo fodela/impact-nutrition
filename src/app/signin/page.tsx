@@ -75,21 +75,20 @@ const LoginForm = () => {
         }
 
     };
-
+    // <div className="flex justify-center items-center">
+    //     <button className="shadow-md font-bold p-4 rounded-md" onClick={() => signIn("google", { callbackUrl: "/dashboard" })}>Sign in with Google</button> */}
+    //     {providers.map((provider) => (
+    //         <button
+    //             key={provider.id}
+    //             onClick={() => signIn(provider.id, { callbackUrl: "/" })}
+    //         >
+    //             Sign in with {provider.name}
+    //         </button>
+    //     ))}
+    // </div>
     return (
         <div className="h-full my-6">
             <h1 className="text-3xl text-center font-bold mb-6">Login</h1>
-            <div className="flex justify-center items-center">
-                <button className="shadow-md font-bold p-4 rounded-md" onClick={() => signIn("google", { callbackUrl: "/dashboard" })}>Sign in with Google</button>
-                {/* {providers.map((provider) => (
-                    <button
-                        key={provider.id}
-                        onClick={() => signIn(provider.id, { callbackUrl: "/" })}
-                    >
-                        Sign in with {provider.name}
-                    </button>
-                ))} */}
-            </div>
             <form className="max-w-md mx-auto my-auto">
                 <div className="mb-4">
                     <label htmlFor="email" className="block text-gray-700 font-bold mb-2">
