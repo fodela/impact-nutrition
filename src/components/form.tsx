@@ -82,7 +82,7 @@ export const RegisterForm = () => {
     <div className="flex my-8 flex-col justify-center items-center h-screen">
       <h1 className="text-3xl font-bold mb-6">Create a new account</h1>
       <form
-        className="max-w-md"
+        className="max-w-md shadow-md m-4 p-6"
         onSubmit={onSubmit}
       >
         <label className="font-bold" htmlFor="firstname">Firstname</label>
@@ -163,7 +163,7 @@ export const RegisterForm = () => {
           >
             {loading ? "loading..." : "Register"}
           </button>
-          <Link className="bg-colorPrimary hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" href={'/api/auth/signin'}>Login</Link>
+          <Link className="border-b border-b-green-600 font-bold py-2 px-4 rounded focus:outline-none hover:shadow-outline" href={'/api/auth/signin'}>Login</Link>
         </div>
       </form>
 
