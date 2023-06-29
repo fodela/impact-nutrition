@@ -49,7 +49,9 @@ const addEventAttendee = async (eventId: string) => {
 const addEventPayment = async (
   eventId: string,
   userId: string,
-  amount: number
+  amount: number,
+  paid: boolean,
+  receipt: string
 ) => {
   const headers = {
     Accept: "*/*",
@@ -60,8 +62,10 @@ const addEventPayment = async (
     eventId,
     amount,
     userId,
+    paid,
+    receipt,
   });
-  const response = await axios.post(`/api/events/attend/payment`, body, {
+  const response = await axios.post(`/api/events/attend/payments`, body, {
     headers,
   });
   return response.data;

@@ -2,11 +2,12 @@ import { getServerSession } from "next-auth";
 import { authOptions } from "../../auth/[...nextauth]/route";
 import { NextResponse } from "next/server";
 import prisma from "@/lib/prisma";
+import { sendMailValidationEmail } from "@/lib/sendEmail";
 
 export async function POST(req: Request) {
   const session = await getServerSession(authOptions);
 
-  if (!session) {
+  if (!session?.user) {
     return NextResponse.json(
       { message: "You are not logged in!" },
       { status: 400 }
@@ -52,6 +53,17 @@ export async function POST(req: Request) {
         amount_paid: 0,
         amount_due: event?.price,
       },
+    });
+
+    // const link = `${process.env.LOCALURL}/api/verifyuser/${verificationToken}`;
+
+    const { user } = session;
+    // Send the email verification email
+    await sendMailValidationEmail({
+      title: `Impact Nutriton: You just registered for the event ${event.title}`,
+      message: `Welcome, ${user.email}! <br> We are happy to see you at our upcoming event: ${event.title}. Kindly note that if this event is priced, you will be required to pay the amount needed to receive your certificate!`,
+      receiverEmail: user.email,
+      link: "",
     });
 
     return NextResponse.json(attendee, { status: 200 });

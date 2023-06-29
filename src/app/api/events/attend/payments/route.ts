@@ -2,6 +2,7 @@ import { getServerSession } from "next-auth";
 import { NextResponse } from "next/server";
 import prisma from "@/lib/prisma";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
+import { sendMailValidationEmail } from "@/lib/sendEmail";
 
 export async function POST(req: Request) {
   const session = await getServerSession(authOptions);
@@ -13,14 +14,24 @@ export async function POST(req: Request) {
     );
   }
   //@ts-ignore
-  const userId = session?.user?.id;
+
   try {
-    const { id, eventId, amount } = await req.json();
+    const { userId, eventId, amount, paid, receipt } = await req.json();
+
+    const atendee = await prisma.user.findFirst({
+      where: {
+        id: userId,
+      },
+    });
+
+    if (!atendee) {
+      throw "We were unable to find the specified attendee that made this payment";
+    }
 
     // Check if the user is already registered for the event
     const existingAttendee = await prisma.attendee.findFirst({
       where: {
-        registrantId: id,
+        registrantId: userId,
         eventId: eventId,
       },
     });
@@ -33,19 +44,35 @@ export async function POST(req: Request) {
     }
     const payment = await prisma.payment.create({
       data: {
-        receipt: eventId,
+        receipt,
         amount: amount,
-        userId: id,
+        userId,
       },
     });
 
     await prisma.attendee.update({
       where: {
-        id,
+        id: existingAttendee.id,
       },
       data: {
         amount_paid: amount + existingAttendee.amount_paid,
+        paid,
       },
+    });
+
+    // Send the email verification email
+
+    await sendMailValidationEmail({
+      title: `Impact Nutriton: Hello ${atendee.name} payment received.`,
+      message: `Welcome, ${atendee.name}! <br> 
+       We have received a payment of ${amount} and just credited your account. <br>
+        The receipt number is <b>${receipt}</b>. <br>
+       Thank you. <br>
+       Yours Sincerely,<br>
+       Impact Nutrition Consult.
+       `,
+      receiverEmail: atendee.email,
+      link: "",
     });
 
     return NextResponse.json(payment, { status: 200 });

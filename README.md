@@ -23,19 +23,21 @@ This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-opti
 ## Todos
 
 //Todo Fix security issues
-//Add animation to the homepage
-//Show attendee and allow attendees update on the dashboard
-// include payment method
-// Add dashboard responsiveness
-//Add payment method
-// use proper state management system done
+//Add animation to the homepage === Dela done
+//Show attendee and allow attendees update on the dashboard === partially done
+// include payment method ==== done
+// Add dashboard responsiveness =====
+//Add payment method === partially done
+// use proper state management system ==== done
 
 // send an email to the user when they decide to attend an event letting them know that they have registered
-// Allow a user to delete the registration for an event.
-// only events that are not done should be attended
-// allow admins to update the system to make a user pay for an event
-// add a temporary payment method where the admins validate the user's payment
+// Allow a user to delete the registration for an event === .
+// only events that are not done should be attended ====
+// allow admins to update the system to make a user pay for an event ==== done
+// add a temporary payment method where the admins validate the user's payment ==== done
 // add a chat system for the page users to communicate directly with the admins.
+// Add help page with an explanation of how to use the system.
+// Add login with Google functionality and ensure it works well with the app.
 
 ## Learn More
 
