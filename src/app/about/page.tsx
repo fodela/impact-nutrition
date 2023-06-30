@@ -1,28 +1,63 @@
 "use client";
-import dynamic from "next/dynamic";
+
+import { moveVariant, offscreenVariants } from "@/lib/animationVariants";
+import { motion } from "framer-motion";
 import Image from "next/image";
-import { FaBullseye, FaEye, FaFlag } from "react-icons/fa";
+import { useEffect } from "react";
 
 const about = () => {
+  useEffect(() => {
+    const elements = document.querySelectorAll(".reveal");
+
+    const revealOptions = {
+      threshold: 0.5, // Percentage of the element visible in the viewport
+    };
+
+    const revealObserver = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("revealed");
+          revealObserver.unobserve(entry.target);
+        }
+      });
+    }, revealOptions);
+
+    elements.forEach((element) => {
+      revealObserver.observe(element);
+    });
+  }, []);
+
   return (
     <main>
-      <section className="grid md:grid-cols-2 max-w-screen-xl p-10 gap-10 mx-auto">
-        <article className="md:row-span-2 self-end text-colorPrimary text-8xl font-semibold revealFromLeft anim">
+      <section className="grid md:grid-cols-2 gap-10 max-w-screen-xl p-10 mx-auto">
+        <motion.article
+          className="md:row-span-2 self-end text-colorPrimary text-6xl sm:text-8xl font-semibold reveal "
+          variants={offscreenVariants}
+          initial="left"
+          animate="visible"
+          transition={{ ease: "easeOut" }}
+        >
           <p>Our</p>
           <p>Mission</p>
           <p>& Vision</p>
-        </article>
+        </motion.article>
         <Image
           src="/assets/svg/about_us.svg"
           width={604}
           height={328}
           alt="an illustration of people collaborating"
         />
-        <article className="flex flex-col gap-4 ">
-          <h2 className="text-4xl text-colorPrimary font-bold revealFromRight ">
+        <motion.article
+          className="flex flex-col gap-4"
+          variants={offscreenVariants}
+          initial="right"
+          animate="visible"
+          transition={{ duration: 1, delay: 1.2, ease: "easeOut" }}
+        >
+          <h2 className="text-4xl text-colorPrimary font-bold reveal revealFromRight">
             About Us
           </h2>
-          <p className="revealFromDown ani-delay_1s">
+          <p className="reveal revealFromDown ">
             Welcome to Impact Nutrition Consult, where we are committed to
             combating the rise of non-communicable diseases through our
             effective nutrition and diet-related services. As passionate agents
@@ -33,33 +68,46 @@ const about = () => {
             our goal is to provide comprehensive services that effectively
             address the pressing challenges of our time.
           </p>
-        </article>
+        </motion.article>
       </section>
       <section className="grid md:grid-cols-3 max-w-screen-xl mx-auto gap-10 p-10">
-        <article className="flex flex-col gap-4 justify-between p-6 border-2 border-colorPrimary rounded revealFromLeft ani-delay-500ms">
+        <motion.article
+          className="about_card"
+          variants={moveVariant}
+          initial="leftBottom"
+          animate="visible"
+          transition={{ duration: 1, delay: 0.2, ease: "linear" }}
+        >
           <header className="flex gap-2 items-center">
             <Image
               src="/assets/svg/mission.svg"
               width={25}
               height={25}
               alt="an icon of mission"
+              className="bg-white rounded-full"
             />{" "}
-            <h3 className="text-4xl font-bold ">Mission</h3>
+            <h3 className="text-4xl font-bold">Mission</h3>
           </header>
           <p>
-            To provide a broad based nutrition and diets related services in an
+            To provide a broad-based nutrition and diet-related services in an
             effective way to combat the emergence of non-communicable diseases
-            in recent times. To be agent of nutrition promotion and advocacy for
-            good eating practices.
+            in recent times. To be an agent of nutrition promotion
           </p>
-        </article>
-        <article className="flex flex-col gap-4 justify-between p-6 border-2 border-colorPrimary rounded revealFromLeft ani-delay_1s">
+        </motion.article>
+        <motion.article
+          className="about_card"
+          variants={moveVariant}
+          initial="leftBottom"
+          animate="visible"
+          transition={{ duration: 1, delay: 0.4, ease: "linear" }}
+        >
           <header className="flex gap-2 items-center">
             <Image
               src="/assets/svg/vision.svg"
               width={25}
               height={25}
               alt="an icon of an eye"
+              className="bg-stone-300 rounded-full"
             />{" "}
             <h3 className="text-4xl font-bold ">Vision</h3>
           </header>
@@ -67,10 +115,17 @@ const about = () => {
             To establish a suitable and an effective nutrition education and
             counseling system in Ghana and to be projected on the global map.
           </p>
-        </article>
-        <article className="flex flex-col gap-4 justify-between p-6 border-2 border-colorPrimary rounded revealFromLeft ani-delay_1500ms">
-          <header className="flex gap-2 items-center">
+        </motion.article>
+        <motion.article
+          className="about_card"
+          variants={moveVariant}
+          initial="leftBottom"
+          animate="visible"
+          transition={{ duration: 1, delay: 0.6, ease: "linear" }}
+        >
+          <header className="flex gap-2 items-center ">
             <Image
+              className="bg-white rounded-full"
               src="/assets/svg/goal.svg"
               width={25}
               height={25}
@@ -84,12 +139,7 @@ const about = () => {
             in recent times. To be agent of nutrition promotion and advocacy for
             good eating practices.
           </p>
-        </article>
-
-        <dialog id="mine">
-          <p>I am in a dialog</p>
-        </dialog>
-        {/* <button onClick={() => mine.showModal()}></button> */}
+        </motion.article>
       </section>
     </main>
   );
