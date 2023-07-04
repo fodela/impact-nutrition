@@ -14,9 +14,10 @@ const NavBar = () => {
 
   const links = [
     { href: "/", label: "Home" },
-    { href: "/blog", label: "Blogs" },
+    { href: "/blog", label: "Blog" },
+    { href: "/services", label: "Services" },
     { href: "/events", label: "Events" },
-    { href: "/about", label: "About Us" },
+    { href: "/about", label: "About" },
     { href: "/contact_us", label: "Contact Us" },
   ];
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
@@ -27,7 +28,7 @@ const NavBar = () => {
     <div>
       <header className="flex justify-between md:hidden">
         <button className="pr-4 dark:text-white" onClick={toggleSidebar}>
-          <AiOutlineMenu className="dark:text-white" size={30} />
+          <AiOutlineMenu className="text-colorPrimary" size={28} />
         </button>
       </header>
       <div ref={sidebarRootRef} id="sidebar-root" />
@@ -39,13 +40,15 @@ const NavBar = () => {
         sidebarRoot={sidebarRootRef.current}
       />
       <div className="hidden md:block">
-        <ul className="flex justify-center text-xl items-center gap-3">
+        <ul className="flex justify-center items-center gap-3">
           {links.map(({ href, label }) => (
             <li key={href}>
               <Link href={href} legacyBehavior>
                 <a
-                  className={` relative btn-effect ${
-                    pathname === href ? "active text-colorPrimary" : ""
+                  className={` relative btn-effect uppercase ${
+                    pathname === href
+                      ? "active text-colorPrimary font-bold"
+                      : ""
                   }`}
                 >
                   {label}
