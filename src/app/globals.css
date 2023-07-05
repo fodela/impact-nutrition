@@ -17,6 +17,11 @@
   }
 }
 
+*{
+  transition: all .5s ease-in;
+  
+}
+
 body {
   color: rgb(var(--foreground-rgb));
   background: linear-gradient(
@@ -57,6 +62,10 @@ body {
   @apply grid md:grid-cols-2 gap-5 lg:gap-10 items-center
 }
 
+.about_card{
+  @apply flex flex-col gap-4 justify-between p-6 dark:border-t-2 dark:border-r-2 border-slate-500 dark:bg-white/5 rounded-lg
+}
+
 .btn-active:hover .absolute,
 .btn-active:focus .absolute {
   transform: scale-x-100;
@@ -93,7 +102,9 @@ body {
    padding: 1rem;
    border-radius: 1.5rem;
  }
-
+.revealAccordion{
+  animation: revealAccordion .5s ease-out;
+}
  .revealFromDown{
 animation: revealFromDown .5s ease-out;
  }
@@ -109,6 +120,9 @@ animation: revealFromRight .5s ease-out;
  }
 .popUp{
   animation: popUp .5s ease-out ;
+}
+.slideDown{
+  animation: slideDown .5s ease-in-out;
 }
 
  .ani-delay_500ms{
@@ -132,6 +146,7 @@ animation: revealFromRight .5s ease-out;
  .ani-delay_5s{
   animation-delay: 5s;
  }
+
 
 
 
@@ -175,3 +190,24 @@ animation: revealFromRight .5s ease-out;
     transform: translateX(0);
   }
  }
+@keyframes slideDown {
+  from{
+    height: 0;
+  }
+  to{
+  height: 100%;
+ }
+}
+@keyframes revealAccordion {
+  0%{
+    opacity: 0;
+    transform: translateY(-100%);
+ 
+  }
+ 
+  100%{
+    opacity: 1;
+    transform: translateY(0);
+  
+  }
+}
