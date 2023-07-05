@@ -1,25 +1,29 @@
 'use client'
-import { redirect } from "next/navigation";
-import TabMenu from "@/components/Dashboard/DashboardTab";
-import { useSession } from "next-auth/react";
+
+import AdminDash from "@/components/Dashboard/AdminDash";
 import DashboardTable from "@/components/Dashboard/DashboardTable";
+import SubscriberDash from "@/components/Dashboard/SubscriberDash";
+import { useSession } from "next-auth/react";
 
-const Profile = async () => {
-  // const { data: session, status } = useSession()
+const Profile = () => {
+  const { data: session, status } = useSession()
 
-  // if (status === "loading") {
-  //   return <div>Loading...</div>;
-  // }
-
-  // if (status === "unauthenticated" && !session) {
-  //   redirect("/api/auth/signin");
-  // }
-  // //@ts-ignore
-  // const role = user.role;
-  return (
-    <div className="mx-2 rounded bg-gray-200 dark:bg-black/30">
-      <DashboardTable />
-    </div>
-  );
+  if (!status) {
+    return <div>Loading!</div>
+  }
+  //@ts-ignore
+  if (session) {
+    return (
+      <div className="mx-2 rounded bg-gray-200 dark:bg-black/30">
+        {status &&
+          //@ts-ignore
+          session.user.role === 'ADMINISTRATOR' && <AdminDash />}
+        {status &&
+          //@ts-ignore
+          session.user.role === 'SUBSCRIBER' && <SubscriberDash />}
+      </div>
+    );
+  }
+  return <div>Something went wrong!</div>
 };
 export default Profile;
