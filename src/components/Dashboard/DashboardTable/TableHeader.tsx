@@ -1,7 +1,7 @@
 import { capitalizeWord } from "@/app/utils/capitalizeWord";
 const headings = ["author", "status", "role", "team", "actions"];
 
-const TableHeader = () => {
+const TableHeader = ({ headings }: { headings: string[] }) => {
   return (
     <thead>
       <tr>
