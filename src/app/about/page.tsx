@@ -42,7 +42,7 @@ const about = () => {
           <p>& Vision</p>
         </motion.article>
         <Image
-          src="/assets/svg/about_us.svg"
+          src="https://impactnutritionconsult.com/assets/svg/about_us.svg"
           width={604}
           height={328}
           alt="an illustration of people collaborating"
@@ -80,7 +80,7 @@ const about = () => {
         >
           <header className="flex gap-2 items-center">
             <Image
-              src="/assets/svg/mission.svg"
+              src="https://impactnutritionconsult.com/assets/svg/mission.svg"
               width={25}
               height={25}
               alt="an icon of mission"
@@ -103,7 +103,7 @@ const about = () => {
         >
           <header className="flex gap-2 items-center">
             <Image
-              src="/assets/svg/vision.svg"
+              src="https://impactnutritionconsult.com/assets/svg/vision.svg"
               width={25}
               height={25}
               alt="an icon of an eye"
@@ -126,7 +126,7 @@ const about = () => {
           <header className="flex gap-2 items-center ">
             <Image
               className="bg-white rounded-full"
-              src="/assets/svg/goal.svg"
+              src="https://impactnutritionconsult.com/assets/svg/goal.svg"
               width={25}
               height={25}
               alt="an icon of a target"

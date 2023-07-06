@@ -29,7 +29,7 @@ const DashboardNav = () => {
         {
           tabs.map((tab) => {
             if (verifyUserRole(role, tab)) {
-              return (<li key={tab}><Link className={`px-2 lg:px-4 font-bold ${pathname === `/dashboard/${tab.toLocaleLowerCase()}` ? "border-b-2 border-white dark-black" : ""}`} href={`/dashboard/${tab.toLowerCase()}`}>{tab}</Link></li>)
+              return (<li key={tab}><Link className={`px-2 lg:px-4 font-bold ${pathname === `/dashboard/${tab.toLocaleLowerCase()}` ? "border-b-2 dark:border-white border-black" : ""}`} href={`/dashboard/${tab.toLowerCase()}`}>{tab}</Link></li>)
             }
           })
         }

@@ -2,6 +2,7 @@
 import { redirect } from "next/navigation";
 import TabMenu from "@/components/Dashboard/DashboardTab";
 import { useSession } from "next-auth/react";
+import DashboardTable from "@/components/Dashboard/DashboardTable";
 
 const Profile = async () => {
   // const { data: session, status } = useSession()
@@ -17,8 +18,7 @@ const Profile = async () => {
   // const role = user.role;
   return (
     <div className="mx-2 rounded bg-gray-200 dark:bg-black/30">
-      {/* <TabMenu role={role} /> */}
-      Dashboard
+      <DashboardTable />
     </div>
   );
 };
