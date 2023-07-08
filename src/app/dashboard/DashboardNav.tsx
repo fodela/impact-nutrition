@@ -11,6 +11,7 @@ const DashboardNav = () => {
 
   const pathname = usePathname();
   const { data: session, status } = useSession()
+  console.log('running')
   if (status === "loading") {
     return <div>Loading...</div>;
   }
@@ -25,7 +26,8 @@ const DashboardNav = () => {
   const role = session.user.role;
   return (
     <nav>
-      <ul className="flex justify-start">
+      <ul className="flex px-4 mx-4 justify-start">
+        <li><Link className={`px-2 lg:px-4 font-bold  ${pathname === `/dashboard` ? "border-b-2 dark:border-white border-black" : ""}`} href={'/dashboard'}>Dashboard</Link></li>
         {
           tabs.map((tab) => {
             if (verifyUserRole(role, tab)) {
