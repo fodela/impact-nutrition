@@ -8,9 +8,13 @@ const Hero = () => {
         <h1 className="heading_primary text-4xl   lg:text-5xl font-bold uppercase mb-4">
           EMPOWERING HEALTH AND NUTRITION EXCELLENCE{" "}
         </h1>
-        <p className="md:text-xl mb-10 ">
+        {/* <p className="md:text-xl mb-10 ">
           Your dedicated partners in reaching your health goals, one step at a
           time.
+        </p> */}
+        <p className="md:text-xl mb-10 ">
+          Promoting optimal health and nutrition for adequate growth and
+          development
         </p>
         <div className="flex gap-4 text-sm md:text-md lg:text-lg justify-center md:justify-start">
           <Link
