@@ -19,7 +19,7 @@ const Testimony = () => {
         handles among others will be mind-blowing so you should watch out for
         Impact Nutrition Consult.”
       </p>
-      <div className="flex items-center gap-4 flex-nowrap">
+      <div className="flex items-center gap-2 justify-start">
         <Image
           className={`w-24 h-24 rounded-full mx-auto ${
             isLoading
