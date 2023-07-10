@@ -38,7 +38,7 @@ export const RegisterForm = () => {
       setLoading(false);
       if (res.status !== 200) {
         const result = res.data;
-        toast.error(result?.message ? result?.message : "Something Went wrong!", {
+        toast.error("Something Went wrong!", {
           position: "top-right",
           autoClose: 5000,
           hideProgressBar: false,
@@ -63,7 +63,7 @@ export const RegisterForm = () => {
       signIn(undefined, { callbackUrl: "/dashboard" });
     } catch (error: any) {
       setLoading(false);
-      toast.error(error?.message ? error?.message : "Something Went wrong!", {
+      toast.error("Registration failed! Is there a chance you have already used that email to register?", {
         position: "top-right",
         autoClose: 5000,
         hideProgressBar: false,

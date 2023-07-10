@@ -9,31 +9,26 @@ import TableRow from './DashboardTable/TableRow'
 import Pagination from './DashboardTable/Pagination'
 import Image from 'next/image'
 import RowStatus from './DashboardTable/RowStatus'
+import { FaUser } from 'react-icons/fa'
 
 const AdminDash = () => {
     const headings = ["User", "Event Name", "Paid status", "Amount Paid", "Amount Due", "actions"];
-    const [totalPayments, setTotalPayments] = useState(0)
-    const { payments, getAllPayments } = useContext(GetPaymentContext)
+    const { payments, totalPayments, getAllPayments } = useContext(GetPaymentContext)
     const { events, getAllEvents } = useContext(GetEventContext);
     const { attendees, getAllattendees } = useContext(GetAttendeesContext);
     useEffect(() => {
         getAllPayments()
         getAllEvents()
         getAllattendees()
-        payments.length && setTotalPayments(() => payments.reduce((accumulator, payment) => {
-            return accumulator + payment.amount;
-        }, 0)
-        )
         return () => {
         }
     }, [])
-    console.log(attendees)
     return (
         <div className='py-10 bg-white dark:bg-inherit'>
             <div className='flex '>
                 <div className="flex shadow-sm rounded-lg max-w-xs  p-4 m-4 ">
-                    <p>Total Payments: </p>
-                    <p className='font-bold pl-2'>{totalPayments}</p>
+                    <p>Total Payments:</p>
+                    <p className='font-bold pl-2'>{String(totalPayments)}</p>
                 </div>
 
                 <div className="flex shadow-sm rounded-lg max-w-xs  p-4 m-4 text-black ">
@@ -51,21 +46,28 @@ const AdminDash = () => {
                                 <tr className={`hover:bg-inherit/80 ${att.paid && 'bg-green-50 dark:bg-green-900/10'}`}>
                                     <th className="flex gap-3 px-6 py-4 font-normal">
                                         <div className="relative h-10 w-10">
-                                            <Image
+                                            {/* <Image
                                                 className="h-full w-full rounded-full object-cover object-center"
                                                 src={att.user.image}
                                                 alt="profile picture"
                                                 width={100}
                                                 height={100}
-                                            />
+                                            /> */}
+                                            <FaUser className="h-full w-full rounded-full object-cover object-center" />
                                             <span className="absolute right-0 bottom-0 h-2 w-2 rounded-full bg-green-400 ring ring-white"></span>
                                         </div>
                                         <div className="text-sm">
-                                            <div className="font-medium">{att.user.name}</div>
-                                            <div className="text-gray-400">{att.user.email}</div>
+                                            <div className="font-medium">{
+                                                //@ts-ignore
+                                                att.user.name}</div>
+                                            <div className="text-gray-400">{
+                                                //@ts-ignore
+                                                att.user.email}</div>
                                         </div>
                                     </th>
-                                    <td className="px-6 py-4">{att.event.title}</td>
+                                    <td className="px-6 py-4">{
+                                        //@ts-ignore
+                                        att.event.title}</td>
 
                                     <td>
                                         {att.paid ? <span key={index} className="inline-flex items-center gap-1 rounded-full bg-green-50 dark:bg-green-600 px-2 py-1 text-xs font-semibold text-green-600 dark:text-green-50 capitalize">
