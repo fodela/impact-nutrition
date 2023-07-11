@@ -18,7 +18,7 @@ const Profile = () => {
     return (
       <GetPaymentProvider>
         <GetAttendeeProvider>
-          <div className="mx-2 rounded bg-gray-200 dark:bg-black/30">
+          <div className="rounded bg-gray-200 dark:bg-black/30">
             {status &&
               //@ts-ignore
               session.user.role === 'ADMINISTRATOR' && <AdminDash />}

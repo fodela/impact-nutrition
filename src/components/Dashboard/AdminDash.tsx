@@ -3,12 +3,8 @@ import React, { useContext, useEffect, useState } from 'react'
 import { GetPaymentContext } from '../context/PaymentContext'
 import { GetEventContext } from '../context/EventContext'
 import { GetAttendeesContext } from '../context/AttendeeContext'
-import DashboardTable from './DashboardTable'
 import TableHeader from './DashboardTable/TableHeader'
-import TableRow from './DashboardTable/TableRow'
 import Pagination from './DashboardTable/Pagination'
-import Image from 'next/image'
-import RowStatus from './DashboardTable/RowStatus'
 import { FaUser } from 'react-icons/fa'
 
 const AdminDash = () => {
@@ -31,7 +27,7 @@ const AdminDash = () => {
                     <p className='font-bold pl-2'>{String(totalPayments)}</p>
                 </div>
 
-                <div className="flex shadow-sm rounded-lg max-w-xs  p-4 m-4 text-black ">
+                <div className="flex shadow-sm rounded-lg max-w-xs  p-4 m-4 text-black dark:text-white">
                     <p className='font-bold pl-2'>{events.length}: <span>Events</span></p>
                 </div>
             </div>
@@ -46,13 +42,6 @@ const AdminDash = () => {
                                 <tr className={`hover:bg-inherit/80 ${att.paid && 'bg-green-50 dark:bg-green-900/10'}`}>
                                     <th className="flex gap-3 px-6 py-4 font-normal">
                                         <div className="relative h-10 w-10">
-                                            {/* <Image
-                                                className="h-full w-full rounded-full object-cover object-center"
-                                                src={att.user.image}
-                                                alt="profile picture"
-                                                width={100}
-                                                height={100}
-                                            /> */}
                                             <FaUser className="h-full w-full rounded-full object-cover object-center" />
                                             <span className="absolute right-0 bottom-0 h-2 w-2 rounded-full bg-green-400 ring ring-white"></span>
                                         </div>
