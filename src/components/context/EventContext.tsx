@@ -52,4 +52,3 @@ const GetEventsProvider = ({ children }: ChildrenProps) => {
 };
 
 export default GetEventsProvider;
-;

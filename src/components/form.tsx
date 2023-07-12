@@ -11,6 +11,9 @@ import "react-toastify/ReactToastify.min.css";
 export const RegisterForm = () => {
   let [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
+  const [showverifyPass, setshowverifyPass] = useState(false);
+  const [passwordMatch, setPasswordMatch] = useState(true);
+
   let [formValues, setFormValues] = useState({
     firstname: "",
     lastname: "",
@@ -18,6 +21,7 @@ export const RegisterForm = () => {
     username: "",
     email: "",
     password: "",
+    verifyPass: ""
   });
 
   const onSubmit = async (e: React.FormEvent) => {
@@ -34,7 +38,7 @@ export const RegisterForm = () => {
       setLoading(false);
       if (res.status !== 200) {
         const result = res.data;
-        toast.error(result?.message ? result?.message : "Something Went wrong!", {
+        toast.error("Something Went wrong!", {
           position: "top-right",
           autoClose: 5000,
           hideProgressBar: false,
@@ -59,7 +63,7 @@ export const RegisterForm = () => {
       signIn(undefined, { callbackUrl: "/dashboard" });
     } catch (error: any) {
       setLoading(false);
-      toast.error(error?.message ? error?.message : "Something Went wrong!", {
+      toast.error("Registration failed! Is there a chance you have already used that email to register?", {
         position: "top-right",
         autoClose: 5000,
         hideProgressBar: false,
@@ -72,17 +76,29 @@ export const RegisterForm = () => {
     }
   };
 
-
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
-    setFormValues({ ...formValues, [name]: value });
+
+    setFormValues((prevFormValues) => {
+      const updatedFormValues = { ...prevFormValues, [name]: value };
+
+      if (name === 'password' || name === 'verifyPass') {
+        setPasswordMatch(
+          updatedFormValues.password === updatedFormValues.verifyPass
+        );
+      }
+
+      return updatedFormValues;
+    });
   };
+
+
 
   return (
     <div className="flex my-8 flex-col justify-center items-center h-screen">
       <h1 className="text-3xl font-bold mb-6">Create a new account</h1>
       <form
-        className="max-w-md"
+        className="max-w-md shadow-md m-4 p-6"
         onSubmit={onSubmit}
       >
         <label className="font-bold" htmlFor="firstname">Firstname</label>
@@ -127,7 +143,7 @@ export const RegisterForm = () => {
         />
         <label className="font-bold" htmlFor="email">Email</label>
         <input
-          className="appearance-none my-4 border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+          className={`appearance-none my-4 border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline`}
           required
           type="email"
           name="email"
@@ -139,7 +155,7 @@ export const RegisterForm = () => {
         <label htmlFor="password">Password</label>
         <div className="flex relative">
           <input
-            className="appearance-none my-4 border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            className={`appearance-none my-4 border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${!passwordMatch && "border-red-600"}`}
             required
             type={showPassword ? 'text' : 'password'}
             name="password"
@@ -156,14 +172,36 @@ export const RegisterForm = () => {
           </button>
         </div>
 
+        <label htmlFor="verifyPass">Confirm Password</label>
+        <div className="flex relative">
+          <input
+            className={`appearance-none my-4 border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${!passwordMatch && "border-red-600"}`}
+            required
+            type={showverifyPass ? 'text' : 'password'}
+            name="verifyPass"
+            value={formValues.verifyPass}
+            onChange={handleChange}
+            style={{ padding: "1rem" }}
+          />
+
+          <button
+            type="button"
+            onClick={() => setshowverifyPass(!showverifyPass)}
+            className="text-gray-700 ml-2 absolute right-2 h-full focus:outline-none"
+          >
+            {showverifyPass ? <AiFillEyeInvisible size={30} /> : <AiFillEye size={30} />}
+          </button>
+        </div>
+
         <div className="flex my-6 justify-between">
           <button
             className="bg-colorPrimary hover:bg-green-800 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-            disabled={loading}
+            disabled={loading || !passwordMatch}
           >
-            {loading ? "loading..." : "Register"}
+            {loading ? "Loading..." : "Register"}
           </button>
-          <Link className="bg-colorPrimary hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" href={'/api/auth/signin'}>Login</Link>
+
+          <Link className="border-b border-b-green-600 font-bold py-2 px-4 rounded focus:outline-none hover:shadow-outline" href={'/api/auth/signin'}>Login</Link>
         </div>
       </form>
 

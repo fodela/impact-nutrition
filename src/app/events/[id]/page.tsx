@@ -29,8 +29,6 @@ const EventPage = () => {
     };
 
     useEffect(() => {
-
-
         const getAllMyEvents = async () => {
             try {
                 const allMyEvents = await getMyEvents(id);
