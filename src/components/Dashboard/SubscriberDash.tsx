@@ -58,7 +58,7 @@ const SubscriberDash = () => {
                                     </th>
                                     <td className="px-6 py-4">{evnt.title}</td>
 
-                                    <td className="px-6 py-4">{evnt.details}</td>
+                                    <td className="px-6 py-4">  {evnt.details && <div dangerouslySetInnerHTML={{ __html: evnt.details }} />}</td>
                                     <td className="px-6 py-4">{evnt.location}</td>
                                     <td className="px-6 py-4">{evnt.price}</td>
                                     <a href={`/events/${evnt.id}`} className='bg-green-500 text-white py-2 rounded-md px-4 m-2'>More</a>
