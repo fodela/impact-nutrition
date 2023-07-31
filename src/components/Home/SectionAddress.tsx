@@ -1,13 +1,10 @@
-"use client";
-import Image from "next/image";
-import { useRef } from "react";
 import { BsTelephone } from "react-icons/bs";
 import { FiMail } from "react-icons/fi";
 import { ImLocation } from "react-icons/im";
 
 const SectionAddress = () => {
   return (
-    <section className="max-w-screen-md md:flex justify-center md:mx-auto">
+    <section className="max-w-screen-md md:flex justify-center md:mx-auto my-10">
       <div className="flex flex-col items-center justify-center">
         <div className="rounded-full mb-4 shadow-md max-w-fit bg-gray-100 p-6">
           <FiMail className="text-colorPrimary" size={80} />

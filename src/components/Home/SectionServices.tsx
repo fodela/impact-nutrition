@@ -32,7 +32,7 @@ const services = [
 const SectionServices = () => {
   return (
     <section className="bg-[#EDF6EF] dark:bg-black py-24 pt-16 ">
-      <div className="max-w-screen-xl px-2 md:mx-auto my-2 ">
+      <header className="max-w-screen-xl px-2 md:mx-auto my-2 ">
         <h2 className="text-xl font-bold text-center mt-10 text-colorPrimary">
           Our Services
         </h2>
@@ -44,7 +44,7 @@ const SectionServices = () => {
           food and nutrition, emphasizing their profound impact on health in a
           sustainable manner for our communities.
         </p>
-      </div>
+      </header>
       <div className=" pt-8 py-5  px-10 grid md:grid-cols-2 lg:grid-cols-4 gap-5 max-w-screen-xl mx-auto">
         {services.map((service, ind) => (
           <ServiceCard service={service} key={ind} />
