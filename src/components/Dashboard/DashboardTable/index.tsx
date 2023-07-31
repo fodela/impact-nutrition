@@ -58,7 +58,7 @@ const DashboardTable = () => {
   return (
     <div className="overflow-hidden rounded-lg border border-gray-200 shadow-md m-5 divide-y-2">
       <table className="w-full border-collapse  text-left text-sm">
-        <TableHeader />
+        {/* <TableHeader /> */}
         <tbody className="divide-y divide-gray-100 border-t border-gray-100">
           {rowDetails.map((detail, index) => (
             <TableRow key={index} rowDetail={detail} />
