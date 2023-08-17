@@ -72,4 +72,3 @@ const GetPostsProvider = ({ children }: ChildrenProps) => {
 };
 
 export default GetPostsProvider;
-;

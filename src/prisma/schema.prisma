@@ -10,21 +10,49 @@ generator client {
   provider = "prisma-client-js"
 }
 
+model SiteSetting {
+  id              Int         @id @default(autoincrement())
+  name            String
+  owner           String
+  directorName    String
+  directorPostion String
+  directorMessage String
+  createdDate     DateTime    @default(now())
+  licenseStatus   String
+  hero            Hero        @relation(fields: [heroId], references: [id])
+  homeSettings    HomeService @relation(fields: [homeServiceId], references: [id])
+  createdAt       DateTime    @default(now())
+  updatedAt       DateTime    @updatedAt
+  heroId          Int
+  homeServiceId   String
+}
+
 model Hero {
-  id        Int      @id @default(autoincrement())
-  header    String
-  content   String
-  link      String
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id          Int           @id @default(autoincrement())
+  header      String
+  content     String
+  link        String
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+  SiteSetting SiteSetting[]
+}
+
+model Faq {
+  id           Int           @id @default(autoincrement())
+  title        String
+  description  String
+  faqQuestions FaqQuestion[]
+
+  @@map(name: "faq_questions")
 }
 
 model HomeService {
-  id          String    @id @default(cuid())
+  id          String        @id @default(cuid())
   name        String
   title       String
   description String
   services    Service[]
+  SiteSetting SiteSetting[]
 
   // Add the opposite relation field in the HomeService model
   @@map(name: "home_service_services")
@@ -40,6 +68,14 @@ model Service {
   homeServices HomeService[]
 
   @@map(name: "service_home_services")
+}
+
+model FaqQuestion {
+  id     String @id @default(cuid())
+  title  String
+  Answer String
+  Faq    Faq?   @relation(fields: [faqId], references: [id])
+  faqId  Int?
 }
 
 model Post {
