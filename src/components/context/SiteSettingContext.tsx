@@ -21,7 +21,7 @@ export const GetPostsContext = createContext<GetPostsContextType>({
 
 
 
-const GetPostsProvider = ({ children }: ChildrenProps) => {
+const GetSiteSettingProvider = ({ children }: ChildrenProps) => {
     const [pubPosts, setPubPosts] = useState<Post[]>([]);
     const [posts, setAllPosts] = useState<Post[]>([]);
 
@@ -71,4 +71,4 @@ const GetPostsProvider = ({ children }: ChildrenProps) => {
     );
 };
 
-export default GetPostsProvider;
+export default GetSiteSettingProvider;
