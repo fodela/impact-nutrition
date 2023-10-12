@@ -15,7 +15,7 @@ const NavBar = () => {
   const links = [
     { href: "/", label: "Home" },
     { href: "/blog", label: "Blog" },
-    { href: "/services", label: "Services" },
+    // { href: "/services", label: "Services" },
     { href: "/events", label: "Events" },
     { href: "/about", label: "About" },
     { href: "/contact_us", label: "Contact Us" },
@@ -45,11 +45,10 @@ const NavBar = () => {
             <li key={href}>
               <Link href={href} legacyBehavior>
                 <a
-                  className={` relative btn-effect uppercase ${
-                    pathname === href
+                  className={` relative btn-effect uppercase ${pathname === href
                       ? "active text-colorPrimary font-bold"
                       : ""
-                  }`}
+                    }`}
                 >
                   {label}
                   <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-green-400 transition-all duration-300 opacity-0"></span>

@@ -69,9 +69,9 @@ const SectionFAQ = () => {
       <div className="grid sm:grid-cols-2 items-start gap-4 ">
         {faqs.map((faq) => (
           <div
-            className={`flex flex-col shadow-lg overflow-clip  ${
-              activeId == faq.id && "sm:row-span-2"
-            }`}
+            key={faq.id}
+            className={`flex flex-col shadow-lg overflow-clip  ${activeId == faq.id && "sm:row-span-2"
+              }`}
           >
             <header
               className="flex gap-2 items-center justify-between bg-[#EDF6EF] dark:bg-[hsl(133,33%,10%)] rounded-t-lg p-4 z-10 "
@@ -79,9 +79,8 @@ const SectionFAQ = () => {
             >
               <h2>{faq.title} </h2>{" "}
               <IoIosArrowDown
-                className={`${
-                  activeId == faq.id && "rotate-180 "
-                } transition-transform ease-in-out`}
+                className={`${activeId == faq.id && "rotate-180 "
+                  } transition-transform ease-in-out`}
                 size={20}
               />
             </header>

@@ -5,7 +5,7 @@ import { motion } from "framer-motion";
 import Image from "next/image";
 import { useEffect } from "react";
 
-const about = () => {
+const About = () => {
   useEffect(() => {
     const elements = document.querySelectorAll(".reveal");
 
@@ -145,4 +145,4 @@ const about = () => {
   );
 };
 
-export default about;
+export default About;
