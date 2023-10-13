@@ -52,12 +52,22 @@ This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-opti
    sudo apt-get update
    sudo apt install postgresql postgresql-contrib
    sudo -i -u postgres
-   CREATE ROLE your_username WITH
-   LOGIN
-   CREATEDB
-   CREATEROLE;
+   psql
 ```
+```bash
+    CREATE ROLE your_username WITH 
+    LOGIN 
+    CREATEDB 
+    CREATEROLE;
+```
+### Update the env file using the sample.env file as an example. use the database credentials from the above.
 
+```bash
+    yarn run prisma-init
+    yarn run prisma-generaate
+    yarn run prisma-push 
+    yarn run seed
+```
 ### Update the sample.env to .env.local file with your details
 
 ```
