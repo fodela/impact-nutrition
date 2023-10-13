@@ -102,6 +102,15 @@ body {
    padding: 1rem;
    border-radius: 1.5rem;
  }
+
+ .favicon_bg{
+  background-image: url("../../public/assets/svg/bg_favicon.svg");
+  background-position: center;
+  background-size: contain;
+  background-repeat: no-repeat;
+ 
+}
+
 .revealAccordion{
   animation: revealAccordion .5s ease-out;
 }

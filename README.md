@@ -1,3 +1,5 @@
+# Impact Nutriction Consult
+
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
 ## Getting Started
@@ -39,11 +41,11 @@ This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-opti
 // Add help page with an explanation of how to use the system.
 // Add login with Google functionality and ensure it works well with the app.
 
-# Get started
+## Get started
 
-## Set up database
+### Set up database
 
-### [Install psql](https://www.timescale.com/blog/how-to-install-psql-on-mac-ubuntu-debian-windows/)
+- [Install psql](https://www.timescale.com/blog/how-to-install-psql-on-mac-ubuntu-debian-windows/)
 
 - If you are on windows, kindly use [wsl 2](https://learn.microsoft.com/en-us/windows/wsl/install) and you can continue from the steps below.
 - Run
@@ -70,7 +72,7 @@ This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-opti
 ```
 ### Update the sample.env to .env.local file with your details
 
-```
+```bash
 DATABASE_URL="postgresql://ursername:password@localhost:5432/db_name?schema=public"
 NEXTAUTH_SECRET=RXeV5QUbhDXeF6LnYVFIy0pRRDKE2oJuvAQlMydsdR4=
 NEXTAUTH_URL=http://localhost:3000
@@ -81,7 +83,7 @@ LOCALURL=http://localhost:3000
 
 ### Initialize prisma
 
-```
+```bash
     npm install
     npm run prisma-generate
     npm run prisma-reset
