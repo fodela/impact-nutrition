@@ -62,11 +62,16 @@ export const RegisterForm = () => {
         progress: undefined,
         theme: "colored",
       });
-      signIn(undefined, { callbackUrl: "/dashboard" });
+      const {phone , password} = formValues;
+      signIn('credentials', {
+        phone, 
+        password, 
+        callbackUrl: "/dashboard" // Redirect URL after successful login
+      })
     } catch (error: any) {
       setLoading(false);
       console.log(error, 'error')
-      toast.error("Registration failed! Is there a chance you have already used that email to register?", {
+      toast.error("Registration failed! Is there a chance you have already used that phone number to register?", {
         position: "top-right",
         autoClose: 5000,
         hideProgressBar: false,
