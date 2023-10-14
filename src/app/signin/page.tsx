@@ -7,7 +7,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/ReactToastify.min.css";
 
 const LoginForm = () => {
-    const [email, setEmail] = useState("");
+    const [phone, setPhone] = useState("");
     const [password, setPassword] = useState("");
     const [providers, setProviders] = useState([]);
     const [showPassword, setShowPassword] = useState(false);
@@ -20,7 +20,7 @@ const LoginForm = () => {
     }, [providers, setProviders]);
 
     const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setEmail(e.target.value);
+        setPhone(e.target.value.trim());
     };
 
     const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -31,12 +31,12 @@ const LoginForm = () => {
         e.preventDefault();
         try {
             const result = await signIn('credentials', {
-                email,
+                phone,
                 password,
                 redirect: false,
             });
             if (result && result.url) {
-                toast.success('Awesome! Welcome!', {
+                toast.success('Awesome Welcome!', {
                     position: "top-right",
                     autoClose: 5000,
                     hideProgressBar: false,
@@ -48,21 +48,11 @@ const LoginForm = () => {
                 });
                 window.location.href = '/dashboard';
             } else {
-                toast.error('Unable to login, Incorrect email or password.', {
-                    position: "top-right",
-                    autoClose: 5000,
-                    hideProgressBar: false,
-                    closeOnClick: true,
-                    pauseOnHover: true,
-                    draggable: true,
-                    progress: undefined,
-                    theme: "colored",
-                });
+              throw new Error("Something went wrong");
             }
 
-
         } catch (error) {
-            toast.error('Something went wrong.', {
+            toast.error(`Unable to login! Wrong phone number or password!`, {
                 position: "top-right",
                 autoClose: 5000,
                 hideProgressBar: false,
@@ -89,17 +79,26 @@ const LoginForm = () => {
     return (
         <div className="h-full my-6">
             <h1 className="text-3xl text-center font-bold mb-6">Login</h1>
-            <form className="max-w-md mx-auto my-auto">
+           
+            <form className="max-w-md mx-auto my-auto"> 
+            <div className="py-6 font-bold px-4">
+                <Link
+                    className="rounded hover:outline-none hover:shadow-outline"
+                    href={'/register'}
+                >
+                    Register
+                </Link>
+            </div>
                 <div className="mb-4">
-                    <label htmlFor="email" className="block text-gray-700 font-bold mb-2">
-                        Email
+                    <label htmlFor="phone" className="block text-gray-700 font-bold mb-2">
+                        Phone
                     </label>
                     <input
-                        type="email"
-                        id="email"
+                        type="phone"
+                        id="phone"
                         className="appearance-none border rounded w-full min-w-md py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                        placeholder="Email"
-                        value={email}
+                        placeholder="phone"
+                        value={phone}
                         onChange={handleEmailChange}
                     />
                 </div>
@@ -135,12 +134,6 @@ const LoginForm = () => {
                     >
                         Login
                     </button>
-                    <Link
-                        className="border-b border-b-green-600 font-bold py-2 px-4 rounded hover:outline-none hover:shadow-outline"
-                        href={'/register'}
-                    >
-                        Register
-                    </Link>
                 </div>
             </form>
 

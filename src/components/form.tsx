@@ -17,8 +17,8 @@ export const RegisterForm = () => {
   let [formValues, setFormValues] = useState({
     firstname: "",
     lastname: "",
-    date_of_birth: "",
-    username: "",
+    phone: "",
+    professional_pin: "",
     email: "",
     password: "",
     verifyPass: ""
@@ -29,6 +29,7 @@ export const RegisterForm = () => {
     setLoading(true);
 
     try {
+      console.log(formValues, 'formbalues')
       const res = await axios.post("/api/register", formValues, {
         headers: {
           "Content-Type": "application/json",
@@ -38,7 +39,8 @@ export const RegisterForm = () => {
       setLoading(false);
       if (res.status !== 200) {
         const result = res.data;
-        toast.error("Something Went wrong!", {
+        console.log(res.data, 'data')
+        toast.error(`Something went wrong! ${res.data}`, {
           position: "top-right",
           autoClose: 5000,
           hideProgressBar: false,
@@ -63,6 +65,7 @@ export const RegisterForm = () => {
       signIn(undefined, { callbackUrl: "/dashboard" });
     } catch (error: any) {
       setLoading(false);
+      console.log(error, 'error')
       toast.error("Registration failed! Is there a chance you have already used that email to register?", {
         position: "top-right",
         autoClose: 5000,
@@ -80,7 +83,7 @@ export const RegisterForm = () => {
     const { name, value } = event.target;
 
     setFormValues((prevFormValues) => {
-      const updatedFormValues = { ...prevFormValues, [name]: value };
+      const updatedFormValues = { ...prevFormValues, [name]: value.trim() };
 
       if (name === 'password' || name === 'verifyPass') {
         setPasswordMatch(
@@ -121,23 +124,23 @@ export const RegisterForm = () => {
           onChange={handleChange}
           style={{ padding: "1rem" }}
         />
-        <label className="font-bold" htmlFor="username">Username</label>
+        <label className="font-bold" htmlFor="phone">Phone</label>
+        <input
+          className="appearance-none my-4 border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+          required
+          type="phone"
+          name="phone"
+          value={formValues.phone}
+          onChange={handleChange}
+          style={{ padding: "1rem" }}
+        />
+        <label className="font-bold" htmlFor="professional_pin">Professional Pin</label>
         <input
           className="appearance-none my-4 border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
           required
           type="text"
-          name="username"
-          value={formValues.username}
-          onChange={handleChange}
-          style={{ padding: "1rem" }}
-        />
-        <label className="font-bold" htmlFor="date_of_birth">Date of birth</label>
-        <input
-          className="appearance-none my-4 border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-          required
-          type="date"
-          name="date_of_birth"
-          value={formValues.date_of_birth}
+          name="professional_pin"
+          value={formValues.professional_pin}
           onChange={handleChange}
           style={{ padding: "1rem" }}
         />

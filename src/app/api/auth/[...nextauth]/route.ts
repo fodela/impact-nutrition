@@ -12,8 +12,8 @@ export type User = {
   name: String,
   email: String,
   password?: String,
-  username?: String,
-  date_of_birth?: String,
+  phone: String,
+  professional_pin?: String,
   role: String
 }
 
@@ -32,9 +32,9 @@ export const authOptions: NextAuthOptions = {
       clientSecret: process.env.GOOGLE_SECRET,
     }),
     CredentialsProvider({
-      name: 'Email',
+      name: 'Phone',
       credentials: {
-        email: { label: 'Email', type: 'text', placeholder: 'kel@gmail.com' },
+        phone: { label: 'Phone', type: 'text', placeholder: '0546249862' },
         password: {
           label: 'Password',
           type: 'password',
@@ -43,26 +43,26 @@ export const authOptions: NextAuthOptions = {
       },
       async authorize(credentials, req) {
         try {
-          if (!credentials?.email || !credentials?.password) {
+          if (!credentials?.phone || !credentials?.password) {
             throw new Error('Please provide an email or a password')
           }
 
           const user = await prisma.user.findUnique({
             where: {
-              email: credentials?.email
+              phone: credentials?.phone
             }
           })
           if (!user) {
-            throw new Error('Wrong email')
+            throw new Error('Wrong prhone number')
           }
           //@ts-ignore
           const isPasswordValid = await compare(credentials?.password, user.password)
           if (!isPasswordValid) {
-            throw new Error('Wrong email')
+            throw new Error('Wrong password')
           }
           return {
             id: user.id,
-            email: user.email,
+            phone: user.phone,
             role: user.role
           }
         } catch (error) {
