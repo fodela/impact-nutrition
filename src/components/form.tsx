@@ -52,7 +52,7 @@ export const RegisterForm = () => {
         });
         return;
       }
-      toast.success("Registration is successful. Verify your email!", {
+      toast.success("Registration is successful. Redirecting to dashboard", {
         position: "top-right",
         autoClose: 5000,
         hideProgressBar: false,
@@ -103,12 +103,13 @@ export const RegisterForm = () => {
 
 
   return (
-    <div className="flex my-8 flex-col justify-center items-center h-screen">
-      <h1 className="text-3xl font-bold mb-6">Create a new account</h1>
+    <div className="w-full">
+      <h1 className="text-3xl text-center font-bold mb-6">Create a new account</h1>
       <form
-        className="max-w-md shadow-md m-4 p-6"
+        className="shadow-md m-4 p-6"
         onSubmit={onSubmit}
       >
+        <div className="max-w-xl mx-auto">
         <label className="font-bold" htmlFor="firstname">Firstname</label>
         <input
           className="appearance-none my-4 border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
@@ -210,6 +211,7 @@ export const RegisterForm = () => {
           </button>
 
           <Link className="border-b border-b-green-600 font-bold py-2 px-4 rounded focus:outline-none hover:shadow-outline" href={'/api/auth/signin'}>Login</Link>
+        </div>
         </div>
       </form>
 

@@ -1,4 +1,5 @@
 'use client'
+import sendSms from "@/components/sms/sendSms";
 import { signIn, useSession, getProviders } from "next-auth/react";
 import Link from "next/link";
 import { useEffect, useState } from "react";
@@ -11,6 +12,11 @@ const LoginForm = () => {
     const [password, setPassword] = useState("");
     const [providers, setProviders] = useState([]);
     const [showPassword, setShowPassword] = useState(false);
+
+    const sendnewSms = () => {
+        let res = sendSms("+233200784008", "Impact Nutrition", "Here is how to send an sms")
+        console.log(res,'res')
+    }
 
     useEffect(() => {
         const setProvidr = async () => {
@@ -78,6 +84,8 @@ const LoginForm = () => {
     // </div>
     return (
         <div className="h-full my-6">
+            {/* Testing sending messages. remove when done */}
+            {/* <button onClick={sendnewSms}>Send sms</button> */}
             <h1 className="text-3xl text-center font-bold mb-6">Login</h1>
            
             <form className="max-w-md mx-auto my-auto"> 
