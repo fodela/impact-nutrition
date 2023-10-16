@@ -28,9 +28,8 @@ const Profile = () => {
           </div>
         </GetAttendeeProvider>
       </GetPaymentProvider>
-
     );
   }
-  return <div>Something went wrong!</div>
+  return <div>We are setting you up!</div>
 };
 export default Profile;

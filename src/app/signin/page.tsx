@@ -1,4 +1,5 @@
 'use client'
+import { RegisterForm } from "@/components/form";
 import sendSms from "@/components/sms/sendSms";
 import { signIn, useSession, getProviders } from "next-auth/react";
 import Link from "next/link";
@@ -10,6 +11,7 @@ import "react-toastify/ReactToastify.min.css";
 const LoginForm = () => {
     const [phone, setPhone] = useState("");
     const [password, setPassword] = useState("");
+    const [showSignin, setShowSignIn] = useState(false)
     const [providers, setProviders] = useState([]);
     const [showPassword, setShowPassword] = useState(false);
 
@@ -84,67 +86,64 @@ const LoginForm = () => {
     // </div>
     return (
         <div className="h-full my-6">
-            {/* Testing sending messages. remove when done */}
-            {/* <button onClick={sendnewSms}>Send sms</button> */}
-            <h1 className="text-3xl text-center font-bold mb-6">Login</h1>
-           
-            <form className="max-w-md mx-auto my-auto"> 
-            <div className="py-6 font-bold px-4">
-                <Link
-                    className="rounded hover:outline-none hover:shadow-outline"
-                    href={'/register'}
-                >
-                    Register
-                </Link>
+            <div className="flex justify-center my-8">
+                <button className="bg-green-400 border-1 rounded-md text-white font-bold px-4 py-2" onClick={() => setShowSignIn(!showSignin)}> {showSignin ? <>Register</> : <>Log In</>} </button>
             </div>
-                <div className="mb-4">
-                    <label htmlFor="phone" className="block text-gray-700 font-bold mb-2">
-                        Phone
-                    </label>
-                    <input
-                        type="phone"
-                        id="phone"
-                        className="appearance-none border rounded w-full min-w-md py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                        placeholder="phone"
-                        value={phone}
-                        onChange={handleEmailChange}
-                    />
-                </div>
-                <div className="mb-6">
-                    <label htmlFor="password" className="block text-gray-700 font-bold mb-2">
-                        Password
-                    </label>
-                    <div className="flex relative">
-                        <input type={showPassword ? 'text' : 'password'}
-                            id="password"
-                            className="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                            placeholder="Password"
-                            value={password}
-                            onChange={handlePasswordChange}
+            {showSignin ? <>
+                <button onClick={sendnewSms}>Send sms</button>
+                <h1 className="text-3xl text-center font-bold mb-6">Login</h1>
+
+                <form className="max-w-md mx-auto my-auto">
+                    <div className="mb-4">
+                        <label htmlFor="phone" className="block text-gray-700 font-bold mb-2">
+                            Phone
+                        </label>
+                        <input
+                            type="phone"
+                            id="phone"
+                            className="appearance-none border rounded w-full min-w-md py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                            placeholder="phone"
+                            value={phone}
+                            onChange={handleEmailChange}
                         />
+                    </div>
+                    <div className="mb-6">
+                        <label htmlFor="password" className="block text-gray-700 font-bold mb-2">
+                            Password
+                        </label>
+                        <div className="flex relative">
+                            <input type={showPassword ? 'text' : 'password'}
+                                id="password"
+                                className="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                                placeholder="Password"
+                                value={password}
+                                onChange={handlePasswordChange}
+                            />
+                            <button
+                                type="button"
+                                onClick={() => setShowPassword(!showPassword)}
+                                className="text-gray-700 ml-2 absolute right-2 h-full focus:outline-none"
+                            >
+                                {showPassword ? <AiFillEyeInvisible size={30} /> : <AiFillEye size={30} />}
+                            </button>
+                        </div>
+
+                    </div>
+                    <div className="flex justify-between">
                         <button
-                            type="button"
-                            onClick={() => setShowPassword(!showPassword)}
-                            className="text-gray-700 ml-2 absolute right-2 h-full focus:outline-none"
+                            className="bg-colorPrimary hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                            type="submit"
+                            onClick={(event) => {
+                                handleLogin(event);
+                            }}
                         >
-                            {showPassword ? <AiFillEyeInvisible size={30} /> : <AiFillEye size={30} />}
+                            Login
                         </button>
                     </div>
-
-                </div>
-                <div className="flex justify-between">
-                    <button
-                        className="bg-colorPrimary hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-                        type="submit"
-                        onClick={(event) => {
-                            handleLogin(event);
-                        }}
-                    >
-                        Login
-                    </button>
-                </div>
-            </form>
-
+                </form>
+            </> : <>
+            <RegisterForm />
+            </>}
         </div>
     );
 };
