@@ -87,7 +87,7 @@ const LoginForm = () => {
     return (
         <div className="h-full my-6">
             <div className="flex justify-center my-8">
-                <button className="bg-green-400 border-1 rounded-md text-white font-bold px-4 py-2" onClick={() => setShowSignIn(!showSignin)}> {showSignin ? <>Register</> : <>Log In</>} </button>
+                <button className="underline border-1 rounded-md text-lg font-bold px-4 py-2" onClick={() => setShowSignIn(!showSignin)}> {showSignin ? <>Register</> : <>Log In</>} </button>
             </div>
             {showSignin ? <>
                 <button onClick={sendnewSms}>Send sms</button>
