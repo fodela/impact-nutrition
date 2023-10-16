@@ -15,7 +15,7 @@
     "prisma-studio": "cd src && npx prisma studio",
     "prisma-seed": "cd src && npx prisma db seed",
     "prisma-generate": "npx prisma generate --schema=./src/prisma/schema.prisma",
-    "prisma-reset": "npx prisma migrate dev --schema=./src/prisma/schema.prisma ",
+    "prisma-reset": "npx prisma migrate reset --schema=./src/prisma/schema.prisma --skip-seed",
     "seed": "ts-node src/prisma/seed.ts"
   },
   "dependencies": {

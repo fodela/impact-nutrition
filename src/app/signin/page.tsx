@@ -1,4 +1,6 @@
 'use client'
+import { RegisterForm } from "@/components/form";
+import sendSms from "@/components/sms/sendSms";
 import { signIn, useSession, getProviders } from "next-auth/react";
 import Link from "next/link";
 import { useEffect, useState } from "react";
@@ -7,10 +9,16 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/ReactToastify.min.css";
 
 const LoginForm = () => {
-    const [email, setEmail] = useState("");
+    const [phone, setPhone] = useState("");
     const [password, setPassword] = useState("");
+    const [showSignin, setShowSignIn] = useState(false)
     const [providers, setProviders] = useState([]);
     const [showPassword, setShowPassword] = useState(false);
+
+    const sendnewSms = () => {
+        let res = sendSms("+233200784008", "Impact Nutrition", "Here is how to send an sms")
+        console.log(res,'res')
+    }
 
     useEffect(() => {
         const setProvidr = async () => {
@@ -20,7 +28,7 @@ const LoginForm = () => {
     }, [providers, setProviders]);
 
     const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setEmail(e.target.value);
+        setPhone(e.target.value.trim());
     };
 
     const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -31,12 +39,12 @@ const LoginForm = () => {
         e.preventDefault();
         try {
             const result = await signIn('credentials', {
-                email,
+                phone,
                 password,
                 redirect: false,
             });
             if (result && result.url) {
-                toast.success('Awesome! Welcome!', {
+                toast.success('Awesome Welcome!', {
                     position: "top-right",
                     autoClose: 5000,
                     hideProgressBar: false,
@@ -48,21 +56,11 @@ const LoginForm = () => {
                 });
                 window.location.href = '/dashboard';
             } else {
-                toast.error('Unable to login, Incorrect email or password.', {
-                    position: "top-right",
-                    autoClose: 5000,
-                    hideProgressBar: false,
-                    closeOnClick: true,
-                    pauseOnHover: true,
-                    draggable: true,
-                    progress: undefined,
-                    theme: "colored",
-                });
+              throw new Error("Something went wrong");
             }
 
-
         } catch (error) {
-            toast.error('Something went wrong.', {
+            toast.error(`Unable to login! Wrong phone number or password!`, {
                 position: "top-right",
                 autoClose: 5000,
                 hideProgressBar: false,
@@ -88,62 +86,64 @@ const LoginForm = () => {
     // </div>
     return (
         <div className="h-full my-6">
-            <h1 className="text-3xl text-center font-bold mb-6">Login</h1>
-            <form className="max-w-md mx-auto my-auto">
-                <div className="mb-4">
-                    <label htmlFor="email" className="block text-gray-700 font-bold mb-2">
-                        Email
-                    </label>
-                    <input
-                        type="email"
-                        id="email"
-                        className="appearance-none border rounded w-full min-w-md py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                        placeholder="Email"
-                        value={email}
-                        onChange={handleEmailChange}
-                    />
-                </div>
-                <div className="mb-6">
-                    <label htmlFor="password" className="block text-gray-700 font-bold mb-2">
-                        Password
-                    </label>
-                    <div className="flex relative">
-                        <input type={showPassword ? 'text' : 'password'}
-                            id="password"
-                            className="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                            placeholder="Password"
-                            value={password}
-                            onChange={handlePasswordChange}
+            <div className="flex justify-center my-8">
+                <button className="underline border-1 rounded-md text-lg font-bold px-4 py-2" onClick={() => setShowSignIn(!showSignin)}> {showSignin ? <>Register</> : <>Log In</>} </button>
+            </div>
+            {showSignin ? <>
+                <button onClick={sendnewSms}>Send sms</button>
+                <h1 className="text-3xl text-center font-bold mb-6">Login</h1>
+
+                <form className="max-w-md mx-auto my-auto">
+                    <div className="mb-4">
+                        <label htmlFor="phone" className="block text-gray-700 font-bold mb-2">
+                            Phone
+                        </label>
+                        <input
+                            type="phone"
+                            id="phone"
+                            className="appearance-none border rounded w-full min-w-md py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                            placeholder="phone"
+                            value={phone}
+                            onChange={handleEmailChange}
                         />
+                    </div>
+                    <div className="mb-6">
+                        <label htmlFor="password" className="block text-gray-700 font-bold mb-2">
+                            Password
+                        </label>
+                        <div className="flex relative">
+                            <input type={showPassword ? 'text' : 'password'}
+                                id="password"
+                                className="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                                placeholder="Password"
+                                value={password}
+                                onChange={handlePasswordChange}
+                            />
+                            <button
+                                type="button"
+                                onClick={() => setShowPassword(!showPassword)}
+                                className="text-gray-700 ml-2 absolute right-2 h-full focus:outline-none"
+                            >
+                                {showPassword ? <AiFillEyeInvisible size={30} /> : <AiFillEye size={30} />}
+                            </button>
+                        </div>
+
+                    </div>
+                    <div className="flex justify-between">
                         <button
-                            type="button"
-                            onClick={() => setShowPassword(!showPassword)}
-                            className="text-gray-700 ml-2 absolute right-2 h-full focus:outline-none"
+                            className="bg-colorPrimary hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                            type="submit"
+                            onClick={(event) => {
+                                handleLogin(event);
+                            }}
                         >
-                            {showPassword ? <AiFillEyeInvisible size={30} /> : <AiFillEye size={30} />}
+                            Login
                         </button>
                     </div>
-
-                </div>
-                <div className="flex justify-between">
-                    <button
-                        className="bg-colorPrimary hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-                        type="submit"
-                        onClick={(event) => {
-                            handleLogin(event);
-                        }}
-                    >
-                        Login
-                    </button>
-                    <Link
-                        className="border-b border-b-green-600 font-bold py-2 px-4 rounded hover:outline-none hover:shadow-outline"
-                        href={'/register'}
-                    >
-                        Register
-                    </Link>
-                </div>
-            </form>
-
+                </form>
+            </> : <>
+            <RegisterForm />
+            </>}
         </div>
     );
 };

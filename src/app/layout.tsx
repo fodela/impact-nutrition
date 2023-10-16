@@ -12,6 +12,7 @@ const Hero = dynamic(() => import("@/components/Hero"));
 export const metadata = {
   title: "Impact Nutrition Consult",
   description: "The place where we grow expert in Nutrition",
+  icons: { icon: "./src/app/favicon.ico"}
 };
 
 export default function RootLayout({

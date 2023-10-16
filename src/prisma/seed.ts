@@ -12,7 +12,8 @@ async function main() {
     data: {
       name: "keli booster",
       email: "info@impactnutritionconsult.com",
-      username: "kelibst111",
+      phone: "0546249862",
+      professional_pin: "1234",
       password,
       role: "ADMINISTRATOR",
       // emailVerified: Date.now()
