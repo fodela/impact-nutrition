@@ -11,7 +11,7 @@ import "react-toastify/ReactToastify.min.css";
 const LoginForm = () => {
     const [phone, setPhone] = useState("");
     const [password, setPassword] = useState("");
-    const [showSignin, setShowSignIn] = useState(false)
+    const [showSignin, setShowSignIn] = useState(true)
     const [providers, setProviders] = useState([]);
     const [showPassword, setShowPassword] = useState(false);
 

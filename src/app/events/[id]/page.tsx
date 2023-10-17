@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 'use client'
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Attendee, Event } from "@prisma/client";
 import { useParams } from "next/navigation";
 import Loading from "../loading";
@@ -11,12 +11,13 @@ import { useSession } from "next-auth/react";
 import { checkIdExists } from "@/lib/tokenUtils";
 import Image from "next/image";
 import EventRegistrationBtn from "@/components/eventsRegisterBtn";
+import { GetEventContext } from "@/components/context/EventContext";
 
 const EventPage = () => {
     const { data: session, status } = useSession();
     const { id } = useParams();
     const [event, setEvent] = useState<Event | null>(null);
-    const [myEvents, setMyEvents] = useState<Event[]>([]);
+    const {myEvents, getAllMyEvents } = useContext(GetEventContext)
     const [isLoading, setIsLoading] = useState(true);
 
    const fetchEvent = async () => {
@@ -30,18 +31,9 @@ const EventPage = () => {
     };
 
     useEffect(() => {
-        const getAllMyEvents = async () => {
-            try {
-                const allMyEvents = await getMyEvents(id);
-                setMyEvents(allMyEvents);
-            } catch (error) {
-                console.log("myeventserr", error);
-            }
-        };
-
         if (id) {
             fetchEvent();
-            getAllMyEvents();
+            getAllMyEvents(id);
         }
 
         return () => {
@@ -76,7 +68,7 @@ const EventPage = () => {
                             <div className="inline-flex border-b-2 my-4 border-b-green-700">Price: {price}</div>
                         </div>
                         
-                        {<EventRegistrationBtn id={id} myEvents={myEvents} />}
+                        {<EventRegistrationBtn id={id} myEvents={myEvents} session={session} />}
 
                         <div className="max-w-xl my-4 mx-auto rounded-md">
                             <ToastContainer />
