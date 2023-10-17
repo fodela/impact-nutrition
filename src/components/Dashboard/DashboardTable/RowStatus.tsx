@@ -10,8 +10,20 @@ const RowStatus = ({ status }: { status: string }) => {
           dot: "bg-green-600 dark:bg-green-300",
           text: "text-green-600 dark:text-green-50",
         };
+      case "active":
+        return {
+          container: "bg-green-50 dark:bg-green-600",
+          dot: "bg-green-600 dark:bg-green-300",
+          text: "text-green-600 dark:text-green-50",
+        };
 
       case "pending_review":
+        return {
+          container: "bg-yellow-50 dark:bg-yellow-600",
+          dot: "bg-yellow-600 dark:bg-yellow-300",
+          text: "text-yellow-600 dark:text-yellow-50",
+        };
+      case "inactive":
         return {
           container: "bg-yellow-50 dark:bg-yellow-600",
           dot: "bg-yellow-600 dark:bg-yellow-300",
@@ -26,6 +38,12 @@ const RowStatus = ({ status }: { status: string }) => {
         };
 
       case "deleted":
+        return {
+          container: "bg-red-50 dark:bg-red-600",
+          dot: "bg-red-600 dark:bg-red-300",
+          text: "text-red-600 dark:text-red-50",
+        };
+      case "suspended":
         return {
           container: "bg-red-50 dark:bg-red-600",
           dot: "bg-red-600 dark:bg-red-300",
