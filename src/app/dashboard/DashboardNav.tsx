@@ -15,11 +15,11 @@ const DashboardNav = () => {
   if (status === "loading") {
     return <div>Loading...</div>;
   }
-  if (status === "unauthenticated" && !session) {
-    redirect("/api/auth/signin");
-  }
+  // if (status === "unauthenticated" && !session) {
+  //   redirect("/api/auth/signin");
+  // }
 
-  if (!session) {
+  if (status === "unauthenticated" && !session) {
     redirect("/api/auth/signin");
   }
   //@ts-ignore
