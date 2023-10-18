@@ -1,73 +1,100 @@
-import React from "react";
 import TableRow from "./TableRow";
 import Pagination from "./Pagination";
 import TableHeader from "./TableHeader";
+import { UserDetail } from "../../../../types";
+import { BiSearch } from "react-icons/bi";
+import { AiOutlineUserAdd } from "react-icons/ai";
 
-const rowDetails = [
+const userTableHeadings = [
+  "#",
+  "User",
+  "Date Created",
+  "Role",
+  "Status",
+  "Actions",
+];
+
+const rowDetails: UserDetail[] = [
   {
     name: "John Doe",
     email: "johndoe@email.com",
-    status: "published",
-    Role: "product designer",
-    teams: ["design", "product", "developer"],
+    status: "active",
+    Role: "managing director",
+    createdAt: "2023-10-13T09:22:33.635Z",
     imageUrl: "https://source.unsplash.com/user/wsanter",
   },
   {
     name: "Fo Dela",
     email: "fodela@email.com",
-    status: "draft",
-    Role: "product designer",
-    teams: ["design", "product", "developer"],
+    status: "inactive",
+    Role: "developer",
+    createdAt: "2023-10-13T09:22:33.635Z",
     imageUrl: "https://source.unsplash.com/user/wsanter",
   },
   {
     name: "Laura Scholauranstein",
     email: "laurascholauranstein@email.com",
-    status: "deleted",
-    Role: "product designer",
-    teams: ["design", "product", "developer"],
+    status: "suspended",
+    Role: "financial secretary",
+    createdAt: "2023-10-13T09:22:33.635Z",
     imageUrl: "https://source.unsplash.com/user",
   },
   {
     name: "Keli Boost",
     email: "kelibst@email.com",
-    status: "",
+    status: "active",
     Role: "product designer",
-    teams: ["design", "product", "developer"],
+    createdAt: "2023-10-13T09:22:33.635Z",
     imageUrl: "https://source.unsplash.com/300x300",
   },
   {
     name: "John Doe",
     email: "johndoe@email.com",
-    status: "draft",
+    status: "active",
     Role: "product designer",
-    teams: ["design", "product", "developer"],
+    createdAt: "2023-10-13T09:22:33.635Z",
     imageUrl: "https://source.unsplash.com/user/300x300",
   },
   {
     name: "John Doe",
     email: "johndoe@email.com",
-    status: "pending_review",
-    Role: "product designer",
-    teams: ["design", "product", "developer"],
+    status: "inactive",
+    Role: "accountant",
+    createdAt: "2023-10-13T09:22:33.635Z",
     imageUrl: "https://source.unsplash.com/user/wsanter",
   },
 ];
 
-const DashboardTable = () => {
+const UserTable = () => {
   return (
-    <div className="overflow-hidden rounded-lg border border-gray-200 shadow-md m-5 divide-y-2">
-      <table className="w-full border-collapse  text-left text-sm">
-        {/* <TableHeader /> */}
-        <tbody className="divide-y divide-gray-100 border-t border-gray-100">
-          {rowDetails.map((detail, index) => (
-            <TableRow key={index} rowDetail={detail} />
-          ))}
-        </tbody>
-      </table>
-      <Pagination />
-    </div>
+    <>
+      <h2 className="heading_tertiary">Users</h2>
+      <div className="flex justify-between">
+        <div className="bg-white dark:bg-white/10 shadow-lg flex rounded-lg  items-center">
+          <input
+            type="search"
+            className="p-3 rounded-lg"
+            placeholder="Search user"
+          />
+          <BiSearch size={25} className="opacity-30" />
+        </div>
+        <button className="btn_primary flex gap-1 items-center">
+          Add user <AiOutlineUserAdd size={25} />
+        </button>
+      </div>
+      <div className="overflow-hidden rounded-lg border border-gray-200 shadow-md m-5 divide-y-2">
+        <table className="w-full border-collapse  text-left text-sm">
+          <TableHeader headings={userTableHeadings} />
+          <tbody className="divide-y divide-gray-100 border-t border-gray-100">
+            {rowDetails.map((detail, index) => (
+              <TableRow key={index} idx={index} userDetail={detail} />
+            ))}
+          </tbody>
+        </table>
+        <Pagination />
+      </div>
+    </>
   );
 };
 
-export default DashboardTable;
+export default UserTable;
