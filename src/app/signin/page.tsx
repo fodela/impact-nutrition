@@ -14,6 +14,7 @@ const LoginForm = () => {
     const [showSignin, setShowSignIn] = useState(true)
     const [providers, setProviders] = useState([]);
     const [showPassword, setShowPassword] = useState(false);
+    const [phoneError, setPhoneError] = useState<string | null>(null);
 
     const sendnewSms = () => {
         let res = sendSms("+233200784008", "Impact Nutrition", "Here is how to send an sms")
@@ -28,7 +29,16 @@ const LoginForm = () => {
     }, [providers, setProviders]);
 
     const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setPhone(e.target.value.trim());
+        const { value, name }=e.target
+        if (name === 'phone') {
+            // Check the phone number length
+            if (value.trim().length > 11 || value.trim().length < 10) {
+                setPhoneError('Phone number must be 10 numbers!');
+            } else {
+                setPhoneError(null);
+            }
+        }
+        setPhone(value.trim());
     };
 
     const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -37,6 +47,7 @@ const LoginForm = () => {
 
     const handleLogin = async (e: any) => {
         e.preventDefault();
+        if (phoneError) return
         try {
             const result = await signIn('credentials', {
                 phone,
@@ -84,11 +95,12 @@ const LoginForm = () => {
     //         </button>
     //     ))}
     // </div>
+    console.log(phoneError, 'phonerror')
     return (
         <div className="h-full my-6">
-            <div className="flex justify-center my-8">
+            {/* <div className="flex justify-center my-8">
                 <button className="underline border-1 rounded-md text-lg font-bold px-4 py-2" onClick={() => setShowSignIn(!showSignin)}> {showSignin ? <>Register</> : <>Log In</>} </button>
-            </div>
+            </div> */}
             {showSignin ? <>
                 <button onClick={sendnewSms}>Send sms</button>
                 <h1 className="text-3xl text-center font-bold mb-6">Login</h1>
@@ -100,12 +112,14 @@ const LoginForm = () => {
                         </label>
                         <input
                             type="phone"
+                            name="phone"
                             id="phone"
-                            className="appearance-none border rounded w-full min-w-md py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                            className={`appearance-none my-4 border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${!phoneError && "border-red-600"}`}
                             placeholder="phone"
                             value={phone}
                             onChange={handleEmailChange}
                         />
+                        {phoneError && <div className="text-red-400 px-3">{phoneError}</div>}
                     </div>
                     <div className="mb-6">
                         <label htmlFor="password" className="block text-gray-700 font-bold mb-2">

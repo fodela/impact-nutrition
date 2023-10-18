@@ -9,6 +9,7 @@ import { toast } from "react-toastify";
 import "react-toastify/ReactToastify.min.css";
 
 export const RegisterForm = () => {
+  const [phoneError, setPhoneError] = useState<string | null>(null);
   let [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [showverifyPass, setshowverifyPass] = useState(false);
@@ -27,9 +28,8 @@ export const RegisterForm = () => {
   const onSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
-
+    if(phoneError) return
     try {
-      console.log(formValues, 'formbalues')
       const res = await axios.post("/api/register", formValues, {
         headers: {
           "Content-Type": "application/json",
@@ -39,7 +39,6 @@ export const RegisterForm = () => {
       setLoading(false);
       if (res.status !== 200) {
         const result = res.data;
-        console.log(res.data, 'data')
         toast.error(`Something went wrong! ${res.data}`, {
           position: "top-right",
           autoClose: 5000,
@@ -70,7 +69,6 @@ export const RegisterForm = () => {
       })
     } catch (error: any) {
       setLoading(false);
-      console.log(error, 'error')
       toast.error("Registration failed! Is there a chance you have already used that phone number to register?", {
         position: "top-right",
         autoClose: 5000,
@@ -86,6 +84,15 @@ export const RegisterForm = () => {
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
+
+    if (name === 'phone') {
+      // Check the phone number length
+      if (value.trim().length > 11 || value.trim().length < 10) {
+        setPhoneError('Phone number must be 10 numbers!');
+      } else {
+        setPhoneError(null);
+      }
+    }
 
     setFormValues((prevFormValues) => {
       const updatedFormValues = { ...prevFormValues, [name]: value.trim() };
@@ -132,7 +139,7 @@ export const RegisterForm = () => {
         />
         <label className="font-bold" htmlFor="phone">Phone</label>
         <input
-          className="appearance-none my-4 border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            className={`appearance-none my-4 border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${!phoneError && "border-red-600"}`}
           required
           type="phone"
           name="phone"
@@ -140,6 +147,7 @@ export const RegisterForm = () => {
           onChange={handleChange}
           style={{ padding: "1rem" }}
         />
+        {phoneError &&  <div className="text-red-400 px-3">{phoneError}</div>}
         <label className="font-bold" htmlFor="professional_pin">Professional Pin</label>
         <input
           className="appearance-none my-4 border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
