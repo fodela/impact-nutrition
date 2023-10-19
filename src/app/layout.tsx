@@ -39,7 +39,6 @@ export default function RootLayout({
             <GetPostsProvider>
               <GetEventsProvider>
                 <Header />
-                {/* <Hero /> */}
                 {children}
                 <Footer />
               </GetEventsProvider>
