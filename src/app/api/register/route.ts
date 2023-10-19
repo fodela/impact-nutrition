@@ -51,7 +51,7 @@ export async function POST(req: Request) {
       receiverEmail: user.email,
       link
     });
-
+  
     return NextResponse.json({
       user: {
         name: user.name,

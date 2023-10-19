@@ -25,7 +25,7 @@ export async function POST(req: Request) {
       await req.json();
     if (!title || !content || !slug) {
       return NextResponse.json(
-        { message: "Missing required data" },
+        { message: "Missing required data title content or slug" },
         { status: 400 }
       );
     }
