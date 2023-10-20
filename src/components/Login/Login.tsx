@@ -15,8 +15,7 @@ const Login = () => {
     const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { value, name } = e.target;
         if (name === "phone") {
-            // Check the phone number length
-            if (value.trim().length > 11 || value.trim().length < 10) {
+            if (value.trim().length > 10 || value.trim().length < 10) {
                 setPhoneError("Phone number must be 10 numbers!");
             } else {
                 setPhoneError(null);

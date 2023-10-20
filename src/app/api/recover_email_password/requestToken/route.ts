@@ -1,10 +1,11 @@
+import prisma from "@/lib/prisma";
 import { sendMailValidationEmail } from "@/lib/sendEmail";
 import { generatePasswordToken, generateToken } from "@/lib/tokenUtils";
 import { NextResponse } from "next/server";
 
 export async function POST(req: Request) {
+  const { phone } = await req.json();
   try {
-    const { phone } = await req.json();
     if (!phone) {
       return NextResponse.json(
         { message: "Provide phone number" },
@@ -27,7 +28,6 @@ export async function POST(req: Request) {
 
     // Generate a unique verification token
     const verificationToken = generatePasswordToken(); // Implement the `generateToken` function to generate a unique token
-
     // Save the verification token to the VerificationToken table
     await prisma.verificationToken.create({
       data: {
@@ -41,11 +41,13 @@ export async function POST(req: Request) {
 
     // Send the email verification email
     await sendMailValidationEmail({
-      title: "Impact Nutriton: Password REcovery",
+      title: "Impact Nutriton: Password Recovery",
       message: `Welcome, ${user.name}! you have requested for a password change. User this token to change your password: ${verificationToken}`,
       receiverEmail: user.email,
       link,
     });
-    NextResponse.json({ user: user.email }, {status: 200});
-  } catch (error) {}
+    return NextResponse.json({ user: {name: user.name, email: user.email} }, {status: 200});
+  } catch (error) {
+    return NextResponse.json({error})
+  }
 }

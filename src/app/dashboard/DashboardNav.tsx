@@ -11,7 +11,6 @@ const DashboardNav = () => {
 
   const pathname = usePathname();
   const { data: session, status } = useSession()
-  console.log('running')
   if (status === "loading") {
     return <div>Loading...</div>;
   }

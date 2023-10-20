@@ -3,13 +3,13 @@ import { randomBytes } from "crypto";
 
 function generateToken() {
   const tokenBytes = 32; // Set the desired number of bytes for the token
-  return randomBytes(tokenBytes).toString("hex");
+  return randomBytes(tokenBytes).toString("hex").substring(4);
 }
 
 
 function generatePasswordToken() {
   const tokenBytes = 4; // Set the desired number of bytes for the token
-  return randomBytes(tokenBytes).toString("hex");
+  return randomBytes(tokenBytes).toString("hex").substring(4);
 }
 
 export { generateToken, generatePasswordToken };

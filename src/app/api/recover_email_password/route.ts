@@ -7,9 +7,10 @@ import { generateToken } from "@/lib/tokenUtils";
 import { sendMailValidationEmail } from "@/lib/sendEmail";
 
 
-export async function POST(req: Request) {
+export async function PUT(req: Request) {
     try {
       const { password, token } = await req.json();
+      console.log(password, token, 'data')
       if (!token || !password) {
         return NextResponse.json(
           { message: "token or new password not provided!" },
