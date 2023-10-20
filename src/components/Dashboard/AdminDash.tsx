@@ -51,10 +51,10 @@ const AdminDash = () => {
         <>
           <h2 className="heading_tertiary">Events</h2>
           <div className="flex justify-between">
-            <div className="bg-white dark:bg-white/10 shadow-lg flex rounded-lg  items-center">
+            <div className="bg-white px-2 dark:bg-white/10 shadow-lg flex rounded-lg  items-center">
               <input
                 type="search"
-                className="p-3 rounded-full"
+                className="p-3 rounded-full bg-transparent"
                 placeholder="Search post"
               />
               <BiSearch size={25} className="opacity-30" />

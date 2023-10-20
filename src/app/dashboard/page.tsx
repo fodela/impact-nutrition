@@ -16,7 +16,7 @@ const Profile = () => {
         router.push("/dashboard/admin");
         break;
       case "SUBSCRIBER":
-        router.push("/dashboard/subscriber");
+        router.push("/dashboard/user");
         break;
       default:
         router.push("/signin");

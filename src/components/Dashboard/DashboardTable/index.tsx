@@ -70,10 +70,10 @@ const UserTable = () => {
     <>
       <h2 className="heading_tertiary">Users</h2>
       <div className="flex justify-between">
-        <div className="bg-white dark:bg-white/10 shadow-lg flex rounded-lg  items-center">
+        <div className="bg-white px-2 dark:bg-white/10 shadow-lg flex rounded-lg  items-center">
           <input
             type="search"
-            className="p-3 rounded-lg"
+            className="p-3 rounded-lg bg-transparent"
             placeholder="Search user"
           />
           <BiSearch size={25} className="opacity-30" />
