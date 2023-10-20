@@ -4,12 +4,6 @@ import Link from "next/link";
 import { HeroDetail } from "../../types";
 
 const Hero = ({ heroDetail }: { heroDetail: HeroDetail }) => {
-  // const [hero, setHero] = useState({
-  //   header: " EMPOWERING HEALTH AND NUTRITION EXCELLENCE",
-  //   content:
-  //     " Promoting optimal health and nutrition for adequate growth and development",
-  //   link: "/assets/Images/hero.jpg",
-  // });
   return (
     <section className="section_grid mt-20">
       <div className="max-w-2xl mx-auto p-10 mt-16 md:mt-10 text-center md:text-left">
