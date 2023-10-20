@@ -1,7 +1,6 @@
 "use client";
 import Image from "next/image";
 import Link from "next/link";
-import { useState } from "react";
 import { HeroDetail } from "../../types";
 
 const Hero = ({ heroDetail }: { heroDetail: HeroDetail }) => {
@@ -12,7 +11,7 @@ const Hero = ({ heroDetail }: { heroDetail: HeroDetail }) => {
   //   link: "/assets/Images/hero.jpg",
   // });
   return (
-    <section className="section_grid">
+    <section className="section_grid mt-20">
       <div className="max-w-2xl mx-auto p-10 mt-16 md:mt-10 text-center md:text-left">
         <h1 className="heading_primary text-4xl   lg:text-5xl font-bold uppercase mb-4">
           {heroDetail.heading
