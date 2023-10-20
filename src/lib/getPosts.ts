@@ -86,4 +86,23 @@ export const createPost = async (formData: FormProps) => {
   return response.data;
 };
 
-export { getPosts, getPublishedPosts, getPostById, updatePOST };
+const deletePost = async (id: string) => {
+  const headersList = {
+    Accept: "*/*",
+  };
+
+  const reqOptions = {
+    url: `/api/blog?id=${id}`,
+    method: "DELETE",
+    headers: headersList,
+  };
+
+  try {
+    const response = await axios.request(reqOptions);
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};
+
+export { getPosts, getPublishedPosts, getPostById, updatePOST, deletePost };

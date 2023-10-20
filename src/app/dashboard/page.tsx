@@ -1,35 +1,27 @@
-'use client'
-
-import AdminDash from "@/components/Dashboard/AdminDash";
-import DashboardTable from "@/components/Dashboard/DashboardTable";
-import SubscriberDash from "@/components/Dashboard/SubscriberDash";
-import GetAttendeeProvider from "@/components/context/AttendeeContext";
-import GetPaymentProvider from "@/components/context/PaymentContext";
+"use client";
 import { useSession } from "next-auth/react";
-
+import { useRouter } from "next/navigation";
 const Profile = () => {
-  const { data: session, status } = useSession()
+  const { data: session, status } = useSession();
+  const router = useRouter();
 
   if (!status) {
-    return <div>Loading!</div>
+    return <div>Loading!</div>;
   }
   //@ts-ignore
   if (session) {
-    return (
-      <GetPaymentProvider>
-        <GetAttendeeProvider>
-          <div className="rounded bg-gray-200 dark:bg-black/30">
-            {status &&
-              //@ts-ignore
-              session.user.role === 'ADMINISTRATOR' && <AdminDash />}
-            {status &&
-              //@ts-ignore
-              session.user.role === 'SUBSCRIBER' && <SubscriberDash />}
-          </div>
-        </GetAttendeeProvider>
-      </GetPaymentProvider>
-    );
+    //@ts-ignore
+    switch (session?.user?.role) {
+      case "ADMINISTRATOR":
+        router.push("/dashboard/admin");
+        break;
+      case "SUBSCRIBER":
+        router.push("/dashboard/subscriber");
+        break;
+      default:
+        router.push("/signin");
+        break;
+    }
   }
-  return <div>We are setting you up!</div>
 };
 export default Profile;

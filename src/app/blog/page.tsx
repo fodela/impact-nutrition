@@ -1,8 +1,22 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-'use client'
+"use client";
 import React, { useContext, useEffect } from "react";
 import { GetPostsContext } from "@/components/context/PostContext";
 import PostComponent from "@/components/Dashboard/DashboardPost/PostComponent";
+import { HeroDetail } from "../../../types";
+import Hero from "@/components/Hero";
+
+const blogHeroDetail: HeroDetail = {
+  heading: "Stay Updated with Our Blog",
+  content: "Your Source for Health and Nutrition Insights",
+  imageLink: "/assets/Images/food/food7.png",
+  showMainButton: true,
+  showSecondaryButton: true,
+  mainButtonName: "",
+  secondaryButtonName: "",
+  mainLink: "",
+  secondaryLink: "",
+};
 
 const Blog = () => {
   const { pubPosts, getAllPubPosts } = useContext(GetPostsContext);
@@ -18,6 +32,7 @@ const Blog = () => {
 
   return (
     <main className="main">
+      <Hero heroDetail={blogHeroDetail} />
       <section className="max-w-screen-xl px-4 md:mx-auto">
         <h2 className="heading_secondary">Blogs</h2>
         <div className="grid md:grid-cols-2 mt-4 gap-6">
