@@ -65,7 +65,7 @@ export function Overview() {
           ))}
         </div>
       </div>
-      <div className="overflow-hidden rounded-lg border border-gray-200 shadow-md m-5 divide-y-2 bg-gray-50 dark:bg-white/10">
+      {/* <div className="overflow-hidden rounded-lg border border-gray-200 shadow-md m-5 divide-y-2 bg-gray-50 dark:bg-white/10">
         <table className="w-full border-collapse  text-left text-sm my">
           <TableHeader headings={headings} />
           <tbody className="divide-y divide-gray-100 border-t border-gray-100">
@@ -170,7 +170,7 @@ export function Overview() {
           </tbody>
         </table>
         <Pagination />
-      </div>
+      </div> */}
     </>
   );
 }
