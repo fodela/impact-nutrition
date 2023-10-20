@@ -4,6 +4,20 @@ import { moveVariant, offscreenVariants } from "@/lib/animationVariants";
 import { motion } from "framer-motion";
 import Image from "next/image";
 import { useEffect } from "react";
+import { HeroDetail } from "../../../types";
+import Hero from "@/components/Hero";
+
+const aboutHeroDetail: HeroDetail = {
+  heading: "Get to Know Us",
+  content: "Our Story, Your Health: A Partnership in Excellence",
+  imageLink: "/assets/Images/food/food3.png",
+  showMainButton: true,
+  showSecondaryButton: true,
+  mainButtonName: "",
+  secondaryButtonName: "",
+  mainLink: "",
+  secondaryLink: "",
+};
 
 const About = () => {
   useEffect(() => {
@@ -29,9 +43,10 @@ const About = () => {
 
   return (
     <main>
+      <Hero heroDetail={aboutHeroDetail} />
       <section className="grid md:grid-cols-2 gap-10 max-w-screen-xl p-10 mx-auto">
         <motion.article
-          className="md:row-span-2 self-end text-colorPrimary text-6xl sm:text-8xl font-semibold reveal "
+          className="md:row-span-2 self-center text-colorPrimary text-6xl sm:text-8xl font-semibold reveal "
           variants={offscreenVariants}
           initial="left"
           animate="visible"
@@ -41,12 +56,12 @@ const About = () => {
           <p>Mission</p>
           <p>& Vision</p>
         </motion.article>
-        <Image
+        {/* <Image
           src="https://impactnutritionconsult.com/assets/svg/about_us.svg"
           width={604}
           height={328}
           alt="an illustration of people collaborating"
-        />
+        /> */}
         <motion.article
           className="flex flex-col gap-4"
           variants={offscreenVariants}

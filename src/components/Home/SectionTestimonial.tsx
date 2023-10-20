@@ -6,9 +6,10 @@ import { BsQuote } from "react-icons/bs";
 const SectionTestimonial = () => {
   const [isLoading, setIsLoading] = useState(true);
   return (
-    <section className="flex flex-col w-full items-center max-w-screen-xl mx-auto px-8">
+    <section className="my-64 flex flex-col w-full items-center max-w-screen-xl mx-auto px-8">
       <h2 className="text-4xl sm:text-6xl font-medium text-center">
-        Meet Our <strong className="text-colorPrimary">CEO</strong>
+        Meet Our{" "}
+        <strong className="text-colorPrimary">Executive Director</strong>
       </h2>
       <div className="grid md:grid-cols-3 pt-8 gap-8">
         <Image
