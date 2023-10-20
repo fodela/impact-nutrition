@@ -3,8 +3,10 @@ import { RegisterForm } from "@/components/form";
 import sendSms from "@/components/sms/sendSms";
 import { resetUserPassword } from "@/lib/resetUserPassword";
 import axios, { Axios } from "axios";
+import { NextApiResponse } from "next";
 import { signIn, useSession, getProviders } from "next-auth/react";
 import Link from "next/link";
+import { NextResponse } from "next/server";
 import { ChangeEvent, useEffect, useState } from "react";
 import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
 import { ToastContainer, toast } from "react-toastify";
@@ -42,6 +44,7 @@ const LoginForm = () => {
             });
             res && setMoveToPassword(true)
         }).catch((error) => {
+            console.log(error,'res')
             toast.error(error?.response?.data?.message ? `Unable to login! Wrong phone number` : "Something Went wrong!", {
                 position: "top-right",
                 autoClose: 5000,
@@ -76,8 +79,8 @@ const LoginForm = () => {
             } else {
                 throw new Error("Something went wrong");
             }
-        } catch (error) {
-            toast.error(`Unable to login! Wrong phone number or password!`, {
+        } catch (error: any) {
+            toast.error(`Unable to reset! ${error?.response.data.message}`, {
                 position: "top-right",
                 autoClose: 5000,
                 hideProgressBar: false,
@@ -92,7 +95,7 @@ const LoginForm = () => {
     return (
         <div className="h-full my-6">
             <form className="max-w-md mx-auto my-auto">
-                <div className="flex justify-center text-3xl my-8"><a href="/signin" className="font-bold">Login</a> </div>
+                <a href="/signin" className="font-bold underline">Login</a>
                 <h1 className="text-3xl text-center font-bold mb-6">Recover Your Password</h1>
                 {!moveToPassword ? <>
                     <div className="mb-4">
