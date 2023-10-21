@@ -2,8 +2,9 @@
 import { useSession, signIn, signOut } from "next-auth/react";
 import Link from "next/link";
 import { useRef, useState } from "react";
+import { BiLeftArrow } from "react-icons/bi";
 import { FiChevronDown, FiUser } from "react-icons/fi";
-import { LuLayoutPanelLeft } from "react-icons/lu";
+// import { LuLayoutPanelLeft } from "react-icons/lu";
 
 export default function SessionButtons() {
   const { data: session } = useSession();
@@ -37,7 +38,8 @@ export default function SessionButtons() {
                   href="/dashboard"
                 >
                   {" "}
-                  <LuLayoutPanelLeft />
+                  {/* <LuLayoutPanelLeft /> */}
+                  <BiLeftArrow />
                   Go to Dashboard
                   <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-green-400 transition-all duration-300 opacity-0"></span>
                 </Link>

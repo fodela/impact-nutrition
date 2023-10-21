@@ -1,7 +1,9 @@
-import { FaUser } from "react-icons/fa";
+import { BiUserVoice } from "react-icons/bi";
+import { FaMoneyBillWave, FaUser } from "react-icons/fa";
 import { MdOutlineAccessAlarms, MdOutlineLocationOn } from "react-icons/md";
-import { PiUsersThreeLight } from "react-icons/pi";
-import { LiaMoneyBillWaveSolid } from "react-icons/lia";
+// import { PiUsersThreeLight } from "react-icons/pi";
+// import { LiaMoneyBillWaveSolid } from "react-icons/lia";
+
 export function UpcomingEventCard({ event }) {
   return (
     <div className="bg-white dark:bg-white/10 shadow p-2  gap-4 flex rounded w-fit">
@@ -29,7 +31,8 @@ export function UpcomingEventCard({ event }) {
           </div>
 
           <div className=" flex gap-2 items-center ">
-            <PiUsersThreeLight size={20} />
+            <BiUserVoice size={20} />
+            {/* <PiUsersThreeLight size={20} /> */}
             <p>
               {" "}
               <strong className="text-black dark:text-white text-lg">
@@ -39,7 +42,8 @@ export function UpcomingEventCard({ event }) {
             </p>
           </div>
           <div className=" flex gap-2 items-center ">
-            <LiaMoneyBillWaveSolid size={20} />
+            <FaMoneyBillWave />
+            {/* <LiaMoneyBillWaveSolid size={20} /> */}
             <p>
               {" "}
               <strong className="text-green-700 dark:text-green-400 text-lg">

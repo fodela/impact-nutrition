@@ -8,14 +8,14 @@ import GetAttendeeProvider, {
   GetAttendeesContext,
 } from "../context/AttendeeContext";
 import { CiCalendar } from "react-icons/ci";
-import { LuLayoutPanelLeft, LuUsers2 } from "react-icons/lu";
+// import { LuLayoutPanelLeft, LuUsers2 } from "react-icons/lu";
 import DashboardTable from "./DashboardTable";
 import { GetEventContext } from "../context/EventContext";
 
 import Pagination from "./DashboardTable/Pagination";
 import EventTableRow from "./DashboardEvent/EventTableRow";
 import TableHeader from "./DashboardTable/TableHeader";
-import { BiMessageRoundedDetail, BiSearch } from "react-icons/bi";
+import { BiLeftArrow, BiMessageRoundedDetail, BiSearch, BiUser } from "react-icons/bi";
 import PostsDashboardView from "./DashboardTable/PostDashboardView";
 
 const eventTableHeadings = [
@@ -102,7 +102,8 @@ const AdminDash = () => {
               }`}
               onClick={() => setDashboardTab("overview")}
             >
-              <LuLayoutPanelLeft size={25} /> Dashboard
+              {/* <LuLayoutPanelLeft size={25} />  */}
+             <BiLeftArrow /> Dashboard
             </button>
           </li>
           <li>
@@ -125,7 +126,8 @@ const AdminDash = () => {
             }`}
             onClick={() => setDashboardTab("users")}
           >
-            <LuUsers2 size={25} /> Users
+            {/* <LuUsers2 size={25} />  */}
+            <BiUser /> Users
           </button>
           <li>
             <button

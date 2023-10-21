@@ -7,8 +7,8 @@ import { GetPaymentContext } from "@/components/context/PaymentContext";
 import { GetEventContext } from "@/components/context/EventContext";
 import { GetAttendeesContext } from "@/components/context/AttendeeContext";
 import { FaUser } from "react-icons/fa";
-import { BiUser } from "react-icons/bi";
-import { PiCalendarCheck } from "react-icons/pi";
+import { BiCalendarCheck, BiUser } from "react-icons/bi";
+// import { PiCalendarCheck } from "react-icons/pi";
 import { GiTakeMyMoney } from "react-icons/gi";
 const headings = ["#", "Name", "Date Created", "Role", "Status", "actions"];
 const summaries = [
@@ -45,15 +45,12 @@ export function Overview() {
     <>
       <div className="flex gap-8 justify-center">
         <DashboardCard detail={summaries[0]}>
-          {" "}
           <BiUser className="text-white" size={32} />
         </DashboardCard>
         <DashboardCard detail={summaries[1]}>
-          {" "}
-          <PiCalendarCheck className="text-white" size={32} />
+          <BiCalendarCheck className="text-white" size={32} />
         </DashboardCard>
         <DashboardCard detail={summaries[2]}>
-          {" "}
           <GiTakeMyMoney className="text-white" size={32} />
         </DashboardCard>
         <div className="flex flex-col text-stone-500 gap-4">
