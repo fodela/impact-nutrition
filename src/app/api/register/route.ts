@@ -6,15 +6,15 @@ import { generateToken } from "@/lib/tokenUtils";
 
 export async function POST(req: Request) {
   try {
-    const { firstname, lastname, username, date_of_birth, email, password } = (await req.json()) as {
+    const { firstname, lastname, phone, professional_pin, email, password } = (await req.json()) as {
       firstname: string;
       lastname: string;
-      username: string;
-      date_of_birth: string;
+      phone: string;
+      professional_pin: string;
       email: string;
       password: string;
     };
-    if (!firstname || !lastname || !username || !email || !password) {
+    if (!firstname || !lastname || !phone || !password) {
       return NextResponse.json({ "message": "Missing required data" }, { status: 400 })
     }
 
@@ -23,8 +23,8 @@ export async function POST(req: Request) {
     const user = await prisma.user.create({
       data: {
         name: `${firstname} ${lastname}`,
-        date_of_birth: new Date(date_of_birth),
-        username,
+        phone,
+        professional_pin,
         email: email.toLowerCase(),
         password: hashed_password,
       },
@@ -36,7 +36,7 @@ export async function POST(req: Request) {
     // Save the verification token to the VerificationToken table
     await prisma.verificationToken.create({
       data: {
-        identifier: user.email,
+        identifier: user.phone,
         token: verificationToken,
         expires: new Date(Date.now() + 24 * 60 * 60 * 1000), // Set an expiration date for the token (e.g., 24 hours)
       },
@@ -51,7 +51,7 @@ export async function POST(req: Request) {
       receiverEmail: user.email,
       link
     });
-
+  
     return NextResponse.json({
       user: {
         name: user.name,
@@ -59,6 +59,7 @@ export async function POST(req: Request) {
       },
     });
   } catch (error: any) {
+    console.log('error', error)
     return new NextResponse(
       JSON.stringify({
         status: "error",
