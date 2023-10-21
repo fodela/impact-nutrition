@@ -5,9 +5,10 @@ import { useSession } from "next-auth/react";
 import { verifyUserRole } from "@/lib/verifyUserRole";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { LuUsers2 } from "react-icons/lu";
+// import { LuUsers2 } from "react-icons/lu";
 import { CiCalendar } from "react-icons/ci";
-import { LuLayoutPanelLeft } from "react-icons/lu";
+import { BiHomeAlt2, BiUser } from "react-icons/bi";
+// import { LuLayoutPanelLeft } from "react-icons/lu";
 
 const DashboardNav = () => {
   const [tabs] = useState(["Dashboard", "Posts", "Events"]);
@@ -17,11 +18,11 @@ const DashboardNav = () => {
   if (status === "loading") {
     return <div>Loading...</div>;
   }
-  if (status === "unauthenticated" && !session) {
-    redirect("/api/auth/signin");
-  }
+  // if (status === "unauthenticated" && !session) {
+  //   redirect("/api/auth/signin");
+  // }
 
-  if (!session) {
+  if (status === "unauthenticated" && !session) {
     redirect("/api/auth/signin");
   }
   //@ts-ignore
@@ -38,7 +39,9 @@ const DashboardNav = () => {
             }`}
             href={"/dashboard"}
           >
-            <LuLayoutPanelLeft size={25} /> Dashboard
+            <BiHomeAlt2 size={25} /> Dashboard
+
+            {/* <LuLayoutPanelLeft size={25} /> Dashboard */}
           </Link>
         </li>
         <li>
@@ -50,7 +53,8 @@ const DashboardNav = () => {
             }`}
             href={"dashboard/users"}
           >
-            <LuUsers2 size={25} /> Users
+            <BiUser size={25} /> Users
+            {/* <LuUsers2 size={25} /> Users */}
           </Link>
         </li>
         <li>
