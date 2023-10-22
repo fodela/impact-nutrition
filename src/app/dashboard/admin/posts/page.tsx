@@ -100,9 +100,9 @@ const PostsDashboardView = () => {
                     />
                     <BiSearch size={25} className="opacity-30" />
                 </div>
-                <button className="btn_primary flex gap-1 items-center">
+                <a href='/dashboard/admin/posts/addpost' className="btn_primary flex gap-1 items-center">
                     Add Post <TbMessagePlus size={25} />
-                </button>
+                </a>
             </div>
 
             <div className="overflow-hidden rounded-lg border border-gray-200 shadow-md m-5 divide-y-2">

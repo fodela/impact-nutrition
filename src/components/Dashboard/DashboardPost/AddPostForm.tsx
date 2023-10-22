@@ -1,3 +1,4 @@
+'use client'
 import dynamic from "next/dynamic";
 import { FC, useState, ChangeEvent, FormEvent, memo } from "react";
 import { toast } from 'react-toastify';
