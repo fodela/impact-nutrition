@@ -1,10 +1,13 @@
+import { Event } from "@prisma/client";
 import { BiUserVoice } from "react-icons/bi";
-import { FaMoneyBillWave, FaUser } from "react-icons/fa";
+import { FaMoneyBillWave } from "react-icons/fa";
 import { MdOutlineAccessAlarms, MdOutlineLocationOn } from "react-icons/md";
-// import { PiUsersThreeLight } from "react-icons/pi";
-// import { LiaMoneyBillWaveSolid } from "react-icons/lia";
 
-export function UpcomingEventCard({ event }) {
+interface UpcomingEventCardProp  {
+  event: Event
+}
+
+export function UpcomingEventCard ({ event}: UpcomingEventCardProp) {
   return (
     <div className="bg-white dark:bg-white/10 shadow p-2  gap-4 flex rounded w-fit">
       <div className="h-4 w-4 rounded-full bg-purple-600"></div>

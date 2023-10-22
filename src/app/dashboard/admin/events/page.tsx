@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 'use client'
-import { useState, useEffect, useRef, useTransition, useCallback, useMemo, useContext } from 'react';
+import { useState, useEffect, useRef, useCallback, useMemo, useContext } from 'react';
 import 'suneditor/dist/css/suneditor.min.css';
 import { ToastContainer, toast } from 'react-toastify';
 import { Event } from '@prisma/client';
@@ -8,14 +8,14 @@ import { deleteEvent } from '@/lib/getEvents';
 import { GetEventContext } from '@/components/context/EventContext';
 import Link from 'next/link';
 import UpdateEvent from '@/components/Dashboard/DashboardEvent/UpdateEvent';
+import { BsFillEyeFill, BsTrash3 } from 'react-icons/bs';
+import { TbPencil } from 'react-icons/tb';
 
 const DashboardEvents = () => {
     const { events, getAllEvents } = useContext(GetEventContext);
 
     const [updateEvent, setUpdateEvent] = useState(false);
     const eventUpdateRef = useRef<HTMLDivElement | null>(null);
-
-    const [startTransition, isPending] = useTransition();
 
     const toggleUpdateEvent = useCallback(() => {
         setUpdateEvent(prevState => !prevState);
@@ -93,21 +93,22 @@ const DashboardEvents = () => {
                             </td>
                             <td>
                                 <div className="flex justify-end">
-                                    <Link className="btn_primary" href={`/dashboard/events/${event.id}`} legacyBehavior>
-                                        <a className="btn_primary font-bold">Open</a>
+                                    <Link className="btn_primary" href={`/dashboard/admin/events/${event.id}`} legacyBehavior>
+                                        <a className="btn_primary font-bold"><BsFillEyeFill size={25}/> </a>
                                     </Link>
-                                    <button
-                                        onClick={() => handleDelete(event.id!)}
-                                        className="text-red-500  px-4 py-2 mr-2 rounded-md"
-                                    >
-                                        Delete
-                                    </button>
+                                  
                                     <button
                                         id={event.id}
                                         onClick={() => handleUpdate(event.id!)}
                                         className="text-blue-500 px-4 py-2 rounded-md"
                                     >
-                                        Update
+                                        <TbPencil size={25} />
+                                    </button>  
+                                    <button
+                                        onClick={() => handleDelete(event.id!)}
+                                        className="text-red-500  px-4 py-2 mr-2 rounded-md"
+                                    >
+                                        <BsTrash3 size={25} />
                                     </button>
                                 </div>
                             </td>

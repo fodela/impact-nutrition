@@ -1,9 +1,7 @@
 'use client'
-import AdminDash from "@/components/Dashboard/AdminDash";
 import Pagination from "@/components/Dashboard/DashboardTable/Pagination";
 import TableHeader from "@/components/Dashboard/DashboardTable/TableHeader";
 import { GetAttendeesContext } from "@/components/context/AttendeeContext";
-import { GetPaymentContext } from "@/components/context/PaymentContext";
 import { useContext, useEffect } from "react";
 import { BiTrashAlt } from "react-icons/bi";
 import { FaPencilAlt, FaUser } from "react-icons/fa";

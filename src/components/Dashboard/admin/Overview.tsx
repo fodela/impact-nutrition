@@ -3,15 +3,13 @@ import React, { useContext, useEffect } from "react";
 import DashboardCard from "../DashboardContent/DashboardCard";
 import TableHeader from "../DashboardTable/TableHeader";
 import Pagination from "../DashboardTable/Pagination";
-import { GetPaymentContext } from "@/components/context/PaymentContext";
 import { GetEventContext } from "@/components/context/EventContext";
 import { GetAttendeesContext } from "@/components/context/AttendeeContext";
 import { FaPencilAlt, FaUser } from "react-icons/fa";
 import { BiCalendarCheck, BiTrashAlt, BiUser } from "react-icons/bi";
-// import { PiCalendarCheck } from "react-icons/pi";
+
 import { GiTakeMyMoney } from "react-icons/gi";
-import { FiDelete } from "react-icons/fi";
-import { BsPenFill } from "react-icons/bs";
+
 const headings = ["#", "Name", "Date Created", "Role", "Status", "actions"];
 const summaries = [
   {
@@ -32,12 +30,11 @@ const summaries = [
 ];
 
 export function Overview() {
-  const { payments, totalPayments, getAllPayments } = useContext(GetPaymentContext);
+  // const { payments, totalPayments, getAllPayments } = useContext(GetPaymentContext);
   const { events, getAllEvents } = useContext(GetEventContext);
   const { attendees, getAllattendees } = useContext(GetAttendeesContext);
 
   useEffect(() => {
-    getAllPayments();
     getAllEvents();
     getAllattendees();
     return () => { };

@@ -1,8 +1,8 @@
 // Login.js
 'use client'
 import { signIn } from "next-auth/react";
-import { useEffect, useState } from "react";
-import { ToastContainer, toast } from "react-toastify";
+import { useState } from "react";
+import {  toast } from "react-toastify";
 import "react-toastify/ReactToastify.min.css";
 import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
 

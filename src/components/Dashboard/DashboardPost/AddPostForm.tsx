@@ -2,11 +2,9 @@
 import dynamic from "next/dynamic";
 import { FC, useState, ChangeEvent, FormEvent, memo } from "react";
 import { toast } from 'react-toastify';
-import axios from "axios";
 import 'suneditor/dist/css/suneditor.min.css';
 import "react-toastify/ReactToastify.min.css";
 import { createPost } from "@/lib/getPosts";
-import { redirect } from "next/dist/server/api-utils";
 
 export interface FormProps {
     title: string;

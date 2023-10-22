@@ -1,7 +1,5 @@
 'use client'
 import AddEventForm from "@/components/Dashboard/DashboardEvent/AddEventForm";
-import { FC, MouseEvent } from "react";
-
 
 
 const AddEvent = () => {

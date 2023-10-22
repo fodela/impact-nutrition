@@ -4,7 +4,7 @@
 import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { Attendee, Event } from "@prisma/client";
 import { useParams } from "next/navigation";
-import { addEventAttendee, getEventById } from "@/lib/getEvents";
+import { getEventById } from "@/lib/getEvents";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useSession } from "next-auth/react";

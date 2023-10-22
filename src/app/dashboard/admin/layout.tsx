@@ -1,16 +1,13 @@
 'use client'
 
 import DashboardCard from "@/components/Dashboard/DashboardContent/DashboardCard";
-import Pagination from "@/components/Dashboard/DashboardTable/Pagination";
-import TableHeader from "@/components/Dashboard/DashboardTable/TableHeader";
+
 import { UpcomingEventCard } from "@/components/Dashboard/admin/UpcomingEventCard";
-import { NextAuthProvider } from "@/components/NextAuthProvider";
-import GetAttendeeProvider, { GetAttendeesContext } from "@/components/context/AttendeeContext";
+import GetAttendeeProvider from "@/components/context/AttendeeContext";
 import { GetEventContext } from "@/components/context/EventContext";
-import GetPaymentProvider, { GetPaymentContext } from "@/components/context/PaymentContext";
+import GetPaymentProvider from "@/components/context/PaymentContext";
 import { useContext, useEffect } from "react";
-import { BiCalendarCheck, BiTrashAlt, BiUser } from "react-icons/bi";
-import { FaPencilAlt, FaUser } from "react-icons/fa";
+import { BiCalendarCheck, BiUser } from "react-icons/bi";
 import { GiTakeMyMoney } from "react-icons/gi";
 
 const headings = ["#", "Name", "Date Created", "Role", "Status", "actions"];
@@ -37,9 +34,7 @@ export default function AdminLayout({
 }: {
     children: React.ReactNode;
 }) {
-    const { payments, totalPayments, getAllPayments } = useContext(GetPaymentContext);
     const { events, getAllEvents } = useContext(GetEventContext);
-    const { attendees, getAllattendees } = useContext(GetAttendeesContext);
 
     useEffect(() => {
         getAllEvents();

@@ -1,26 +1,11 @@
-import { GetResult } from "@prisma/client/runtime";
-export type EventType = GetResult<
-  {
-    id: string;
-    title: string;
-    details: string;
-    location: string;
-    organizers: string;
-    price: number;
-    createdAt: Date;
-    updatedAt: Date;
-    image: string | null;
-    userId: string;
-  },
-  any
-> & {};
+import { Event } from "@prisma/client";
 
 const EventTableRow = ({
   idx,
   eventDetail,
 }: {
   idx: number;
-  eventDetail: EventType;
+  eventDetail: Event;
 }) => {
   const date = new Date(eventDetail.createdAt);
 
