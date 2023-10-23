@@ -1,8 +1,7 @@
-
+'use client'
 import dynamic from "next/dynamic";
 import { FC, useContext, useState } from "react";
 import "suneditor/dist/css/suneditor.min.css"; // Import SunEditor CSS
-import axios from "axios";
 import { toast } from 'react-toastify';
 import { Event } from "@prisma/client";
 import { getEvents, updateEvent } from "@/lib/getEvents";
@@ -11,7 +10,7 @@ import { GetEventContext } from "@/components/context/EventContext";
 interface FormProps {
     id: string;
     title: string;
-    event: string;
+    event?: string;
     details: string,
     location: string;
     image?: string;

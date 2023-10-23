@@ -1,5 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 'use client'
+
 import { useState, useEffect, useRef, useCallback, useMemo, useContext } from 'react';
 import 'suneditor/dist/css/suneditor.min.css';
 import { ToastContainer, toast } from 'react-toastify';
@@ -10,6 +11,7 @@ import Link from 'next/link';
 import UpdateEvent from '@/components/Dashboard/DashboardEvent/UpdateEvent';
 import { BsFillEyeFill, BsTrash3 } from 'react-icons/bs';
 import { TbPencil } from 'react-icons/tb';
+
 
 const DashboardEvents = () => {
     const { events, getAllEvents } = useContext(GetEventContext);
@@ -25,7 +27,7 @@ const DashboardEvents = () => {
     const memoizedSelectedEvent = useMemo(() => selectedEvent, [selectedEvent]);
 
     useEffect(() => {
-        getAllEvents()
+       !events && getAllEvents()
     }, []);
 
     const handleDelete = useCallback(async (id: string) => {
@@ -63,7 +65,7 @@ const DashboardEvents = () => {
         <div className="p-4 max-w-screen-xl mx-auto">
             <ToastContainer />
             <div className="relative mb-2 flex justify-end">
-                <a href="/dashboard/events/addevent" className='p-3 rounded-lg bg-colorPrimary'> Add event</a>
+                <a href="/dashboard/admin/events/addevent" className='p-3 rounded-lg bg-colorPrimary'> Add event</a>
             </div>
             {events.length === 0 && <div>No events!</div>}
             <table className="w-full">
@@ -74,10 +76,8 @@ const DashboardEvents = () => {
                         <th>Actions</th>
                     </tr>
                 </thead>
-
                 <tbody>
                     {events.map(event => (
-
                         <tr className="p-4 m-4" key={event.id}>
                             <UpdateEvent
                                 isOpen={updateEvent}
@@ -93,8 +93,8 @@ const DashboardEvents = () => {
                             </td>
                             <td>
                                 <div className="flex justify-end">
-                                    <Link className="btn_primary" href={`/dashboard/admin/events/${event.id}`} legacyBehavior>
-                                        <a className="btn_primary font-bold"><BsFillEyeFill size={25}/> </a>
+                                    <Link className="" href={`/dashboard/admin/events/${event.id}`} legacyBehavior>
+                                        <a className=" font-bold"><BsFillEyeFill size={25}/> </a>
                                     </Link>
                                   
                                     <button

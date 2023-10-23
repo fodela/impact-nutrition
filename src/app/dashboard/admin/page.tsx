@@ -31,14 +31,11 @@ const Admin = () => {
   const { attendees, getAllattendees } = useContext(GetAttendeesContext);
 
   useEffect(() => {
-    getAllattendees();
+    !attendees && getAllattendees();
     return () => { };
   }, []);
 
-  console.log(attendees, 'attendees')
-
   return <div className="flexx">
-    <div>some content</div>
     <div className="overflow-hidden rounded-lg border border-gray-200 shadow-md my-5 divide-y-2 bg-gray-50 dark:bg-white/10">
       <table className="w-full border-collapse  text-left text-sm my">
         <TableHeader headings={headings} />

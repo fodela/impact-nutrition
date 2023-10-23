@@ -10,8 +10,8 @@ import "react-toastify/dist/ReactToastify.css";
 import { useSession } from "next-auth/react";
 import AddPayment from "@/components/Dashboard/DashboardEvent/AddPayment";
 
+
 const EventPage = () => {
-    const { data: session, status } = useSession()
     const [selectedAttendee, setSelectedAttendee] = useState<Attendee | null>(null)
     const [addPayment, setAddPayment] = useState(false)
     const { id } = useParams();

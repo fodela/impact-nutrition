@@ -2,7 +2,6 @@ import { compare } from "bcrypt"
 import { NextAuthOptions } from "next-auth"
 import NextAuth from "next-auth/next"
 import CredentialsProvider from "next-auth/providers/credentials"
-import { PrismaAdapter } from "@next-auth/prisma-adapter";
 import GoogleProvider from "next-auth/providers/google";
 import prisma from "@/lib/prisma";
 
@@ -16,8 +15,6 @@ export type User = {
   professional_pin?: String,
   role: String
 }
-
-// const adapter = PrismaAdapter(prisma)
 
 export const authOptions: NextAuthOptions = {
   // adapter,
@@ -68,11 +65,6 @@ export const authOptions: NextAuthOptions = {
         } catch (error) {
           return null
         }
-        // finally {
-        //   await prisma.$disconnect(); // Release the PrismaClient instance after using it
-        //   //@ts-ignore
-        //   prisma = null; // Set the variable to null for subsequent requests
-        // }
       }
       ,
     })

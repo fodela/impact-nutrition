@@ -1,10 +1,11 @@
 "use client";
 import { useSession } from "next-auth/react";
-import { useRouter } from "next/navigation";
+
+
 const Profile = () => {
   const { data: session, status } = useSession();
-  const router = useRouter();
-
+  
+console.log('home layout running')
   if (!status) {
     return <div>Loading!</div>;
   }
@@ -13,13 +14,13 @@ const Profile = () => {
     //@ts-ignore
     switch (session?.user?.role) {
       case "ADMINISTRATOR":
-        router.push("/dashboard/admin");
+       window.location.href = ("/dashboard/admin");
         break;
       case "SUBSCRIBER":
-        router.push("/dashboard/user");
+       window.location.href = ("/dashboard/subscriber");
         break;
       default:
-        router.push("/signin");
+       window.location.href = ("/signin");
         break;
     }
   }

@@ -51,7 +51,7 @@ const AddEventForm = () => {
             });
             const notify = () => toast.success("Event created!");
             notify();
-            window.location.href = '/dashboard/events';
+            window.location.href = '/dashboard/admin/events';
         } catch (error) {
             const notify = () => {
                 //@ts-ignore

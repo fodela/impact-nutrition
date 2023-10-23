@@ -2,9 +2,8 @@
 import Login from "@/components/Login/Login";
 import { RegisterForm } from "@/components/form";
 
-import { useEffect, useState } from "react";
-import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
-import { ToastContainer, toast } from "react-toastify";
+import { useState } from "react";
+
 import "react-toastify/ReactToastify.min.css";
 
 const LoginForm = () => {

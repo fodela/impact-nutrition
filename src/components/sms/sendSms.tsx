@@ -1,6 +1,11 @@
 import axios from 'axios';
+interface sendSmsProps {
+    from: string,
+    to: string,
+    content: string
+}
 
-const sendSms = async (from, to, content) => {
+const sendSms = async ({from, to, content}:sendSmsProps ) => {
     console.log(process.env.CLIENTID, 'sec', process.env.CLIENTSECRET)
     const params = new URLSearchParams({
         clientid: "paxiucym",

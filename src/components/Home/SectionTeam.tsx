@@ -43,8 +43,8 @@ const SectionTeam = () => {
         Meet Our Team
       </h2>
       <div className="justify-self-center grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-2 ">
-        {teamMembersDetails.map((member) => (
-          <TeamMember member={member} />
+        {teamMembersDetails.map((member, index) => (
+          <TeamMember key={index} member={member} />
         ))}
       </div>
     </section>
