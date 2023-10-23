@@ -14,7 +14,8 @@ interface FormProps {
     details: string,
     location: string;
     image?: string;
-    price: string;
+    price: string | number;
+    paymentLink?: string;
     organizers?: string;
 }
 type AddEventProp = {
@@ -35,8 +36,8 @@ const UpdateEventForm: FC<AddEventProp> = ({ onClose, event }) => {
         details: event.details,
         //@ts-ignore
         image: event.image,
-        //@ts-ignore
-        price: event.price,
+        price: event.price || 0,
+        paymentLink: event.paymentLink || "",
         location: event.location,
         organizers: event.organizers,
     });
@@ -47,6 +48,7 @@ const UpdateEventForm: FC<AddEventProp> = ({ onClose, event }) => {
         details,
         image,
         location,
+        paymentLink,
         price,
         organizers,
     } = eventInputs;
@@ -59,6 +61,7 @@ const UpdateEventForm: FC<AddEventProp> = ({ onClose, event }) => {
                 title,
                 details,
                 //@ts-ignore
+                paymentLink,
                 image,
                 location,
                 price,
@@ -148,6 +151,24 @@ const UpdateEventForm: FC<AddEventProp> = ({ onClose, event }) => {
                             setEventInputs((prevState) => ({
                                 ...prevState,
                                 location: e.target.value,
+                            }))
+                        }
+                    />
+                </div>
+
+                <div className="mb-4">
+                    <label htmlFor="paymentLink" className="block mb-2 font-bold">
+                        Payment Link
+                    </label>
+                    <input
+                        type="text"
+                        id="paymentLink"
+                        className="w-full px-4 py-2 border rounded-lg"
+                        value={paymentLink}
+                        onChange={(e) =>
+                            setEventInputs((prevState) => ({
+                                ...prevState,
+                                paymentLink: e.target.value,
                             }))
                         }
                     />
