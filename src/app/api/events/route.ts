@@ -22,7 +22,7 @@ export async function POST(req: Request) {
   }
 
   try {
-    const { title, details, location, organizers, image, price } =
+    const { title, details, location, organizers, image, price, paymentLink } =
       await req.json();
     let Evprice = Number(price);
     if (!title || !details || !location || !organizers) {
@@ -48,6 +48,7 @@ export async function POST(req: Request) {
         organizers,
         image,
         price: Evprice,
+        paymentLink,
         userId,
       },
     });
@@ -64,7 +65,7 @@ export async function PUT(req: Request) {
   const userId = session?.user?.id;
 
   try {
-    const { id, title, details, location, price, image, organizers } =
+    const { id, title, details, location, price, image, organizers,paymentLink } =
       await req.json();
     let evPrice = Number(price);
     if (!id) {
@@ -88,7 +89,7 @@ export async function PUT(req: Request) {
     }
     const updatedevent = await prisma.event.update({
       where: { id },
-      data: { title, details, location, organizers, image, price: evPrice },
+      data: { title, details, location, organizers, image, price: evPrice, paymentLink },
     });
 
     //update the event price for each of the attendees

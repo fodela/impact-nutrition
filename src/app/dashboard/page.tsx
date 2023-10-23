@@ -2,7 +2,7 @@
 import { useSession } from "next-auth/react";
 
 
-const Profile = () => {
+const Dasboard = () => {
   const { data: session, status } = useSession();
   
 console.log('home layout running')
@@ -25,4 +25,4 @@ console.log('home layout running')
     }
   }
 };
-export default Profile;
+export default Dasboard;

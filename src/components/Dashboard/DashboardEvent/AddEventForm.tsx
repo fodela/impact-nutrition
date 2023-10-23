@@ -10,6 +10,7 @@ export interface EventFormProps {
     details: string;
     location: string;
     organizers: string;
+    paymentLink?: string;
     price: string;
     image: string;
 }
@@ -25,6 +26,7 @@ const AddEventForm = () => {
         details: "",
         location: "",
         organizers: "",
+        paymentLink: "",
         price: "",
         image: ""
     });
@@ -35,6 +37,7 @@ const AddEventForm = () => {
         location,
         organizers,
         price,
+        paymentLink,
         image, } = eventInputs;
 
     const handleSubmit = async (e: FormEvent) => {
@@ -124,6 +127,21 @@ const AddEventForm = () => {
                         className="w-full px-4 py-2 border rounded-lg"
                         name="location"
                         value={location}
+                        onChange={handleInputChange}
+                    />
+                </div>
+
+                <div className="mb-4">
+                    <label htmlFor="paymentLink" className="block mb-2 font-bold">
+                        Payment Link
+                    </label>
+                    <input
+                        type="text"
+                        required
+                        id="paymentLink"
+                        className="w-full px-4 py-2 border rounded-lg"
+                        name="paymentLink"
+                        value={paymentLink}
                         onChange={handleInputChange}
                     />
                 </div>

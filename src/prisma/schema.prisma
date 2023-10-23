@@ -148,6 +148,7 @@ model Event {
   title      String
   details    String
   location   String
+  paymentLink String?
   organizers String
   price      Float      @default(0)
   createdAt  DateTime   @default(now()) @map(name: "created_at")

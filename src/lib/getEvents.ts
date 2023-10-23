@@ -97,7 +97,8 @@ export const updateEvent = async (
   image: string,
   location: string,
   price: string,
-  organizers: string
+  organizers: string,
+  paymentLink: string
 ) => {
   const headers = {
     Accept: "*/*",
@@ -111,6 +112,7 @@ export const updateEvent = async (
     image,
     location,
     price,
+    paymentLink,
     organizers,
   });
 

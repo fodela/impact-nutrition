@@ -33,6 +33,7 @@ const Subscriber = () => {
 
     useEffect(() => {
         if (session) {
+            //@ts-ignore
             !myEvents && session.user && getAllMyEvents(session.user.id);
         }
     }, [session]);

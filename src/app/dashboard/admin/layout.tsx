@@ -37,7 +37,7 @@ export default function AdminLayout({
     const { events, getAllEvents } = useContext(GetEventContext);
 
     useEffect(() => {
-        !events && getAllEvents();
+        !events.length && getAllEvents();
         return () => { };
     }, []);
 
