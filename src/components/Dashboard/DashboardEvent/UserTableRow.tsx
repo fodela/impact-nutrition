@@ -1,4 +1,4 @@
-import { User } from "@prisma/client";
+import { Event, User } from "@prisma/client";
 import React from "react";
 import { FiEdit3 } from "react-icons/fi";
 import { TfiTrash } from "react-icons/tfi";
@@ -10,7 +10,7 @@ const UserTableRow = ({
   userDetail,
 }: {
   idx: number;
-  userDetail: User;
+  userDetail: Event;
 }) => {
   const date = new Date(userDetail.createdAt);
 

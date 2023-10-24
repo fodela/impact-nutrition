@@ -55,21 +55,12 @@ const UpdateEventForm: FC<AddEventProp> = ({ onClose, event }) => {
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
+        console.log(eventInputs, 'eventinputs')
         try {
-            const newEvent = await updateEvent(
-                id,
-                title,
-                details,
-                //@ts-ignore
-                paymentLink,
-                image,
-                location,
-                price,
-                organizers
-            )
+            //@ts-ignore
+            const newEvent = await updateEvent(eventInputs)
             getAllEvents();
             setEventInputs(
-                //@ts-ignore
                 {
                     id: "",
                     title: "",
@@ -78,6 +69,7 @@ const UpdateEventForm: FC<AddEventProp> = ({ onClose, event }) => {
                     image: "",
                     price: "",
                     organizers: "",
+                    paymentLink: ""
                 })
             const notify = () => toast.success("Event Updated!");
             notify()

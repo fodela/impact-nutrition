@@ -89,16 +89,27 @@ const deleteEvent = async (id: string) => {
     throw error;
   }
 };
+interface updateEventData {
+  id: string;
+  title: string;
+  details: string;
+  image: string;
+  location: string;
+  price: string;
+  organizers: string;
+  paymentLink: string;
+}
 
-export const updateEvent = async (
-  id: string,
-  title: string,
-  details: string,
-  image: string,
-  location: string,
-  price: string,
-  organizers: string,
-  paymentLink: string
+export const updateEvent = async ({
+   id,
+  title,
+  details,
+  image,
+  location,
+  price,
+  organizers,
+  paymentLink
+}:updateEventData
 ) => {
   const headers = {
     Accept: "*/*",

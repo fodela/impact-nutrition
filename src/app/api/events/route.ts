@@ -25,7 +25,7 @@ export async function POST(req: Request) {
     const { title, details, location, organizers, image, price, paymentLink } =
       await req.json();
     let Evprice = Number(price);
-    if (!title || !details || !location || !organizers) {
+    if (!title || !details || !location ) {
       return NextResponse.json(
         { message: "Missing required data" },
         { status: 400 }
@@ -65,8 +65,17 @@ export async function PUT(req: Request) {
   const userId = session?.user?.id;
 
   try {
-    const { id, title, details, location, price, image, organizers,paymentLink } =
-      await req.json();
+    const {
+      id,
+      title,
+      details,
+      image,
+      location,
+      price,
+      paymentLink,
+      organizers,
+    } = await req.json();
+      
     let evPrice = Number(price);
     if (!id) {
       return NextResponse.json(
@@ -109,6 +118,7 @@ export async function PUT(req: Request) {
     }
     return NextResponse.json(updatedevent, { status: 200 });
   } catch (error) {
+    console.log('error', error)
     //@ts-ignore
     const message = error?.message ? error?.message : "something went wrong!";
     return NextResponse.json({ message }, { status: 500 });
