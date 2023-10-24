@@ -1,49 +1,72 @@
 'use client'
 import dynamic from "next/dynamic";
-import { FC, useContext, useState } from "react";
+import { FC, useContext, useEffect, useState } from "react";
 import "suneditor/dist/css/suneditor.min.css"; // Import SunEditor CSS
 import { toast } from 'react-toastify';
 import { Event } from "@prisma/client";
-import { getEvents, updateEvent } from "@/lib/getEvents";
+import { getEventById, getEvents, updateEvent } from "@/lib/getEvents";
 import { GetEventContext } from "@/components/context/EventContext";
+import { redirect, useParams } from "next/navigation";
+import Loading from "@/app/events/loading";
 
-interface FormProps {
-    id: string;
-    title: string;
-    event?: string;
-    details: string,
-    location: string;
-    image?: string;
-    price: string | number;
-    paymentLink?: string;
-    organizers?: string;
-}
-type AddEventProp = {
-    onClose: () => void,
-    event: Event
-}
+
 const SunEditor = dynamic(() => import("suneditor-react"), {
     ssr: false,
 });
 
 
 
-const UpdateEventForm: FC<AddEventProp> = ({ onClose, event }) => {
+const UpdateEventForm = () => {
     const { events, getAllEvents } = useContext(GetEventContext);
-    const [eventInputs, setEventInputs] = useState<FormProps>({
-        id: event.id,
-        title: event.title,
-        details: event.details,
+    const [event, setEvent] = useState<Event | null>(null);
+    const [isLoading, setIsLoading] = useState(true);
+    const { id } = useParams();
+
+    const [eventInputs, setEventInputs] = useState<Event>({
+        id: "",
+        title: "",
+        details:"",
+        image: "",
         //@ts-ignore
-        image: event.image,
-        price: event.price || 0,
-        paymentLink: event.paymentLink || "",
-        location: event.location,
-        organizers: event.organizers,
+        price: "",
+        paymentLink: "",
+        location: "",
+        eventDate: new Date(),
+        organizers: ""
     });
 
+
+    console.log(eventInputs, 'inputs')
+
+    const fetchEvent = async () => {
+        try {
+            const fetchedEvent = await getEventById(id);
+            setEvent(fetchedEvent);
+            fetchedEvent && setEventInputs(fetchedEvent)
+            setIsLoading(false);
+        } catch (error) {
+            console.error("Unable to get event:", error);
+        }
+    };
+    useEffect(() => {
+        if (id) {
+            fetchEvent();
+        }
+
+        return () => {
+            // Cleanup function to cancel any pending requests or subscriptions
+        };
+    }, [id]);
+
+    if (isLoading) {
+        return <Loading />;
+    }
+
+    if (!event) {
+        return <p>Event not found.</p>;
+    }
+
     const {
-        id,
         title,
         details,
         image,
@@ -51,32 +74,25 @@ const UpdateEventForm: FC<AddEventProp> = ({ onClose, event }) => {
         paymentLink,
         price,
         organizers,
+        eventDate
     } = eventInputs;
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-        console.log(eventInputs, 'eventinputs')
         try {
             //@ts-ignore
             const newEvent = await updateEvent(eventInputs)
-            getAllEvents();
-            setEventInputs(
-                {
-                    id: "",
-                    title: "",
-                    details: "",
-                    location: "",
-                    image: "",
-                    price: "",
-                    organizers: "",
-                    paymentLink: ""
-                })
+            console.log(newEvent, 'new Event')
+            newEvent.length && getAllEvents();
             const notify = () => toast.success("Event Updated!");
             notify()
-            newEvent?.id && onClose()
+            if(newEvent?.id){
+                window.location.href = "/dashboard/admin/events"
+            }
+          
         } catch (error) {
             //@ts-ignore
-            const notify = () => toast.error(error?.message ? error?.message : "Something went wrong!", {
+            const notify = () => toast.error("Something went wrong!", {
                 position: "top-right",
                 autoClose: 5000,
                 hideProgressBar: false,
@@ -149,6 +165,36 @@ const UpdateEventForm: FC<AddEventProp> = ({ onClose, event }) => {
                 </div>
 
                 <div className="mb-4">
+                    <label htmlFor="eventDate" className="block mb-2 font-bold">
+                        Event Date And Time
+                    </label>
+                    <input
+                        type="datetime-local"
+                        required
+                        id="eventDate"
+                        className="w-full px-4 py-2 border rounded-lg"
+                        value={
+                            eventDate instanceof Date
+                                ? eventDate.toISOString().slice(0, 16)
+                                //@ts-ignore
+                                : eventDate.toString().slice(0, 16) // Provide a default value if eventDate is not a Date
+                        }
+                        onChange={(e) => {
+                            const selectedDate = new Date(e.target.value);
+                            if (!isNaN(selectedDate.getTime())) {
+                                console.log(selectedDate, 'date');
+                                setEventInputs((prevState) => ({
+                                    ...prevState,
+                                    eventDate: selectedDate,
+                                }));
+                            } else {
+                                console.error("Invalid date selected", selectedDate);
+                            }
+                        }}
+                    />
+                </div>
+
+                <div className="mb-4">
                     <label htmlFor="paymentLink" className="block mb-2 font-bold">
                         Payment Link
                     </label>
@@ -156,6 +202,7 @@ const UpdateEventForm: FC<AddEventProp> = ({ onClose, event }) => {
                         type="text"
                         id="paymentLink"
                         className="w-full px-4 py-2 border rounded-lg"
+                        //@ts-ignore
                         value={paymentLink}
                         onChange={(e) =>
                             setEventInputs((prevState) => ({
@@ -179,7 +226,7 @@ const UpdateEventForm: FC<AddEventProp> = ({ onClose, event }) => {
                         onChange={(e) =>
                             setEventInputs((prevState) => ({
                                 ...prevState,
-                                price: e.target.value,
+                                price: Number(e.target.value,)
                             }))
                         }
                     />
@@ -193,6 +240,7 @@ const UpdateEventForm: FC<AddEventProp> = ({ onClose, event }) => {
                         type="text"
                         id="image"
                         className="w-full px-4 py-2 border rounded-lg"
+                        //@ts-ignore
                         value={image}
                         onChange={(e) =>
                             setEventInputs((prevState) => ({
@@ -211,6 +259,7 @@ const UpdateEventForm: FC<AddEventProp> = ({ onClose, event }) => {
                         type="text"
                         id="organizers"
                         className="w-full px-4 py-2 border rounded-lg"
+                        //@ts-ignore
                         value={organizers}
                         onChange={(e) =>
                             setEventInputs((prevState) => ({
@@ -228,13 +277,13 @@ const UpdateEventForm: FC<AddEventProp> = ({ onClose, event }) => {
                     >
                         Update
                     </button>
-                    <button
+                    {/* <button
                         type="button"
                         onClick={onClose}
                         className="px-4 py-2 text-gray-600 bg-gray-200 rounded-lg hover:bg-gray-300"
                     >
                         Close
-                    </button>
+                    </button> */}
                 </div>
             </form>
         </div>

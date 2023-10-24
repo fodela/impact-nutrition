@@ -149,7 +149,8 @@ model Event {
   details    String
   location   String
   paymentLink String?
-  organizers String
+  organizers String?
+  eventDate  DateTime   @default(now()) 
   price      Float      @default(0)
   createdAt  DateTime   @default(now()) @map(name: "created_at")
   updatedAt  DateTime   @updatedAt @map(name: "updated_at")

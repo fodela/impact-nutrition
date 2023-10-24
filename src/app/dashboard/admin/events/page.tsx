@@ -53,13 +53,6 @@ const DashboardEvents = () => {
         }
     }, [events]);
 
-    const handleUpdate = useCallback((id: string) => {
-        const event = events.find(evt => evt.id === id);
-        if (event?.title) {
-            setSelectedEvent(event);
-            toggleUpdateEvent();
-        }
-    }, [events, toggleUpdateEvent]);
 
     return (
         <div className="p-4 max-w-screen-xl mx-auto">
@@ -79,14 +72,6 @@ const DashboardEvents = () => {
                 <tbody>
                     {events.map(event => (
                         <tr className="p-4 m-4" key={event.id}>
-                            <UpdateEvent
-                                isOpen={updateEvent}
-                                onClose={toggleUpdateEvent}
-                                //@ts-ignore
-                                event={memoizedSelectedEvent}
-                                //@ts-ignore
-                                eventUpdateRoot={eventUpdateRef}
-                            />
                             <td>{event.title}</td>
                             <td>
                                 <div dangerouslySetInnerHTML={{ __html: event.details }} />
@@ -97,13 +82,13 @@ const DashboardEvents = () => {
                                         <a className=" font-bold"><BsFillEyeFill size={25}/> </a>
                                     </Link>
                                   
-                                    <button
+                                    <a
+                                    href={`/dashboard/admin/events/updateevent/${event.id}`}
                                         id={event.id}
-                                        onClick={() => handleUpdate(event.id!)}
                                         className="text-blue-500 px-4 py-2 rounded-md"
                                     >
                                         <TbPencil size={25} />
-                                    </button>  
+                                    </a>  
                                     <button
                                         onClick={() => handleDelete(event.id!)}
                                         className="text-red-500  px-4 py-2 mr-2 rounded-md"

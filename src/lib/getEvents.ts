@@ -98,6 +98,7 @@ interface updateEventData {
   price: string;
   organizers: string;
   paymentLink: string;
+  eventDate: Date
 }
 
 export const updateEvent = async ({
@@ -108,7 +109,8 @@ export const updateEvent = async ({
   location,
   price,
   organizers,
-  paymentLink
+  paymentLink,
+  eventDate
 }:updateEventData
 ) => {
   const headers = {
@@ -125,6 +127,7 @@ export const updateEvent = async ({
     price,
     paymentLink,
     organizers,
+    eventDate
   });
 
   const response = await axios.put(`/api/events`, body, {

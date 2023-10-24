@@ -11,6 +11,7 @@ export interface EventFormProps {
     location: string;
     organizers: string;
     paymentLink?: string;
+    eventDate: Date,
     price: string;
     image: string;
 }
@@ -27,6 +28,7 @@ const AddEventForm = () => {
         location: "",
         organizers: "",
         paymentLink: "",
+        eventDate: new Date(),
         price: "",
         image: ""
     });
@@ -37,6 +39,7 @@ const AddEventForm = () => {
         location,
         organizers,
         price,
+        eventDate,
         paymentLink,
         image, } = eventInputs;
 
@@ -49,6 +52,7 @@ const AddEventForm = () => {
                 details: "",
                 location: "",
                 organizers: "",
+                eventDate: new Date(),
                 price: '',
                 image: "",
             });
@@ -76,10 +80,23 @@ const AddEventForm = () => {
 
     const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;
-        setEventInputs((prevState) => ({
-            ...prevState,
-            [name]: value,
-        }));
+        if (name === "eventDate") {
+            const selectedDate = new Date(value);
+            if (!isNaN(selectedDate.getTime())) {
+                console.log(selectedDate, 'date');
+                setEventInputs((prevState) => ({
+                    ...prevState,
+                    [name]: selectedDate,
+                }));
+            } else {
+                console.error("Invalid date selected", selectedDate);
+            }
+        } else {
+            setEventInputs((prevState) => ({
+                ...prevState,
+                [name]: value,
+            }));
+        }
     };
 
     const handleContentChange = (details: string) => {
@@ -127,6 +144,26 @@ const AddEventForm = () => {
                         className="w-full px-4 py-2 border rounded-lg"
                         name="location"
                         value={location}
+                        onChange={handleInputChange}
+                    />
+                </div>
+
+                <div className="mb-4">
+                    <label htmlFor="eventDate" className="block mb-2 font-bold">
+                        Event Date
+                    </label>
+                    <input
+                        type="date"
+                        value={
+                            eventDate instanceof Date
+                                ? eventDate.toISOString().slice(0, 16)
+                                //@ts-ignore
+                                : eventDate.toString().slice(0, 16) // Provide a default value if eventDate is not a Date
+                        }
+                        required
+                        id="eventDate"
+                        className="w-full px-4 py-2 border rounded-lg"
+                        name="eventDate"
                         onChange={handleInputChange}
                     />
                 </div>

@@ -22,7 +22,7 @@ export async function POST(req: Request) {
   }
 
   try {
-    const { title, details, location, organizers, image, price, paymentLink } =
+    const { title, details, location, organizers, image, price, paymentLink, eventDate } =
       await req.json();
     let Evprice = Number(price);
     if (!title || !details || !location ) {
@@ -50,6 +50,7 @@ export async function POST(req: Request) {
         price: Evprice,
         paymentLink,
         userId,
+        eventDate
       },
     });
 
@@ -74,7 +75,10 @@ export async function PUT(req: Request) {
       price,
       paymentLink,
       organizers,
+      eventDate
     } = await req.json();
+
+    console.log(eventDate, 'eventDate')
       
     let evPrice = Number(price);
     if (!id) {
@@ -98,8 +102,10 @@ export async function PUT(req: Request) {
     }
     const updatedevent = await prisma.event.update({
       where: { id },
-      data: { title, details, location, organizers, image, price: evPrice, paymentLink },
+      data: { title, details, location, organizers, image, price: evPrice, paymentLink, eventDate },
     });
+
+    console.log(updatedevent, 'updated')
 
     //update the event price for each of the attendees
 
@@ -118,7 +124,6 @@ export async function PUT(req: Request) {
     }
     return NextResponse.json(updatedevent, { status: 200 });
   } catch (error) {
-    console.log('error', error)
     //@ts-ignore
     const message = error?.message ? error?.message : "something went wrong!";
     return NextResponse.json({ message }, { status: 500 });
