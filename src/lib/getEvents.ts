@@ -89,15 +89,29 @@ const deleteEvent = async (id: string) => {
     throw error;
   }
 };
+interface updateEventData {
+  id: string;
+  title: string;
+  details: string;
+  image: string;
+  location: string;
+  price: string;
+  organizers: string;
+  paymentLink: string;
+  eventDate: Date
+}
 
-export const updateEvent = async (
-  id: string,
-  title: string,
-  details: string,
-  image: string,
-  location: string,
-  price: string,
-  organizers: string
+export const updateEvent = async ({
+   id,
+  title,
+  details,
+  image,
+  location,
+  price,
+  organizers,
+  paymentLink,
+  eventDate
+}:updateEventData
 ) => {
   const headers = {
     Accept: "*/*",
@@ -111,7 +125,9 @@ export const updateEvent = async (
     image,
     location,
     price,
+    paymentLink,
     organizers,
+    eventDate
   });
 
   const response = await axios.put(`/api/events`, body, {

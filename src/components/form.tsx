@@ -9,6 +9,7 @@ import { toast } from "react-toastify";
 import "react-toastify/ReactToastify.min.css";
 
 export const RegisterForm = () => {
+  const [phoneError, setPhoneError] = useState<string | null>(null);
   let [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [showverifyPass, setshowverifyPass] = useState(false);
@@ -17,8 +18,8 @@ export const RegisterForm = () => {
   let [formValues, setFormValues] = useState({
     firstname: "",
     lastname: "",
-    date_of_birth: "",
-    username: "",
+    phone: "",
+    professional_pin: "",
     email: "",
     password: "",
     verifyPass: ""
@@ -27,7 +28,7 @@ export const RegisterForm = () => {
   const onSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
-
+    if(phoneError) return
     try {
       const res = await axios.post("/api/register", formValues, {
         headers: {
@@ -38,7 +39,7 @@ export const RegisterForm = () => {
       setLoading(false);
       if (res.status !== 200) {
         const result = res.data;
-        toast.error("Something Went wrong!", {
+        toast.error(`Something went wrong! ${res.data}`, {
           position: "top-right",
           autoClose: 5000,
           hideProgressBar: false,
@@ -50,7 +51,7 @@ export const RegisterForm = () => {
         });
         return;
       }
-      toast.success("Registration is successful. Verify your email!", {
+      toast.success("Registration is successful. Redirecting to dashboard", {
         position: "top-right",
         autoClose: 5000,
         hideProgressBar: false,
@@ -60,10 +61,15 @@ export const RegisterForm = () => {
         progress: undefined,
         theme: "colored",
       });
-      signIn(undefined, { callbackUrl: "/dashboard" });
+      const {phone , password} = formValues;
+      signIn('credentials', {
+        phone, 
+        password, 
+        callbackUrl: "/dashboard" // Redirect URL after successful login
+      })
     } catch (error: any) {
       setLoading(false);
-      toast.error("Registration failed! Is there a chance you have already used that email to register?", {
+      toast.error("Registration failed! Is there a chance you have already used that phone number to register?", {
         position: "top-right",
         autoClose: 5000,
         hideProgressBar: false,
@@ -79,8 +85,17 @@ export const RegisterForm = () => {
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
 
+    if (name === 'phone') {
+      // Check the phone number length
+      if (value.trim().length > 11 || value.trim().length < 10) {
+        setPhoneError('Phone number must be 10 numbers!');
+      } else {
+        setPhoneError(null);
+      }
+    }
+
     setFormValues((prevFormValues) => {
-      const updatedFormValues = { ...prevFormValues, [name]: value };
+      const updatedFormValues = { ...prevFormValues, [name]: value.trim() };
 
       if (name === 'password' || name === 'verifyPass') {
         setPasswordMatch(
@@ -95,12 +110,13 @@ export const RegisterForm = () => {
 
 
   return (
-    <div className="flex my-8 flex-col justify-center items-center h-screen">
-      <h1 className="text-3xl font-bold mb-6">Create a new account</h1>
+    <div className="w-full">
+      <h1 className="text-3xl text-center font-bold mb-6">Create a new account</h1>
       <form
-        className="max-w-md shadow-md m-4 p-6"
+        className="shadow-md m-4 p-6"
         onSubmit={onSubmit}
       >
+        <div className="max-w-xl mx-auto">
         <label className="font-bold" htmlFor="firstname">Firstname</label>
         <input
           className="appearance-none my-4 border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
@@ -121,23 +137,24 @@ export const RegisterForm = () => {
           onChange={handleChange}
           style={{ padding: "1rem" }}
         />
-        <label className="font-bold" htmlFor="username">Username</label>
+        <label className="font-bold" htmlFor="phone">Phone</label>
+        <input
+            className={`appearance-none my-4 border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${!phoneError && "border-red-600"}`}
+          required
+          type="phone"
+          name="phone"
+          value={formValues.phone}
+          onChange={handleChange}
+          style={{ padding: "1rem" }}
+        />
+        {phoneError &&  <div className="text-red-400 px-3">{phoneError}</div>}
+        <label className="font-bold" htmlFor="professional_pin">Professional Pin</label>
         <input
           className="appearance-none my-4 border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
           required
           type="text"
-          name="username"
-          value={formValues.username}
-          onChange={handleChange}
-          style={{ padding: "1rem" }}
-        />
-        <label className="font-bold" htmlFor="date_of_birth">Date of birth</label>
-        <input
-          className="appearance-none my-4 border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-          required
-          type="date"
-          name="date_of_birth"
-          value={formValues.date_of_birth}
+          name="professional_pin"
+          value={formValues.professional_pin}
           onChange={handleChange}
           style={{ padding: "1rem" }}
         />
@@ -200,8 +217,7 @@ export const RegisterForm = () => {
           >
             {loading ? "Loading..." : "Register"}
           </button>
-
-          <Link className="border-b border-b-green-600 font-bold py-2 px-4 rounded focus:outline-none hover:shadow-outline" href={'/api/auth/signin'}>Login</Link>
+        </div>
         </div>
       </form>
 

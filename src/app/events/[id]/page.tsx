@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 'use client'
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Attendee, Event } from "@prisma/client";
 import { useParams } from "next/navigation";
 import Loading from "../loading";
@@ -10,15 +10,17 @@ import "react-toastify/dist/ReactToastify.css";
 import { useSession } from "next-auth/react";
 import { checkIdExists } from "@/lib/tokenUtils";
 import Image from "next/image";
+import EventRegistrationBtn from "@/components/eventsRegisterBtn";
+import { GetEventContext } from "@/components/context/EventContext";
 
 const EventPage = () => {
     const { data: session, status } = useSession();
     const { id } = useParams();
     const [event, setEvent] = useState<Event | null>(null);
-    const [myEvents, setMyEvents] = useState<Event[]>([]);
+    const {myEvents, getAllMyEvents } = useContext(GetEventContext)
     const [isLoading, setIsLoading] = useState(true);
 
-    const fetchEvent = async () => {
+   const fetchEvent = async () => {
         try {
             const fetchedEvent = await getEventById(id);
             setEvent(fetchedEvent);
@@ -29,18 +31,9 @@ const EventPage = () => {
     };
 
     useEffect(() => {
-        const getAllMyEvents = async () => {
-            try {
-                const allMyEvents = await getMyEvents(id);
-                setMyEvents(allMyEvents);
-            } catch (error) {
-                console.log("myeventserr", error);
-            }
-        };
-
         if (id) {
             fetchEvent();
-            getAllMyEvents();
+            getAllMyEvents(id);
         }
 
         return () => {
@@ -48,34 +41,7 @@ const EventPage = () => {
         };
     }, [id]);
 
-    const eventAddAttendee = async (id: string) => {
-        try {
-            await addEventAttendee(id);
-            toast.success("Awesome! you are registered to attend this event", {
-                autoClose: 5000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-                theme: "colored",
-            });
-            fetchEvent();
-        } catch (error) {
-            //@ts-ignore
-            const errorMessage = error?.response?.data?.message || "We were unable to add you to the event!";
-            toast.error(errorMessage, {
-                position: "top-right",
-                autoClose: 5000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-                theme: "colored",
-            });
-        }
-    };
+  
 
     if (isLoading) {
         return <Loading />;
@@ -101,19 +67,9 @@ const EventPage = () => {
                             {details && <div dangerouslySetInnerHTML={{ __html: details }} />}
                             <div className="inline-flex border-b-2 my-4 border-b-green-700">Price: {price}</div>
                         </div>
-                        <div className="max-w-xl my-4 mx-auto rounded-md">
-                            {!session ? (
-                                <a className="p-3 bg-colorPrimary rounded-md text-white" href="/signin">
-                                    Login to attend event
-                                </a>
-                            ) : !checkIdExists(myEvents, id) ? (
-                                <button className="p-3 bg-colorPrimary rounded-md text-white" onClick={() => eventAddAttendee(id)}>
-                                    Attend Event
-                                </button>
-                            ) : (
-                                <p>You have already registered for this event</p>
-                            )}
-                        </div>
+                        
+                        {<EventRegistrationBtn id={id} myEvents={myEvents} session={session} />}
+
                         <div className="max-w-xl my-4 mx-auto rounded-md">
                             <ToastContainer />
                             <h3 className="text-xl font-bold">List of Event attendees</h3>

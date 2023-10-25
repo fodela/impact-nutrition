@@ -30,7 +30,7 @@ export async function GET(req: Request, { params: { token } }: tokenParamProp) {
 
         // Find the user associated with the verification token
         const user = await prisma.user.findUnique({
-            where: { email: verificationToken.identifier },
+            where: { phone: verificationToken.identifier },
         });
 
         if (!user) {

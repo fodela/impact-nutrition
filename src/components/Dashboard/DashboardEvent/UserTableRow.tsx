@@ -1,30 +1,16 @@
-import { GetResult } from "@prisma/client/runtime";
+import { Event, User } from "@prisma/client";
 import React from "react";
 import { FiEdit3 } from "react-icons/fi";
 import { TfiTrash } from "react-icons/tfi";
 
-export type User = GetResult<
-  {
-    id: string;
-    title: string;
-    details: string;
-    location: string;
-    organizers: string;
-    price: number;
-    createdAt: Date;
-    updatedAt: Date;
-    image: string | null;
-    userId: string;
-  },
-  any
-> & {};
+
 
 const UserTableRow = ({
   idx,
   userDetail,
 }: {
   idx: number;
-  userDetail: User;
+  userDetail: Event;
 }) => {
   const date = new Date(userDetail.createdAt);
 

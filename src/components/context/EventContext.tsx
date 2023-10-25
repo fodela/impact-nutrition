@@ -4,16 +4,20 @@ import { ChildrenProps } from "../NextAuthProvider";
 import { Event } from "@prisma/client";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/ReactToastify.min.css";
-import { getEvents } from "@/lib/getEvents";
+import { getEvents, getMyEvents } from "@/lib/getEvents";
 
 export interface GetEventContextType {
     events: Event[];
+    myEvents: Event[],
     getAllEvents: () => void;
+    getAllMyEvents: (id: string) => void;
 }
 
 export const GetEventContext = createContext<GetEventContextType>({
     events: [],
+    myEvents: [],
     getAllEvents: () => { },
+    getAllMyEvents: (id: string) => {}
 });
 
 
@@ -21,6 +25,17 @@ export const GetEventContext = createContext<GetEventContextType>({
 
 const GetEventsProvider = ({ children }: ChildrenProps) => {
     const [events, setEvents] = useState<Event[]>([]);
+    const [myEvents, setMyEvents] = useState<Event[]>([]);
+
+
+    const getAllMyEvents = async (id: string) => {
+        try {
+            const allMyEvents = await getMyEvents(id);
+            setMyEvents(allMyEvents);
+        } catch (error) {
+            console.log("myeventserr", error);
+        }
+    };
 
     const getAllEvents = async () => {
         try {
@@ -43,7 +58,7 @@ const GetEventsProvider = ({ children }: ChildrenProps) => {
 
 
     return (
-        <GetEventContext.Provider value={{ events, getAllEvents }}>
+        <GetEventContext.Provider value={{ events, getAllEvents, myEvents, getAllMyEvents }}>
             <ToastContainer />
             {children}
         </GetEventContext.Provider>

@@ -116,10 +116,10 @@ model User {
   id            String     @id @default(cuid())
   name          String
   password      String?
-  balance       Float      @default(0)
-  username      String?    @unique
-  email         String     @unique
-  date_of_birth DateTime?  @default(now())
+  phone         String    @unique
+  professional_pin      String?
+  balance       Float     @default(0)
+  email         String?     
   createdAt     DateTime   @default(now()) @map(name: "created_at")
   updatedAt     DateTime   @updatedAt @map(name: "updated_at")
   image         String?
@@ -148,7 +148,9 @@ model Event {
   title      String
   details    String
   location   String
-  organizers String
+  paymentLink String?
+  organizers String?
+  eventDate  DateTime   @default(now()) 
   price      Float      @default(0)
   createdAt  DateTime   @default(now()) @map(name: "created_at")
   updatedAt  DateTime   @updatedAt @map(name: "updated_at")

@@ -22,10 +22,10 @@ export async function POST(req: Request) {
   }
 
   try {
-    const { title, details, location, organizers, image, price } =
+    const { title, details, location, organizers, image, price, paymentLink, eventDate } =
       await req.json();
     let Evprice = Number(price);
-    if (!title || !details || !location || !organizers) {
+    if (!title || !details || !location ) {
       return NextResponse.json(
         { message: "Missing required data" },
         { status: 400 }
@@ -48,7 +48,9 @@ export async function POST(req: Request) {
         organizers,
         image,
         price: Evprice,
+        paymentLink,
         userId,
+        eventDate
       },
     });
 
@@ -64,8 +66,20 @@ export async function PUT(req: Request) {
   const userId = session?.user?.id;
 
   try {
-    const { id, title, details, location, price, image, organizers } =
-      await req.json();
+    const {
+      id,
+      title,
+      details,
+      image,
+      location,
+      price,
+      paymentLink,
+      organizers,
+      eventDate
+    } = await req.json();
+
+    console.log(eventDate, 'eventDate')
+      
     let evPrice = Number(price);
     if (!id) {
       return NextResponse.json(
@@ -88,8 +102,10 @@ export async function PUT(req: Request) {
     }
     const updatedevent = await prisma.event.update({
       where: { id },
-      data: { title, details, location, organizers, image, price: evPrice },
+      data: { title, details, location, organizers, image, price: evPrice, paymentLink, eventDate },
     });
+
+    console.log(updatedevent, 'updated')
 
     //update the event price for each of the attendees
 
