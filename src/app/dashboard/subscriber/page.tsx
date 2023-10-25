@@ -29,15 +29,14 @@ const summaries = [
 const Subscriber = () => {
     const { myEvents, getAllMyEvents } = useContext(GetEventContext);
     const { data: session } = useSession();
-    console.log(myEvents, 'myevents')
 
     useEffect(() => {
         if (session) {
             //@ts-ignore
             !myEvents && session.user && getAllMyEvents(session.user.id);
         }
-    }, [session]);
-
+    }, []);
+    console.log(myEvents, 'myEvents')
     return (
         <div className="subscription-container">
             <div className="overflow-hidden rounded-lg border border-gray-200 shadow-md my-5 divide-y-2 bg-gray-50 dark:bg-white/10">

@@ -50,9 +50,6 @@ const EventRegistrationBtn: React.FC<EventRegistrationProps> = ({ id, myEvents, 
 
 
 
-    console.log(session, 'sessioo')
-
-
     return (
         <div className="max-w-xl my-4 mx-auto rounded-md">
             {!session && (

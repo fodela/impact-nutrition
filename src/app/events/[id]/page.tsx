@@ -32,16 +32,15 @@ const EventPage = () => {
 
     useEffect(() => {
         if (id) {
-            fetchEvent();
-            getAllMyEvents(id);
+            !event?.id && fetchEvent();
+            //@ts-ignore
+            session?.user && getAllMyEvents(session?.user.id);
         }
 
         return () => {
             // Cleanup function to cancel any pending requests or subscriptions
         };
     }, [id]);
-
-  
 
     if (isLoading) {
         return <Loading />;
@@ -51,7 +50,7 @@ const EventPage = () => {
         return <p>Event not found.</p>;
     }
     //@ts-ignore
-    const { attendees, title, image, location, details, price } = event;
+    const { attendees, eventDate, title, paymentLink, image, location, details, price } = event;
 
     return (
         <div>
@@ -71,8 +70,7 @@ const EventPage = () => {
                         {<EventRegistrationBtn id={id} myEvents={myEvents} session={session} />}
 
                         <div className="max-w-xl my-4 mx-auto rounded-md">
-                            <ToastContainer />
-                            <h3 className="text-xl font-bold">List of Event attendees</h3>
+=                            <h3 className="text-xl font-bold">List of Event attendees</h3>
                             <ul>
                                 {attendees?.length ? (
                                     attendees.map((att: Attendee) => (

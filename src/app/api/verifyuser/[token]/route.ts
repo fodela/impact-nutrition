@@ -9,7 +9,6 @@ export interface tokenParamProp {
 
 
 export async function GET(req: Request, { params: { token } }: tokenParamProp) {
-
     try {
         // Find the verification token in the database
         if (!token) {
