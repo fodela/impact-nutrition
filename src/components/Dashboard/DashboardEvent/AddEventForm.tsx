@@ -153,7 +153,7 @@ const AddEventForm = () => {
                         Event Date
                     </label>
                     <input
-                        type="date"
+                        type="datetime-local"
                         value={
                             eventDate instanceof Date
                                 ? eventDate.toISOString().slice(0, 16)

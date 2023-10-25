@@ -42,7 +42,7 @@ const SectionTeam = () => {
       <h2 className="text-4xl sm:text-6xl font-medium text-center">
         Meet Our Team
       </h2>
-      <div className="justify-self-center grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-2 ">
+      <div className="justify-self-center grid sm:grid-cols-2 overflow-x-auto  lg:grid-cols-3 xl:grid-cols-4 gap-2 ">
         {teamMembersDetails.map((member, index) => (
           <TeamMember key={index} member={member} />
         ))}

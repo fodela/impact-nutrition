@@ -13,7 +13,7 @@ type TeamMemberDetails = {
 };
 export function TeamMember({ member }: { member: TeamMemberDetails }) {
   return (
-    <div className="grid sm:grid-cols-2 md:grid-cols-3 max-w-screen-xl overflow-scroll py-8 gap-8 ">
+    <div className="grid sm:grid-cols-2 md:grid-cols-3 overflow-hidden py-8 gap-8 ">
       <div className=" pt-5 relative  w-[290px]">
         {" "}
         <Image
@@ -31,7 +31,7 @@ export function TeamMember({ member }: { member: TeamMemberDetails }) {
             <p className="text-[#637381] text-sm">{member.position}</p>
           </div>
         </div>
-        <div className="flex gap-4 mx-auto p-2 w-1/2 justify-center text-[#CDCED6] z-30">
+        <div className="flex bg-colorPrimary w-full gap-4 mx-auto p-2 m-4 justify-center text-dark rounded-md z-30">
           <Link href={member.facebookLink}>
             <FiFacebook size={20} />
           </Link>
