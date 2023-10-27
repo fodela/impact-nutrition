@@ -2,7 +2,7 @@
 import { useSession, signIn, signOut } from "next-auth/react";
 import Link from "next/link";
 import { useRef, useState } from "react";
-import { BiLeftArrow } from "react-icons/bi";
+import { BiLeftArrow, BiUserCircle } from "react-icons/bi";
 import { FiChevronDown, FiUser } from "react-icons/fi";
 // import { LuLayoutPanelLeft } from "react-icons/lu";
 
@@ -44,6 +44,18 @@ export default function SessionButtons() {
                   <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-green-400 transition-all duration-300 opacity-0"></span>
                 </Link>
               </li>
+
+              <li>
+                <Link
+                  className="btn-effect flex items-center gap-2"
+                  href="/dashboard/profile"
+                >
+                  {/* <LuLayoutPanelLeft /> */}
+                  <BiUserCircle />
+                  Profile
+                  <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-green-400 transition-all duration-300 opacity-0"></span>
+                </Link>
+              </li>              
             </ul>
             <button
               className="bg-colorPrimary hover:bg-colorPrimary-200 px-4 py-1 rounded text-white transition-colors duration-1200 w-24"

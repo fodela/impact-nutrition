@@ -8,11 +8,19 @@ interface UpcomingEventCardProp  {
 }
 
 export function UpcomingEventCard ({ event}: UpcomingEventCardProp) {
+
+  const eventDate = new Date(event.eventDate);
+  const year = eventDate.getFullYear();
+  const month = eventDate.toLocaleString('default', { month: 'short' });
+  const day = eventDate.getDate();
+  const time = eventDate.toLocaleTimeString();
+
+
   return (
     <div className="bg-white dark:bg-white/10 shadow p-2  gap-4 flex rounded w-fit">
       <div className="h-4 w-4 rounded-full bg-purple-600"></div>
       <div className="">
-        <p className="text-sm">NOV 20 TUESDAY</p>
+        <p className="text-sm">{`${day} ${month} ${year}`}</p>
         <h2 className="font-bold my-2 text-black dark:text-white">
           {event.title}
         </h2>
@@ -22,7 +30,7 @@ export function UpcomingEventCard ({ event}: UpcomingEventCardProp) {
               <MdOutlineAccessAlarms size={16} />
               Time
             </div>{" "}
-            <p>8:00AM - 10:00AM</p>
+            <p>{time}</p>
           </div>
 
           <div>
