@@ -1,7 +1,5 @@
 'use client'
-import AddEventForm from "@/components/Dashboard/DashboardEvent/AddEventForm";
-import { FC, MouseEvent } from "react";
-
+import UpdateEvent from "@/components/Dashboard/DashboardEvent/UpdateEvent";
 
 
 const AddEvent = () => {
@@ -14,9 +12,9 @@ const AddEvent = () => {
                     className={`dark:text-black bg-white`}
                 >
                     <h1 className="font-bold text-center uppercase text-2xl">
-                        Add new Event
+                        Update an Event
                     </h1>
-                    <AddEventForm />
+                    <UpdateEvent />
                 </div>
             </div>
         </>

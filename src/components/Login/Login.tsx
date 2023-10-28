@@ -1,16 +1,19 @@
 // Login.js
 'use client'
-import { signIn } from "next-auth/react";
-import { useEffect, useState } from "react";
-import { ToastContainer, toast } from "react-toastify";
+import { signIn, useSession } from "next-auth/react";
+import { useState } from "react";
+import {  toast } from "react-toastify";
 import "react-toastify/ReactToastify.min.css";
 import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
+import { redirect } from "next/navigation";
 
 const Login = () => {
     const [phone, setPhone] = useState("");
     const [password, setPassword] = useState("");
     const [showPassword, setShowPassword] = useState(false);
     const [phoneError, setPhoneError] = useState<string | null>(null);
+    const [loading, setLoading] = useState(false); //
+    const {data: session, status} = useSession()
 
     const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { value, name } = e.target;
@@ -24,6 +27,10 @@ const Login = () => {
         setPhone(value.trim());
     };
 
+    if(session){
+        redirect('/dashboard')
+    }
+
     const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setPassword(e.target.value);
     };
@@ -32,6 +39,7 @@ const Login = () => {
         e.preventDefault();
         if (phoneError) return;
         try {
+            setLoading(true); // Start loadin
             const result = await signIn("credentials", {
                 phone,
                 password,
@@ -63,6 +71,8 @@ const Login = () => {
                 progress: undefined,
                 theme: "colored",
             });
+        } finally {
+            setLoading(false); // Finish loading
         }
     };
 
@@ -113,7 +123,7 @@ const Login = () => {
                         handleLogin(event);
                     }}
                 >
-                    Login
+                    {loading ? "loading" : "Login"} 
                 </button>
                 <a className="underline font-bold" href="/recoverpassword/email">
                     Forgot Password

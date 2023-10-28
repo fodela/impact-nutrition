@@ -10,6 +10,8 @@ export interface EventFormProps {
     details: string;
     location: string;
     organizers: string;
+    paymentLink?: string;
+    eventDate: Date,
     price: string;
     image: string;
 }
@@ -25,6 +27,8 @@ const AddEventForm = () => {
         details: "",
         location: "",
         organizers: "",
+        paymentLink: "",
+        eventDate: new Date(),
         price: "",
         image: ""
     });
@@ -35,6 +39,8 @@ const AddEventForm = () => {
         location,
         organizers,
         price,
+        eventDate,
+        paymentLink,
         image, } = eventInputs;
 
     const handleSubmit = async (e: FormEvent) => {
@@ -46,12 +52,13 @@ const AddEventForm = () => {
                 details: "",
                 location: "",
                 organizers: "",
+                eventDate: new Date(),
                 price: '',
                 image: "",
             });
             const notify = () => toast.success("Event created!");
             notify();
-            window.location.href = '/dashboard/events';
+            window.location.href = '/dashboard/admin/events';
         } catch (error) {
             const notify = () => {
                 //@ts-ignore
@@ -73,10 +80,23 @@ const AddEventForm = () => {
 
     const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;
-        setEventInputs((prevState) => ({
-            ...prevState,
-            [name]: value,
-        }));
+        if (name === "eventDate") {
+            const selectedDate = new Date(value);
+            if (!isNaN(selectedDate.getTime())) {
+                console.log(selectedDate, 'date');
+                setEventInputs((prevState) => ({
+                    ...prevState,
+                    [name]: selectedDate,
+                }));
+            } else {
+                console.error("Invalid date selected", selectedDate);
+            }
+        } else {
+            setEventInputs((prevState) => ({
+                ...prevState,
+                [name]: value,
+            }));
+        }
     };
 
     const handleContentChange = (details: string) => {
@@ -124,6 +144,41 @@ const AddEventForm = () => {
                         className="w-full px-4 py-2 border rounded-lg"
                         name="location"
                         value={location}
+                        onChange={handleInputChange}
+                    />
+                </div>
+
+                <div className="mb-4">
+                    <label htmlFor="eventDate" className="block mb-2 font-bold">
+                        Event Date
+                    </label>
+                    <input
+                        type="datetime-local"
+                        value={
+                            eventDate instanceof Date
+                                ? eventDate.toISOString().slice(0, 16)
+                                //@ts-ignore
+                                : eventDate.toString().slice(0, 16) // Provide a default value if eventDate is not a Date
+                        }
+                        required
+                        id="eventDate"
+                        className="w-full px-4 py-2 border rounded-lg"
+                        name="eventDate"
+                        onChange={handleInputChange}
+                    />
+                </div>
+
+                <div className="mb-4">
+                    <label htmlFor="paymentLink" className="block mb-2 font-bold">
+                        Payment Link
+                    </label>
+                    <input
+                        type="text"
+                        required
+                        id="paymentLink"
+                        className="w-full px-4 py-2 border rounded-lg"
+                        name="paymentLink"
+                        value={paymentLink}
                         onChange={handleInputChange}
                     />
                 </div>

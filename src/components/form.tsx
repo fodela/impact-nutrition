@@ -2,7 +2,6 @@
 
 import axios from "axios";
 import { signIn } from "next-auth/react";
-import Link from "next/link";
 import { ChangeEvent, useState } from "react";
 import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
 import { toast } from "react-toastify";
@@ -19,6 +18,7 @@ export const RegisterForm = () => {
     firstname: "",
     lastname: "",
     phone: "",
+    profession: "",
     professional_pin: "",
     email: "",
     password: "",
@@ -95,7 +95,7 @@ export const RegisterForm = () => {
     }
 
     setFormValues((prevFormValues) => {
-      const updatedFormValues = { ...prevFormValues, [name]: value.trim() };
+      const updatedFormValues = { ...prevFormValues, [name]: value };
 
       if (name === 'password' || name === 'verifyPass') {
         setPasswordMatch(
@@ -139,7 +139,7 @@ export const RegisterForm = () => {
         />
         <label className="font-bold" htmlFor="phone">Phone</label>
         <input
-            className={`appearance-none my-4 border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${!phoneError && "border-red-600"}`}
+            className={`appearance-none my-4 border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${phoneError && "border-red-600"}`}
           required
           type="phone"
           name="phone"
@@ -148,6 +148,18 @@ export const RegisterForm = () => {
           style={{ padding: "1rem" }}
         />
         {phoneError &&  <div className="text-red-400 px-3">{phoneError}</div>}
+
+          <label className="font-bold" htmlFor="profession">Profession</label>
+          <input
+            className="appearance-none my-4 border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            required
+            type="text"
+            name="profession"
+            value={formValues.profession}
+            onChange={handleChange}
+            style={{ padding: "1rem" }}
+          />
+
         <label className="font-bold" htmlFor="professional_pin">Professional Pin</label>
         <input
           className="appearance-none my-4 border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"

@@ -6,10 +6,11 @@ import { generateToken } from "@/lib/tokenUtils";
 
 export async function POST(req: Request) {
   try {
-    const { firstname, lastname, phone, professional_pin, email, password } = (await req.json()) as {
+    const { firstname, lastname, phone, professional_pin, email, password, profession } = (await req.json()) as {
       firstname: string;
       lastname: string;
       phone: string;
+      profession: string;
       professional_pin: string;
       email: string;
       password: string;
@@ -22,11 +23,12 @@ export async function POST(req: Request) {
 
     const user = await prisma.user.create({
       data: {
-        name: `${firstname} ${lastname}`,
-        phone,
-        professional_pin,
-        email: email.toLowerCase(),
+        name: `${firstname.trim()} ${lastname.trim()}`,
+        phone: phone.trim(),
+        professional_pin: professional_pin.trim(),
+        email: email.toLowerCase().trim(),
         password: hashed_password,
+        profession: profession.trim()
       },
     });
 

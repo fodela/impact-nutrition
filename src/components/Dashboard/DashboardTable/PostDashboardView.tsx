@@ -112,7 +112,7 @@ const PostsDashboardView = () => {
           {/* <TableHeader /> */}
           <tbody className="divide-y divide-gray-100 border-t border-gray-100">
             {posts.map((postDetail, index) => (
-              <tr className="hover:bg-inherit/80 opacity-80">
+              <tr key={index} className="hover:bg-inherit/80 opacity-80">
                 <td className="px-6 py-4 opacity-40 capitalize">{index + 1}</td>
                 <td className="px-6 py-4 capitalize font-bold text-lg opacity-100">
                   {postDetail.title}

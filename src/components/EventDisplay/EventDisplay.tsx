@@ -17,12 +17,18 @@ const EventDisplay: FC<eventProps> = ({ event }) => {
       />}
       <div className="rounded-lg">
         <h3 className="heading_tertiary capitalize">{event.title}</h3>
+
         <p>{event.location}</p>
       </div>
-      <div className="flex">
+      <div className="flex justify-between">
         <Link className="btn_primary" href={`/events/${event.id}`} legacyBehavior>
           <a className="btn_primary font-bold">Read more</a>
         </Link>
+      {
+          event.paymentLink &&  <Link className="btn_primary" href={`${event.paymentLink}`} legacyBehavior>
+          <a target="_blank" className="btn_primary font-bold">Make payment</a>
+        </Link>
+      } 
       </div>
     </article>
   );

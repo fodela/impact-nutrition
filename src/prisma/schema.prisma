@@ -117,6 +117,7 @@ model User {
   name          String
   password      String?
   phone         String    @unique
+  profession    String?
   professional_pin      String?
   balance       Float     @default(0)
   email         String?     
@@ -148,7 +149,9 @@ model Event {
   title      String
   details    String
   location   String
-  organizers String
+  paymentLink String?
+  organizers String?
+  eventDate  DateTime   @default(now()) 
   price      Float      @default(0)
   createdAt  DateTime   @default(now()) @map(name: "created_at")
   updatedAt  DateTime   @updatedAt @map(name: "updated_at")
