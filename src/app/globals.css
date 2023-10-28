@@ -88,6 +88,18 @@ body {
    margin-top: 40px;
  }
 
+ .signup{
+  @apply grid gap-4 md:grid-cols-2 ;
+ }
+
+ .signup div{
+  @apply flex flex-col;
+ }
+
+ .signup input{
+  @apply bg-inherit border rounded p-2;
+ }
+
  .contact-wrapper {
    width: fit-content;
    display: flex;

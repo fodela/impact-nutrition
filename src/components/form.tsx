@@ -22,13 +22,13 @@ export const RegisterForm = () => {
     professional_pin: "",
     email: "",
     password: "",
-    verifyPass: ""
+    verifyPass: "",
   });
 
   const onSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
-    if(phoneError) return
+    if (phoneError) return;
     try {
       const res = await axios.post("/api/register", formValues, {
         headers: {
@@ -61,34 +61,37 @@ export const RegisterForm = () => {
         progress: undefined,
         theme: "colored",
       });
-      const {phone , password} = formValues;
-      signIn('credentials', {
-        phone, 
-        password, 
-        callbackUrl: "/dashboard" // Redirect URL after successful login
-      })
+      const { phone, password } = formValues;
+      signIn("credentials", {
+        phone,
+        password,
+        callbackUrl: "/dashboard", // Redirect URL after successful login
+      });
     } catch (error: any) {
       setLoading(false);
-      toast.error("Registration failed! Is there a chance you have already used that phone number to register?", {
-        position: "top-right",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "colored",
-      });
+      toast.error(
+        "Registration failed! Is there a chance you have already used that phone number to register?",
+        {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "colored",
+        }
+      );
     }
   };
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
 
-    if (name === 'phone') {
+    if (name === "phone") {
       // Check the phone number length
       if (value.trim().length > 11 || value.trim().length < 10) {
-        setPhoneError('Phone number must be 10 numbers!');
+        setPhoneError("Phone number must be 10 numbers!");
       } else {
         setPhoneError(null);
       }
@@ -97,7 +100,7 @@ export const RegisterForm = () => {
     setFormValues((prevFormValues) => {
       const updatedFormValues = { ...prevFormValues, [name]: value };
 
-      if (name === 'password' || name === 'verifyPass') {
+      if (name === "password" || name === "verifyPass") {
         setPasswordMatch(
           updatedFormValues.password === updatedFormValues.verifyPass
         );
@@ -107,17 +110,17 @@ export const RegisterForm = () => {
     });
   };
 
-
-
   return (
-    <div className="w-full">
-      <h1 className="text-3xl text-center font-bold mb-6">Create a new account</h1>
-      <form
-        className="shadow-md m-4 p-6"
-        onSubmit={onSubmit}
-      >
-        <div className="max-w-xl mx-auto">
-        <label className="font-bold" htmlFor="firstname">Firstname</label>
+    <div className="w-fit">
+      <h1 className="text-3xl text-center font-bold">Create a new account</h1>
+      <form className="m-4 p-6 signup" onSubmit={onSubmit}>
+        <div className="">
+          {" "}
+          <label className="opacity-50" htmlFor="firstname">
+            Firstname
+          </label>
+
+      
         <input
           className="appearance-none my-4 border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
           required
@@ -184,45 +187,127 @@ export const RegisterForm = () => {
         <label htmlFor="password">Password</label>
         <div className="flex relative">
           <input
-            className={`appearance-none my-4 border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${!passwordMatch && "border-red-600"}`}
+            className=""
             required
-            type={showPassword ? 'text' : 'password'}
-            name="password"
-            value={formValues.password}
+            type="text"
+            name="firstname"
+            value={formValues.firstname}
             onChange={handleChange}
-            style={{ padding: "1rem" }}
           />
-          <button
-            type="button"
-            onClick={() => setShowPassword(!showPassword)}
-            className="text-gray-700 ml-2 absolute right-2 h-full focus:outline-none"
-          >
-            {showPassword ? <AiFillEyeInvisible size={30} /> : <AiFillEye size={30} />}
-          </button>
         </div>
-
-        <label htmlFor="verifyPass">Confirm Password</label>
-        <div className="flex relative">
+        <div className="">
+          <label className="opacity-50" htmlFor="lastname">
+            Lastname
+          </label>
           <input
-            className={`appearance-none my-4 border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${!passwordMatch && "border-red-600"}`}
+            className=""
             required
-            type={showverifyPass ? 'text' : 'password'}
-            name="verifyPass"
-            value={formValues.verifyPass}
+            type="text"
+            name="lastname"
+            value={formValues.lastname}
             onChange={handleChange}
-            style={{ padding: "1rem" }}
           />
-
-          <button
-            type="button"
-            onClick={() => setshowverifyPass(!showverifyPass)}
-            className="text-gray-700 ml-2 absolute right-2 h-full focus:outline-none"
+        </div>
+        <div className="">
+          <label className="opacity-50" htmlFor="phone">
+            Phone
+          </label>
+          <input
+            className={` ${phoneError && "border-red-600"}`}
+            required
+            type="phone"
+            name="phone"
+            value={formValues.phone}
+            onChange={handleChange}
+          />
+          <div
+            className={`${
+              phoneError ? "opacity-100" : "opacity-0"
+            } text-red-400 px-3 text-sm text-left`}
           >
-            {showverifyPass ? <AiFillEyeInvisible size={30} /> : <AiFillEye size={30} />}
-          </button>
+            {phoneError}
+          </div>
         </div>
 
-        <div className="flex my-6 justify-between">
+        <div className="">
+          <label className="opacity-50" htmlFor="professional_pin">
+            Professional Pin
+          </label>
+          <input
+            className=""
+            required
+            type="text"
+            name="professional_pin"
+            value={formValues.professional_pin}
+            onChange={handleChange}
+          />
+        </div>
+        <div className="md:col-span-2">
+          <label className="opacity-50" htmlFor="email">
+            Email
+          </label>
+          <input
+            className=""
+            required
+            type="email"
+            name="email"
+            value={formValues.email}
+            onChange={handleChange}
+          />
+        </div>
+
+        <div className="">
+          <label htmlFor="password">Password</label>
+          <div className="flex relative">
+            <input
+              className={` ${!passwordMatch && "border-red-600"}`}
+              required
+              type={showPassword ? "text" : "password"}
+              name="password"
+              value={formValues.password}
+              onChange={handleChange}
+            />
+            <button
+              type="button"
+              onClick={() => setShowPassword(!showPassword)}
+              className="text-gray-700 ml-2 absolute right-2 h-full focus:outline-none"
+            >
+              {showPassword ? (
+                <AiFillEyeInvisible size={30} />
+              ) : (
+                <AiFillEye size={30} />
+              )}
+            </button>
+          </div>
+        </div>
+
+        <div className="">
+          <label htmlFor="verifyPass">Confirm Password</label>
+          <div className="flex relative">
+            <input
+              className={` ${!passwordMatch && "border-red-600"}`}
+              required
+              type={showverifyPass ? "text" : "password"}
+              name="verifyPass"
+              value={formValues.verifyPass}
+              onChange={handleChange}
+            />
+
+            <button
+              type="button"
+              onClick={() => setshowverifyPass(!showverifyPass)}
+              className="text-gray-700 ml-2 absolute right-2 h-full focus:outline-none"
+            >
+              {showverifyPass ? (
+                <AiFillEyeInvisible size={20} />
+              ) : (
+                <AiFillEye size={20} />
+              )}
+            </button>
+          </div>
+        </div>
+
+        <div className="flex mt-3 justify-between">
           <button
             className="bg-colorPrimary hover:bg-green-800 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
             disabled={loading || !passwordMatch}
@@ -230,10 +315,7 @@ export const RegisterForm = () => {
             {loading ? "Loading..." : "Register"}
           </button>
         </div>
-        </div>
       </form>
-
     </div>
-
   );
 };
