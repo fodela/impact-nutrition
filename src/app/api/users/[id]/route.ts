@@ -16,9 +16,10 @@ export async function GET() {
   try {
     const userData = await prisma.user.findUnique({
       where: {
-        id: user.session.id,
+        id: user.id,
       },
     });
+
 
     if (!userData) {
       return NextResponse.json({ message: "User not found" });

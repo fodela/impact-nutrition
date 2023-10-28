@@ -33,6 +33,9 @@ export function Overview() {
   // const { payments, totalPayments, getAllPayments } = useContext(GetPaymentContext);
   const { events, getAllEvents } = useContext(GetEventContext);
   const { attendees, getAllattendees } = useContext(GetAttendeesContext);
+  const today = new Date();
+  const year = today.getFullYear();
+  const month = today.toLocaleString('default', { month: 'short' });
 
   useEffect(() => {
     getAllEvents();
@@ -134,7 +137,7 @@ export function Overview() {
           </div>
         </div>
         <div className="flex flex-col text-stone-500 gap-4 w-1/4">
-          <p className="text-sm">November 2023</p>
+          <p className="text-sm">{`${year} ${month}`}</p>
           <p className="text-black dark:text-white ">Upcoming Events</p>
 
           {events.map((event, index) => (

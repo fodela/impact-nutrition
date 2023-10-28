@@ -2,7 +2,6 @@
 
 import axios from "axios";
 import { signIn } from "next-auth/react";
-import Link from "next/link";
 import { ChangeEvent, useState } from "react";
 import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
 import { toast } from "react-toastify";

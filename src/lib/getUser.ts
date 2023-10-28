@@ -1,13 +1,12 @@
-import { EventFormProps } from "@/components/Dashboard/DashboardEvent/AddEventForm";
 import axios from "axios";
 
-const getUser = async () => {
+const getUser = async (id: String) => {
   let headersList = {
     Accept: "*/*",
   };
 
   let reqOptions = {
-    url: `/api/users/update`,
+    url: `/api/users/${id}`,
     method: "GET",
     headers: headersList,
   };

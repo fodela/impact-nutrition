@@ -10,12 +10,12 @@ import { getUser } from "@/lib/getUser";
 
 export interface GetUserContextType {
     currentUser: User[];
-    getCurrentUser: () => void;
+    getCurrentUser: (id: string) => void;
 }
 
 export const GetUserContext = createContext<GetUserContextType>({
     currentUser: [],
-    getCurrentUser: () => { },
+    getCurrentUser: (id) => { },
 });
 
 
@@ -24,9 +24,9 @@ export const GetUserContext = createContext<GetUserContextType>({
 const GetUserProvider = ({ children }: ChildrenProps) => {
     const [currentUser, setCurrentUser] = useState<User[]>([]);
 
-    const getCurrentUser = async () => {
+    const getCurrentUser = async (id:string) => {
         try {
-            const usr: User[] = await getUser();
+            const usr: User[] = await getUser(id);
             setCurrentUser(usr);
         } catch (error) {
             toast.error("Unable to get your profile. check your internet", {

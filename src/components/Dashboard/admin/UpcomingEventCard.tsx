@@ -8,7 +8,7 @@ interface UpcomingEventCardProp  {
 }
 
 export function UpcomingEventCard ({ event}: UpcomingEventCardProp) {
-
+  console.log('event running updcomgin',)
   const eventDate = new Date(event.eventDate);
   const year = eventDate.getFullYear();
   const month = eventDate.toLocaleString('default', { month: 'short' });
