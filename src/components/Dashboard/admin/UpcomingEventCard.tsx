@@ -3,16 +3,16 @@ import { BiUserVoice } from "react-icons/bi";
 import { FaMoneyBillWave } from "react-icons/fa";
 import { MdOutlineAccessAlarms, MdOutlineLocationOn } from "react-icons/md";
 
-interface UpcomingEventCardProp  {
-  event: Event
+interface UpcomingEventCardProp {
+  event: Event;
 }
 
-export function UpcomingEventCard ({ event}: UpcomingEventCardProp) {
+export function UpcomingEventCard({ event }: UpcomingEventCardProp) {
   return (
     <div className="bg-white dark:bg-white/10 shadow p-2  gap-4 flex rounded w-fit">
       <div className="h-4 w-4 rounded-full bg-purple-600"></div>
       <div className="">
-        <p className="text-sm">NOV 20 TUESDAY</p>
+        <p className="text-sm">{event?.eventDate || "NOV 20 TUESDAY"}</p>
         <h2 className="font-bold my-2 text-black dark:text-white">
           {event.title}
         </h2>
