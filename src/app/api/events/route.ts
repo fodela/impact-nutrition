@@ -63,6 +63,14 @@ export async function POST(req: Request) {
 export async function PUT(req: Request) {
   const session = await getServerSession(authOptions);
   //@ts-ignore
+  if (!session.user) {
+    NextResponse.json(
+      { message: "Kindly log in to update an event." },
+      { status: 400 }
+    );
+  }
+
+  //@ts-ignore
   const userId = session?.user?.id;
 
   try {
@@ -75,11 +83,11 @@ export async function PUT(req: Request) {
       price,
       paymentLink,
       organizers,
-      eventDate
+      eventDate,
     } = await req.json();
 
-    console.log(eventDate, 'eventDate')
-      
+    console.log(eventDate, "eventDate");
+
     let evPrice = Number(price);
     if (!id) {
       return NextResponse.json(
@@ -102,10 +110,19 @@ export async function PUT(req: Request) {
     }
     const updatedevent = await prisma.event.update({
       where: { id },
-      data: { title, details, location, organizers, image, price: evPrice, paymentLink, eventDate },
+      data: {
+        title,
+        details,
+        location,
+        organizers,
+        image,
+        price: evPrice,
+        paymentLink,
+        eventDate,
+      },
     });
 
-    console.log(updatedevent, 'updated')
+    console.log(updatedevent, "updated");
 
     //update the event price for each of the attendees
 

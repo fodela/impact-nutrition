@@ -1,6 +1,7 @@
 "use client";
 import "react-toastify/ReactToastify.min.css";
 import { useSession } from "next-auth/react";
+import GetUserProvider from "@/components/context/UserContent";
 
 export default function DashboardLayout({
   children,
@@ -31,11 +32,13 @@ export default function DashboardLayout({
 
   return (
     <div>
+      <GetUserProvider>
       <div className="mt-10 pt-10 max-w-screen-2xl md:mx-auto border-b border-gray-300 ">
         <div className="bg-[#EDF6EF] dark:bg-black rounded-xl p-4 m-4">
           {children}
         </div>
-      </div>
+      </div> 
+      </GetUserProvider>
     </div>
   );
 }
