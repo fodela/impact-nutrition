@@ -114,7 +114,6 @@ export const RegisterForm = () => {
     <div className="w-fit">
       <h1 className="text-3xl text-center font-bold">Create a new account</h1>
       <form className="m-4 p-6 signup" onSubmit={onSubmit}>
-        <div className="">
           {" "}
           <label className="opacity-50" htmlFor="firstname">
             Firstname

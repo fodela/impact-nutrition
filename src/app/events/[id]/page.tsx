@@ -123,7 +123,6 @@ const EventPage = () => {
             {organizers}
           </p>
           <div className="opacity-50">
-            {" "}
             {details && <div dangerouslySetInnerHTML={{ __html: details }} />}
           </div>
 
@@ -163,26 +162,13 @@ const EventPage = () => {
           <p className="capitalize opacity-30 text-center ">No Refunds</p>
         </div>
       </section>
-      <section className="grid md:grid-cols-2 lg:grid-cols-3 gap-4 my-16">
+      <section className="grid md:grid-cols-2 lg:grid-cols-3 gap-4 my-16 mx-6">
         <div className="lg:col-span-2 flex flex-col gap-4">
           <h3 className="text-xl font-bold capitalize ">Description</h3>
           {image && (
-            <Image src={image} alt="event image" width={500} height={500} />
+            <Image src={image.toString()} alt="event image" width={500} height={500} />
           )}
-          {details || (
-            <p>
-              Lorem ipsum dolor sit amet consectetur, adipisicing elit. Dolores
-              saepe beatae rem fugit iusto aliquam voluptas, cupiditate esse
-              ipsum ratione dolorum sit, maxime quaerat harum repellendus
-              voluptates a odit omnis!
-            </p>
-          )}
-
-          <p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Rem, non
-            error nulla perferendis eligendi pariatur suscipit iusto cupiditate
-            perspiciatis officia sequi alias molestia.
-          </p>
+          {details && <div dangerouslySetInnerHTML={{ __html: details }} />}
           <h3 className="text-xl font-bold capitalize mt-16">
             How can I contact the oganizer with any question?
           </h3>
