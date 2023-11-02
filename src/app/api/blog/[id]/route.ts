@@ -1,6 +1,6 @@
 import prisma from "@/lib/prisma";
 import { NextResponse } from "next/server";
-import { paramsProp } from "../../users/[id]/route";
+import { paramsProp } from "../../users/update/route";
 
 export async function GET(req: Request, { params: { id } }: paramsProp) {
   try {

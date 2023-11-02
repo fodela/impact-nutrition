@@ -31,9 +31,10 @@ const Admin = () => {
   const { attendees, getAllattendees } = useContext(GetAttendeesContext);
 
   useEffect(() => {
-    !attendees && getAllattendees();
+    !attendees.length && getAllattendees();
     return () => { };
   }, []);
+  console.log(attendees, 'attendees')
 
   return <div className="flexx">
     <div className="overflow-hidden rounded-lg border border-gray-200 shadow-md my-5 divide-y-2 bg-gray-50 dark:bg-white/10">

@@ -1,3 +1,4 @@
+import { UserUpdateFormProps } from "@/components/Dashboard/user/UserUpdateForm";
 import axios from "axios";
 
 const getUser = async (id: String) => {
@@ -14,5 +15,9 @@ const getUser = async (id: String) => {
   let response = await axios.request(reqOptions);
   return response.data;
 };
+
+const updateUser = ({ name, phone, profession, professional_pin, email }: UserUpdateFormProps) => {
+
+}
 
 export {getUser}

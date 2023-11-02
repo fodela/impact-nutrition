@@ -1,4 +1,4 @@
-import { paramsProp } from "@/app/api/users/[id]/route";
+import { paramsProp } from "@/app/api/users/update/route";
 import { NextResponse } from "next/server";
 
 export async function GET(req: Request, { params: { id } }: paramsProp) {

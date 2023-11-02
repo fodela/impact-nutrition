@@ -66,7 +66,6 @@ const EventPage = () => {
   }
   //@ts-ignore
   const {
-    attendees,
     eventDate,
     title,
     organizers,
@@ -76,6 +75,12 @@ const EventPage = () => {
     details,
     price,
   } = event;
+
+  const eventDateUpdate = new Date(event.eventDate);
+  const year = eventDateUpdate.getFullYear();
+  const month = eventDateUpdate.toLocaleString('default', { month: 'short' });
+  const day = eventDateUpdate.getDate();
+  const time = eventDateUpdate.toLocaleTimeString();
 
   return (
     //         <div>
@@ -131,7 +136,7 @@ const EventPage = () => {
           </p>
           <p>
             <span className="opacity-50">Attendees: </span>
-            <span className="text-primary font-bold">{attendees || "0"}</span>
+            {/* <span className="text-primary font-bold">{attendees || "0"}</span> */}
           </p>
 
           <div className="flex gap-4  rounded-lg">
@@ -144,7 +149,7 @@ const EventPage = () => {
         <div className="bg-white text-black w-[310px] flex flex-col gap-2 p-4 sm:p-8 rounded-lg ">
           <h3 className="text-xl font-bold capitalize ">Date & Time</h3>
           <p className="capitalize opacity-40">
-            {eventDate || "Wednesday, Oct 25, 2023"}
+            <p className="text-sm">{`${day} ${month} ${year}`}</p>
           </p>
           <div className="flex gap-4 py-6 text-colorPrimary">
             <BiPlus size={20} />{" "}
@@ -206,7 +211,7 @@ const EventPage = () => {
             <h3 className="text-xl font-bold capitalize ">Tags</h3>
             <div className="flex gap-2 flex-wrap">
               {tags.map((tag) => (
-                <span className="px-4 py-2 wrap bg-slate-500 rounded text-white">
+                <span key={tag} className="px-4 py-2 wrap bg-slate-500 rounded text-white">
                   {tag}
                 </span>
               ))}

@@ -57,6 +57,7 @@ const EventPage = () => {
       }
       //@ts-ignore
     },
+     //@ts-ignore
     [event?.attendees, toggleUpdatePayment]
   );
 
@@ -227,7 +228,7 @@ const EventPage = () => {
             <h3 className="text-xl font-bold capitalize ">Tags</h3>
             <div className="flex gap-2 flex-wrap">
               {tags.map((tag) => (
-                <span className="px-4 py-2 wrap bg-slate-500 rounded text-white">
+                <span key={tag} className="px-4 py-2 wrap bg-slate-500 rounded text-white">
                   {tag}
                 </span>
               ))}
