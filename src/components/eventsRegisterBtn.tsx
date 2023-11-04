@@ -53,13 +53,13 @@ const EventRegistrationBtn: React.FC<EventRegistrationProps> = ({ id, myEvents, 
     return (
         <div className="max-w-xl my-4 mx-auto rounded-md">
             {!session && (
-                <a className="p-3 bg-colorPrimary rounded-md text-white" href="/signin">
+                <a className="bg-gray-500  py-3 px-6 rounded text-white hover:bg-gray-700 " href="/signin">
                     Login to attend event
                 </a>
             )}
             {registered && <p>You have already registered for this event</p>}
             {session && !registered && <button
-                className="p-3 bg-colorPrimary rounded-md text-white"
+                className="bg-gray-500  py-3rounded text-white hover:bg-gray-700 px-6 font-semibold"
                 onClick={() => eventAddAttendee(id)}
             >
                 Attend Event

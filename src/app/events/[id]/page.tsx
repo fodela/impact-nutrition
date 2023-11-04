@@ -155,9 +155,8 @@ const EventPage = () => {
             <BiPlus size={20} />{" "}
             <p>Add to Calendar</p>
           </div>
-          <button className="bg-gray-500  py-3  rounded text-white hover ">
-            Attend Event
-          </button>
+          {<EventRegistrationBtn id={id} myEvents={myEvents} session={session} />}
+          
           <Link
             href={`${paymentLink}`}
             className="bg-colorPrimary  py-3  rounded text-white hover text-center"
