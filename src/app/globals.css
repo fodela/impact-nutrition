@@ -237,3 +237,9 @@ overflow-x: auto;
   
   }
 }
+
+  .grid-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1.5rem; /* Adjust the gap as needed */
+  }

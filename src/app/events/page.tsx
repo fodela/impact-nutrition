@@ -35,7 +35,7 @@ const Events = () => {
       <Hero heroDetail={eventHeroDetail} />
       <section className="max-w-screen-xl px-4 md:mx-auto">
         <h2 className="heading_secondary">Events</h2>
-        <div className="grid md:grid-cols-2 mt-4 gap-6">
+        <div className="grid grid-cols-1 grid-container mt-4 gap-6">
           {events.length ? (
             events.map((event) => (
               <div key={event.id}>
