@@ -178,8 +178,8 @@ const EventPage = () => {
           </h3>
           <p>
             Please visit{" "}
-            <Link href="www.google.com" className="text-blue-500 underline">
-              www.theorganizer.com
+            <Link  href="/contact_us" className="text-blue-500 underline">
+              Our contact page
             </Link>{" "}
             and refer to the FAQ section for all questions and contact
             information
@@ -201,9 +201,7 @@ const EventPage = () => {
             {" "}
             <h3 className="text-xl font-bold capitalize ">{location}</h3>
             <p>
-              Lorem ipsum dolor sit amet consectetur, adipisicing elit. Non
-              nesciunt consectetur nulla recusandae, aspernatur error nisi autem
-              numquam, vel, distinctio animi voluptatibu libero.
+           {event.excerpt || <p>No exccerpt</p>}
             </p>
           </div>
           <div className="">
