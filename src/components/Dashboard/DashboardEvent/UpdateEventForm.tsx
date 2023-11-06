@@ -26,6 +26,7 @@ const UpdateEventForm = () => {
         id: "",
         title: "",
         details:"",
+        excerpt: "",
         image: "",
         //@ts-ignore
         price: "",
@@ -71,11 +72,13 @@ const UpdateEventForm = () => {
         details,
         image,
         location,
+        excerpt,
         paymentLink,
         price,
         organizers,
         eventDate
     } = eventInputs;
+
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -114,6 +117,13 @@ const UpdateEventForm = () => {
         }));
     };
 
+    const handleExceptChange = (excerpt: string) => {
+        setEventInputs((prevState) => ({
+            ...prevState,
+            excerpt,
+        }));
+    };
+
     return (
         <div>
             <form className="p-4" onSubmit={handleSubmit}>
@@ -133,6 +143,16 @@ const UpdateEventForm = () => {
                                 title: e.target.value,
                             }))
                         }
+                    />
+                </div>
+                <div className="mb-4">
+                    <label htmlFor="details" className="block mb-2 font-bold">
+                        Excerpt
+                    </label>
+                    <SunEditor
+                        placeholder="Please type here..."
+                        onChange={handleExceptChange}
+                        setContents={excerpt || ""}
                     />
                 </div>
                 <div className="mb-4">

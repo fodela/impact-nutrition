@@ -31,7 +31,7 @@ export function TeamMember({ member }: { member: TeamMemberDetails }) {
             <p className="text-[#637381] text-sm">{member.position}</p>
           </div>
         </div>
-        <div className="flex bg-colorPrimary w-full gap-4 mx-auto p-2 m-4 justify-center text-dark rounded-md z-30">
+        <div className="flex w-full gap-4 mx-auto p-2 m-4 justify-center text-dark rounded-md z-30">
           <Link href={member.facebookLink}>
             <FiFacebook size={20} />
           </Link>

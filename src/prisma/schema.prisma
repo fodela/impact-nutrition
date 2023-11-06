@@ -82,6 +82,7 @@ model Post {
   id         String     @id @default(cuid())
   title      String
   content    String?
+  excerpt    String?
   createAt   DateTime   @default(now())
   updatedAt  DateTime   @updatedAt
   published  Boolean    @default(false)
@@ -148,6 +149,7 @@ model Event {
   id         String     @id @default(cuid())
   title      String
   details    String
+  excerpt    String?
   location   String
   paymentLink String?
   organizers String?

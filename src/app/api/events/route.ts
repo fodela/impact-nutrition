@@ -6,7 +6,11 @@ import prisma from "@/lib/prisma";
 import { validateAuthorization } from "@/lib/validateAuthorization";
 
 export async function GET() {
-  const events = await prisma.event.findMany();
+  const events = await prisma.event.findMany({
+    orderBy: {
+      eventDate: 'desc' // Sorting events by eventDate in descending order
+    }
+  });
   return NextResponse.json(events);
 }
 
@@ -22,7 +26,7 @@ export async function POST(req: Request) {
   }
 
   try {
-    const { title, details, location, organizers, image, price, paymentLink, eventDate } =
+    const { title, details, location, organizers, image, price, paymentLink, eventDate, excerpt } =
       await req.json();
     let Evprice = Number(price);
     if (!title || !details || !location ) {
@@ -45,6 +49,7 @@ export async function POST(req: Request) {
         title,
         details,
         location,
+        excerpt,
         organizers,
         image,
         price: Evprice,
@@ -80,6 +85,7 @@ export async function PUT(req: Request) {
       details,
       image,
       location,
+      excerpt,
       price,
       paymentLink,
       organizers,
@@ -114,6 +120,7 @@ export async function PUT(req: Request) {
         title,
         details,
         location,
+        excerpt,
         organizers,
         image,
         price: evPrice,

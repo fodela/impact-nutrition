@@ -1,5 +1,6 @@
 'use client'
-import UpdateEvent from "@/components/Dashboard/DashboardEvent/UpdateEvent";
+
+import UpdateEventForm from "@/components/Dashboard/DashboardEvent/UpdateEventForm";
 
 
 const AddEvent = () => {
@@ -11,10 +12,7 @@ const AddEvent = () => {
                 <div
                     className={`dark:text-black bg-white`}
                 >
-                    <h1 className="font-bold text-center uppercase text-2xl">
-                        Update an Event
-                    </h1>
-                    <UpdateEvent />
+                    <UpdateEventForm />
                 </div>
             </div>
         </>

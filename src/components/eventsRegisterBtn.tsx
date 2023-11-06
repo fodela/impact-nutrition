@@ -59,7 +59,7 @@ const EventRegistrationBtn: React.FC<EventRegistrationProps> = ({ id, myEvents, 
             )}
             {registered && <p>You have already registered for this event</p>}
             {session && !registered && <button
-                className="bg-gray-500  py-3rounded text-white hover:bg-gray-700 px-6 font-semibold"
+                className="bg-gray-500  py-3 rounded text-white hover:bg-gray-700 px-6 font-semibold"
                 onClick={() => eventAddAttendee(id)}
             >
                 Attend Event

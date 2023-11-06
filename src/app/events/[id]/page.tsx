@@ -76,7 +76,7 @@ const EventPage = () => {
     price,
   } = event;
 
-  const eventDateUpdate = new Date(event.eventDate);
+  const eventDateUpdate = new Date(eventDate);
   const year = eventDateUpdate.getFullYear();
   const month = eventDateUpdate.toLocaleString('default', { month: 'short' });
   const day = eventDateUpdate.getDate();

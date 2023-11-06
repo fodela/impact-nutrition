@@ -64,9 +64,9 @@ export default function AdminLayout({
           <p className="text-sm">November 2023</p>
           <p className="text-black dark:text-white ">Upcoming Events</p>
 
-          {events.map((event, index) => (
+          {/* {events.map((event, index) => (
             <UpcomingEventCard key={index} event={event} />
-          ))}
+          ))} */}
         </div>
       </div>
     </>

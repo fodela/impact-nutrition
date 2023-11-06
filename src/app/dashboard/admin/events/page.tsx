@@ -8,7 +8,6 @@ import { Event } from '@prisma/client';
 import { deleteEvent } from '@/lib/getEvents';
 import { GetEventContext } from '@/components/context/EventContext';
 import Link from 'next/link';
-import UpdateEvent from '@/components/Dashboard/DashboardEvent/UpdateEvent';
 import { BsFillEyeFill, BsTrash3 } from 'react-icons/bs';
 import { TbPencil } from 'react-icons/tb';
 
@@ -74,7 +73,7 @@ const DashboardEvents = () => {
                         <tr className="p-4 m-4" key={event.id}>
                             <td>{event.title}</td>
                             <td>
-                                <div dangerouslySetInnerHTML={{ __html: event.details }} />
+                                <div dangerouslySetInnerHTML={{ __html: event?.excerpt || "<p>Update and add an excerpt</p>" }} />
                             </td>
                             <td>
                                 <div className="flex justify-end">

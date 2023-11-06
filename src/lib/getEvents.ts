@@ -1,4 +1,5 @@
 import { EventFormProps } from "@/components/Dashboard/DashboardEvent/AddEventForm";
+import { Event } from "@prisma/client";
 import axios from "axios";
 
 const getEvents = async () => {
@@ -89,29 +90,20 @@ const deleteEvent = async (id: string) => {
     throw error;
   }
 };
-interface updateEventData {
-  id: string;
-  title: string;
-  details: string;
-  image: string;
-  location: string;
-  price: string;
-  organizers: string;
-  paymentLink: string;
-  eventDate: Date
-}
+
 
 export const updateEvent = async ({
    id,
   title,
   details,
+  excerpt,
   image,
   location,
   price,
   organizers,
   paymentLink,
   eventDate
-}:updateEventData
+}:Event
 ) => {
   const headers = {
     Accept: "*/*",
@@ -122,6 +114,7 @@ export const updateEvent = async ({
     id,
     title,
     details,
+    excerpt,
     image,
     location,
     price,

@@ -17,7 +17,9 @@ const EventDisplay: FC<eventProps> = ({ event }) => {
       />}
       <div className="rounded-lg">
         <h3 className="heading_tertiary capitalize">{event.title}</h3>
-
+        <div className="opacity-50">
+          {event.excerpt && <div className="max-w-full" dangerouslySetInnerHTML={{ __html: event.excerpt }} />}
+        </div>
         <p>{event.location}</p>
       </div>
       <div className="flex justify-between">

@@ -21,7 +21,7 @@ export async function POST(req: Request) {
   const authorId = session?.user?.id;
 
   try {
-    const { title, content, slug, author, imageUrl, published } =
+    const { title, content, slug, author, imageUrl, published, excerpt } =
       await req.json();
     if (!title || !content || !slug) {
       return NextResponse.json(
@@ -39,7 +39,7 @@ export async function POST(req: Request) {
     }
 
     const post = await prisma.post.create({
-      data: { title, content, slug, author, authorId, imageUrl, published },
+      data: { title, content, slug, author, authorId, imageUrl, published, excerpt },
     });
 
     return NextResponse.json(post, { status: 200 });
@@ -54,7 +54,7 @@ export async function PUT(req: Request) {
   const authorId = session?.user?.id;
 
   try {
-    const { id, title, content, slug, author, imageUrl, published } =
+    const { id, title, content, slug, author, imageUrl, published, excerpt } =
       await req.json();
     if (!id) {
       return NextResponse.json(
@@ -77,7 +77,7 @@ export async function PUT(req: Request) {
 
     const updatedPost = await prisma.post.update({
       where: { id },
-      data: { title, content, slug, author, authorId, imageUrl, published },
+      data: { title, content, slug, author, authorId, imageUrl, published, excerpt },
     });
 
     return NextResponse.json(updatedPost, { status: 200 });

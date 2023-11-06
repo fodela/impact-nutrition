@@ -9,6 +9,7 @@ export interface EventFormProps {
     title: string;
     details: string;
     location: string;
+    excerpt: string;
     organizers: string;
     paymentLink?: string;
     eventDate: Date,
@@ -28,6 +29,7 @@ const AddEventForm = () => {
         location: "",
         organizers: "",
         paymentLink: "",
+        excerpt: "",
         eventDate: new Date(),
         price: "",
         image: ""
@@ -37,6 +39,7 @@ const AddEventForm = () => {
         title,
         details,
         location,
+        excerpt,
         organizers,
         price,
         eventDate,
@@ -52,6 +55,7 @@ const AddEventForm = () => {
                 details: "",
                 location: "",
                 organizers: "",
+                excerpt: "",
                 eventDate: new Date(),
                 price: '',
                 image: "",
@@ -106,6 +110,13 @@ const AddEventForm = () => {
         }));
     };
 
+    const handleErceptChange = (excerpt: string) => {
+        setEventInputs((prevState) => ({
+            ...prevState,
+            excerpt: excerpt,
+        }));
+    };
+
     return (
         <div>
             <form className="p-4" onSubmit={handleSubmit}>
@@ -145,6 +156,16 @@ const AddEventForm = () => {
                         name="location"
                         value={location}
                         onChange={handleInputChange}
+                    />
+                </div>
+                <div className="mb-4">
+                    <label htmlFor="excerpt" className="block mb-2 font-bold">
+                        Excerpt
+                    </label>
+                    <SunEditor
+                        placeholder="Please type here..."
+                        onChange={handleContentChange}
+                        setContents={excerpt}
                     />
                 </div>
 
