@@ -8,6 +8,8 @@ import { useContext, useEffect } from "react";
 import { BiCalendarCheck, BiUser } from "react-icons/bi";
 import { GiTakeMyMoney } from "react-icons/gi";
 import DashboardNav from "../DashboardNav";
+import { useAppDispatch, useAppSelector } from "@/app/redux/hooks";
+import { getEvents } from "@/app/redux/actions/eventsAction";
 
 const headings = ["#", "Name", "Date Created", "Role", "Status", "actions"];
 const summaries = [
@@ -33,10 +35,10 @@ export default function AdminLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const { events, getAllEvents } = useContext(GetEventContext);
-
+  const { events, error } = useAppSelector(state => state.events)
+  const dispatch = useAppDispatch()
   useEffect(() => {
-    !events.length && getAllEvents();
+    !events?.length && dispatch(getEvents());
     return () => {};
   }, []);
 
@@ -64,9 +66,9 @@ export default function AdminLayout({
           <p className="text-sm">November 2023</p>
           <p className="text-black dark:text-white ">Upcoming Events</p>
 
-          {/* {events.map((event, index) => (
+          {events.map((event, index) => (
             <UpcomingEventCard key={index} event={event} />
-          ))} */}
+          ))}
         </div>
       </div>
     </>

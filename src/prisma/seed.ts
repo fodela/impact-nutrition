@@ -1,6 +1,5 @@
-const { PrismaClient } = require("@prisma/client");
+import prisma from "@/lib/prisma";
 
-const prisma = new PrismaClient();
 
 const { hash } = require("bcrypt");
 
@@ -98,7 +97,6 @@ async function main() {
   );
 }
 
-// Rest of the code remains the same
 
 main()
   .catch((e) => console.error(e))

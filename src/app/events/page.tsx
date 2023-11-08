@@ -1,10 +1,11 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 "use client";
-import React, { useContext, useEffect, useState } from "react";
+import React, {  useEffect} from "react";
 import dynamic from "next/dynamic";
-import { GetEventContext } from "@/components/context/EventContext";
 import { HeroDetail } from "../../../types";
 import Hero from "@/components/Hero";
+import { useAppDispatch, useAppSelector } from "../redux/hooks";
+import { getEvents } from "../redux/actions/eventsAction";
 
 const eventHeroDetail: HeroDetail = {
   heading: "Don't Miss Out on What's Coming",
@@ -23,9 +24,11 @@ const EventDisplay = dynamic(
 );
 
 const Events = () => {
-  const { events, getAllEvents } = useContext(GetEventContext);
+  const {events, error} = useAppSelector(state => state.events)
+  const dispatch = useAppDispatch()
+
   useEffect(() => {
-    getAllEvents();
+   !events?.length && dispatch(getEvents())
   }, []);
 
   if (!events) return <h1>Loading....</h1>;

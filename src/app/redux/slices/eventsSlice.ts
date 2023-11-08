@@ -1,15 +1,17 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { getEvents } from "../actions/eventsAction";
+import { Event } from "@prisma/client";
+
 interface initialState {
   loading: boolean,
   error: null | string,
-  data: null | string
+  events: Event[]
 }
 
 const initialState = {
   loading: false,
   error: null,
-  data: null
+  events: []
 } as initialState;
 
 const eventsSlice = createSlice({
@@ -22,12 +24,12 @@ const eventsSlice = createSlice({
       })
       builder.addCase(getEvents.fulfilled, (state, action) => {
         state.loading = false
-        state.data = action.payload
+        state.events = action.payload
         state.error = null
       })
-      builder.addCase(getEvents.rejected, (state, action) => {
+      builder.addCase(getEvents.rejected, (state, action: PayloadAction<any>) => {
         state.loading = false
-        state.error =action.payload
+        state.error = action.payload
       })
   },
 });
