@@ -6,6 +6,8 @@ import "./globals.css";
 import { ToastContainer } from "react-toastify";
 import GetPostsProvider from "@/components/context/PostContext";
 import GetEventsProvider from "@/components/context/EventContext";
+import { Provider } from 'react-redux';
+import { ReduxProvider } from "./redux/Provider";
 
 const Hero = dynamic(() => import("@/components/Hero"));
 
@@ -36,6 +38,7 @@ export default function RootLayout({
           theme="colored"
         />
         <div className={` relative`}>
+          <ReduxProvider>
           <NextAuthProvider>
             <GetPostsProvider>
               <GetEventsProvider>
@@ -45,6 +48,7 @@ export default function RootLayout({
               </GetEventsProvider>
             </GetPostsProvider>
           </NextAuthProvider>
+          </ReduxProvider>
         </div>
       </body>
     </html>
