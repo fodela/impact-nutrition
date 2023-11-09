@@ -1,27 +1,31 @@
 "use client";
 import "react-toastify/ReactToastify.min.css";
-import { useSession } from "next-auth/react";
 import GetUserProvider from "@/components/context/UserContent";
+import { useAppSelector } from "../redux/hooks";
+import { useEffect } from "react";
 
 export default function DashboardLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  const { status, data: session } = useSession({ required: true });
+  const { currentSession, sessionStatus } = useAppSelector(state => state.session)
+ 
 
-  if (status === "loading") {
-    return <p>Loading...</p>;
-  }
+  useEffect(() => {
+    if (sessionStatus === "unauthenticated") {
+      window.location.href = "/signin";
+    }
+  }, [sessionStatus]);
 
-  if (session) {
+  if (currentSession) {
     const currentPath = window.location.href;
     const newPath =
       //@ts-ignore
-      session.user.role === "SUBSCRIBER" && currentPath.includes("admin")
+      currentSession.user.role === "SUBSCRIBER" && currentPath.includes("admin")
         ? currentPath.replace("/admin", "/subscriber")
         : //@ts-ignore
-        session.user.role === "ADMIN" && currentPath.includes("subscriber")
+        currentSession.user.role === "ADMIN" && currentPath.includes("subscriber")
         ? currentPath.replace("/subscriber", "/admin")
         : currentPath;
 

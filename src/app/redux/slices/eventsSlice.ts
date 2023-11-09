@@ -2,17 +2,17 @@ import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { getEvents } from "../actions/eventsAction";
 import { Event } from "@prisma/client";
 
-interface initialState {
-  loading: boolean,
-  error: null | string,
-  events: Event[]
-}
+type EventsState = {
+  loading: boolean;
+  error: null | string;
+  events: Event[];
+};
 
-const initialState = {
+const initialState: EventsState = {
   loading: false,
   error: null,
-  events: []
-} as initialState;
+  events: [],
+};
 
 const eventsSlice = createSlice({
   name: "events",

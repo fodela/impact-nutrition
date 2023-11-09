@@ -14,6 +14,7 @@ export const getEvents = createAsyncThunk( "events/getEvents", async (data, thun
         method: "GET",
         headers: headersList,
     };
+    console.log('get events running')
     try {
         let response = await axios.request(reqOptions);
         return response.data;
@@ -23,7 +24,7 @@ export const getEvents = createAsyncThunk( "events/getEvents", async (data, thun
     } 
 ) 
 
-export const addEventAttendee = createAsyncThunk('events/addEventAttendee',  async (eventId: string) => {
+export const addEventAttendee = createAsyncThunk('events/addEventAttendee',  async (eventId: string, thunkApi) => {
   const headers = {
     Accept: "*/*",
     "Content-Type": "application/json",
@@ -32,115 +33,184 @@ export const addEventAttendee = createAsyncThunk('events/addEventAttendee',  asy
   const body = JSON.stringify({
     eventId,
   });
-  const response = await axios.post(`/api/events/attend`, body, {
+  try {
+    const response = await axios.post(`/api/events/attend`, body, {
     headers,
   });
   return response.data;
+  } catch (error: unknown) {
+    return thunkApi.rejectWithValue(error);
+  }
+  
 }
 )
 
-const addEventPayment = async (
-  eventId: string,
-  userId: string,
-  amount: number,
-  paid: boolean,
-  receipt: string
-) => {
-  const headers = {
-    Accept: "*/*",
-    "Content-Type": "application/json",
-  };
-
-  const body = JSON.stringify({
+export const addEventPayment = createAsyncThunk(
+  "events/addEventPayment",
+  async ({
     eventId,
-    amount,
     userId,
+    amount,
     paid,
     receipt,
-  });
-  const response = await axios.post(`/api/events/attend/payments`, body, {
-    headers,
-  });
-  return response.data;
-};
+  }: {
+    eventId: string;
+    userId: string;
+    amount: number;
+    paid: boolean;
+    receipt: string;
+  }, thunkApi) => {
+    const headers = {
+      Accept: "*/*",
+      "Content-Type": "application/json",
+    };
 
-const deleteEvent = async (id: string) => {
-  const headersList = {
-    Accept: "*/*",
-  };
+    const body = JSON.stringify({
+      eventId,
+      amount,
+      userId,
+      paid,
+      receipt,
+    });
 
-  const reqOptions = {
-    url: `/api/events?id=${id}`,
-    method: "DELETE",
-    headers: headersList,
-  };
+    try {
+      const response = await axios.post("/api/events/attend/payments", body, {
+        headers,
+      });
 
-  try {
-    const response = await axios.request(reqOptions);
-    return response.data;
-  } catch (error) {
-    throw error;
+      return response.data;
+    } catch (error:any) {
+      // Handle the error appropriately
+      console.error("Failed to add event payment:", error);
+     thunkApi.rejectWithValue({ error: error.message }) ;
+    }
   }
-};
+);
+export const deleteEvent = createAsyncThunk(
+  "events/deleteEvent",
+  async (id: string, thunkAPI) => {
+    const headers = {
+      Accept: "*/*",
+    };
 
-export const updateEvent = async ({
-  id,
-  title,
-  details,
-  excerpt,
-  image,
-  location,
-  price,
-  organizers,
-  paymentLink,
-  eventDate,
-}: Event) => {
-  const headers = {
-    Accept: "*/*",
-    "Content-Type": "application/json",
-  };
+    const reqOptions = {
+      url: `/api/events?id=${id}`,
+      method: "DELETE",
+      headers,
+    };
 
-  const body = JSON.stringify({
-    id,
-    title,
-    details,
-    excerpt,
-    image,
-    location,
-    price,
-    paymentLink,
-    organizers,
-    eventDate,
-  });
+    try {
+      const response = await axios.request(reqOptions);
+      return response.data;
+    } catch (error:any) {
+      if (error.response && error.response.status >= 400) {
+        const errorMessage = error.response.data.message;
+        return thunkAPI.rejectWithValue({ message: errorMessage });
+      } else {
+        throw error;
+      }
+    }
+  }
+);
 
-  const response = await axios.put(`/api/events`, body, {
-    headers,
-  });
-  return response.data;
-};
+export const updateEvent = createAsyncThunk(
+  "events/updateEvent",
+  async (
+    {
+      id,
+      title,
+      details,
+      excerpt,
+      image,
+      location,
+      price,
+      organizers,
+      paymentLink,
+      eventDate,
+    }: Event,
+    thunkAPI
+  ) => {
+    const headers = {
+      Accept: "*/*",
+      "Content-Type": "application/json",
+    };
 
-const getMyEvents = async (id: string) => {
-  let headersList = {
-    Accept: "*/*",
-  };
+    const body = JSON.stringify({
+      id,
+      title,
+      details,
+      excerpt,
+      image,
+      location,
+      price,
+      paymentLink,
+      organizers,
+      eventDate,
+    });
 
-  let reqOptions = {
-    url: `/api/events/attend/${id}/myevents`,
-    method: "GET",
-    headers: headersList,
-  };
+    try {
+      const response = await axios.put(`/api/events`, body, {
+        headers,
+      });
+      return response.data;
+    } catch (error:any) {
+      if (error.response && error.response.status >= 400) {
+        const errorMessage = error.response.data.message;
+        return thunkAPI.rejectWithValue({ message: errorMessage });
+      } else {
+        throw error;
+      }
+    }
+  }
+);
 
-  let response = await axios.request(reqOptions);
-  return response.data;
-};
+export const getMyEvents = createAsyncThunk(
+  "events/getMyEvents",
+  async (id: string, thunkAPI) => {
+    const headers = {
+      Accept: "*/*",
+    };
 
-export const createEvent = async (formData: EventFormProps) => {
-  const headers = {
-    Accept: "*/*",
-    "Content-Type": "application/json",
-  };
-  const response = await axios.post(`/api/events`, formData, {
-    headers,
-  });
-  return response.data;
-};
+    const reqOptions = {
+      url: `/api/events/attend/${id}/myevents`,
+      method: "GET",
+      headers,
+    };
+
+    try {
+      const response = await axios.request(reqOptions);
+      return response.data;
+    } catch (error:any) {
+      if (error.response && error.response.status >= 400) {
+        const errorMessage = error.response.data.message;
+        return thunkAPI.rejectWithValue({ message: errorMessage });
+      } else {
+        throw error;
+      }
+    }
+  }
+);
+
+export const createEvent = createAsyncThunk(
+  "events/createEvent",
+  async (formData: EventFormProps, thunkAPI) => {
+    const headers = {
+      Accept: "*/*",
+      "Content-Type": "application/json",
+    };
+
+    try {
+      const response = await axios.post(`/api/events`, formData, {
+        headers,
+      });
+      return response.data;
+    } catch (error:any) {
+      if (error.response && error.response.status >= 400) {
+        const errorMessage = error.response.data.message;
+        return thunkAPI.rejectWithValue({ message: errorMessage });
+      } else {
+        throw error;
+      }
+    }
+  }
+);

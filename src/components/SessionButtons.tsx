@@ -1,17 +1,34 @@
 "use client";
+import { setSession } from "@/app/redux/actions/sessionAction";
+import { useAppDispatch, useAppSelector } from "@/app/redux/hooks";
 import { useSession, signIn, signOut } from "next-auth/react";
 import Link from "next/link";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { BiLeftArrow, BiUserCircle } from "react-icons/bi";
 import { FiChevronDown, FiUser } from "react-icons/fi";
 // import { LuLayoutPanelLeft } from "react-icons/lu";
 
 export default function SessionButtons() {
-  const { data: session } = useSession();
+  const { data: session, status } = useSession();
+
+  const {sessionStatus, currentSession} = useAppSelector(state => state.session)
+  const dispatch = useAppDispatch()
+
+  useEffect(() => {
+    if (status === "unauthenticated" && sessionStatus !== status) {
+      dispatch(setSession({ session, sessionStatus: status }));
+    } else if (status === "authenticated") {
+      if (currentSession != session) {
+        dispatch(setSession({ session, sessionStatus: status }));
+      }
+    }
+  }, [currentSession, dispatch, session, sessionStatus, status]);
+  
   const [showAction, setShowAction] = useState(false);
 
   const authRef = useRef<HTMLDialogElement>(null);
-  if (session) {
+
+  if (currentSession) {
     return (
       <div className="relative ">
         <div className="link flex justify-center items-center font-bold cursor-pointer">

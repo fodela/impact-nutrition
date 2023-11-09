@@ -1,11 +1,28 @@
+import { Session } from "@prisma/client";
 import { createSlice } from "@reduxjs/toolkit";
+import { setSession } from "../actions/sessionAction";
 
+interface SessionState {
+  sessionStatus: null | string;
+  currentSession: Session | null;
+}
 
-const initialState = {}
-const session = createSlice({
-    name: 'users',
-    initialState,
-    reducers: {}
-})
+const initialState: SessionState = {
+  sessionStatus: null,
+  currentSession: null,
+};
 
-export default session.reducer
+const sessionSlice = createSlice({
+  name: "users",
+  initialState,
+  reducers: {},
+  extraReducers(builder) {
+        builder.addCase(setSession.fulfilled, (state, action) => {
+          console.log(action,'action')
+          state.sessionStatus = action.payload.sessionStatus;
+          state.currentSession = action.payload.currentSession;
+        });
+  },
+});
+
+export default sessionSlice.reducer;
