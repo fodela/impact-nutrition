@@ -1,6 +1,6 @@
 # Impact Nutriction Consult
 
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+
 
 ## Getting Started
 
@@ -46,6 +46,8 @@ This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-opti
 ### Set up database
 
 - [Install psql](https://www.timescale.com/blog/how-to-install-psql-on-mac-ubuntu-debian-windows/)
+- after installation use this [link](https://www.digitalocean.com/community/tutorials/how-to-install-and-use-postgresql-on-ubuntu-18-04) to correctly setup psql
+
 
 - If you are on windows, kindly use [wsl 2](https://learn.microsoft.com/en-us/windows/wsl/install) and you can continue from the steps below.
 - Run
@@ -53,12 +55,18 @@ This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-opti
 ```bash
    sudo apt-get update
    sudo apt install postgresql postgresql-contrib
-   sudo -i -u postgres
-   psql
+   sudo systemctl start postgresql.service 
 ```
+
+```
+  sudo -u postgres createuser -s $USER
+  createdb
+  psql
+
+```
+
 ```bash
-    CREATE ROLE your_username WITH 
-    LOGIN 
+    CREATE ROLE your_username WITH LOGIN PASSWORD 'your_password'
     CREATEDB 
     CREATEROLE;
 ```
@@ -66,11 +74,11 @@ This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-opti
 
 ```bash
     yarn run prisma-init
-    yarn run prisma-generaate
+    yarn run prisma-generate
     yarn run prisma-push 
     yarn run seed
 ```
-### Update the sample.env to .env.local file with your details
+### Update the sample.env to .env.local file with your details and rename it to .env
 
 ```bash
 DATABASE_URL="postgresql://ursername:password@localhost:5432/db_name?schema=public"

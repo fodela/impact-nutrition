@@ -10,24 +10,21 @@ import { GetEventContext } from '@/components/context/EventContext';
 import Link from 'next/link';
 import { BsFillEyeFill, BsTrash3 } from 'react-icons/bs';
 import { TbPencil } from 'react-icons/tb';
+import { useAppDispatch, useAppSelector } from '@/app/redux/hooks';
+import { getEvents } from '@/app/redux/actions/eventsAction';
 
 
 const DashboardEvents = () => {
-    const { events, getAllEvents } = useContext(GetEventContext);
-
-    const [updateEvent, setUpdateEvent] = useState(false);
-    const eventUpdateRef = useRef<HTMLDivElement | null>(null);
-
-    const toggleUpdateEvent = useCallback(() => {
-        setUpdateEvent(prevState => !prevState);
+    const { events, error } = useAppSelector(state => state.events)
+    const dispatch = useAppDispatch()
+    useEffect(() => {
+        !events?.length && dispatch(getEvents());
+        return () => { };
     }, []);
+
 
     const [selectedEvent, setSelectedEvent] = useState<Event | null>(null);
     const memoizedSelectedEvent = useMemo(() => selectedEvent, [selectedEvent]);
-
-    useEffect(() => {
-       !events && getAllEvents()
-    }, []);
 
     const handleDelete = useCallback(async (id: string) => {
         const event = events.find(evt => evt.id === id);
