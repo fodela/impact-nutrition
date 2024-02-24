@@ -114,77 +114,12 @@ export const RegisterForm = () => {
     <div className="w-fit">
       <h1 className="text-3xl text-center font-bold">Create a new account</h1>
       <form className="m-4 p-6 signup" onSubmit={onSubmit}>
+        {" "}
+        <div className="">
           {" "}
           <label className="opacity-50" htmlFor="firstname">
             Firstname
           </label>
-
-      
-        <input
-          className="appearance-none my-4 border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-          required
-          type="text"
-          name="firstname"
-          value={formValues.firstname}
-          onChange={handleChange}
-          style={{ padding: "1rem" }}
-        />
-        <label className="font-bold" htmlFor="lastname">Lastname</label>
-        <input
-          className="appearance-none my-4 border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-          required
-          type="text"
-          name="lastname"
-          value={formValues.lastname}
-          onChange={handleChange}
-          style={{ padding: "1rem" }}
-        />
-        <label className="font-bold" htmlFor="phone">Phone</label>
-        <input
-            className={`appearance-none my-4 border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${phoneError && "border-red-600"}`}
-          required
-          type="phone"
-          name="phone"
-          value={formValues.phone}
-          onChange={handleChange}
-          style={{ padding: "1rem" }}
-        />
-        {phoneError &&  <div className="text-red-400 px-3">{phoneError}</div>}
-
-          <label className="font-bold" htmlFor="profession">Profession</label>
-          <input
-            className="appearance-none my-4 border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-            required
-            type="text"
-            name="profession"
-            value={formValues.profession}
-            onChange={handleChange}
-            style={{ padding: "1rem" }}
-          />
-
-        <label className="font-bold" htmlFor="professional_pin">Professional Pin</label>
-        <input
-          className="appearance-none my-4 border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-          required
-          type="text"
-          name="professional_pin"
-          value={formValues.professional_pin}
-          onChange={handleChange}
-          style={{ padding: "1rem" }}
-        />
-        <label className="font-bold" htmlFor="email">Email</label>
-        <input
-          className={`appearance-none my-4 border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline`}
-          required
-          type="email"
-          name="email"
-          value={formValues.email}
-          onChange={handleChange}
-          style={{ padding: "1rem" }}
-        />
-
-        <label htmlFor="password">Password</label>
-        <div className="flex relative">
           <input
             className=""
             required
@@ -227,7 +162,6 @@ export const RegisterForm = () => {
             {phoneError}
           </div>
         </div>
-
         <div className="">
           <label className="opacity-50" htmlFor="professional_pin">
             Professional Pin
@@ -241,7 +175,7 @@ export const RegisterForm = () => {
             onChange={handleChange}
           />
         </div>
-        <div className="md:col-span-2">
+        <div className="">
           <label className="opacity-50" htmlFor="email">
             Email
           </label>
@@ -254,7 +188,6 @@ export const RegisterForm = () => {
             onChange={handleChange}
           />
         </div>
-
         <div className="">
           <label htmlFor="password">Password</label>
           <div className="flex relative">
@@ -279,7 +212,6 @@ export const RegisterForm = () => {
             </button>
           </div>
         </div>
-
         <div className="">
           <label htmlFor="verifyPass">Confirm Password</label>
           <div className="flex relative">
@@ -305,7 +237,6 @@ export const RegisterForm = () => {
             </button>
           </div>
         </div>
-
         <div className="flex mt-3 justify-between">
           <button
             className="bg-colorPrimary hover:bg-green-800 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
