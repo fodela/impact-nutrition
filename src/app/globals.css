@@ -17,9 +17,8 @@
   }
 }
 
-*{
-  transition: all .5s ease-in;
-  
+* {
+  transition: all 0.5s ease-in;
 }
 
 body {
@@ -33,37 +32,35 @@ body {
 }
 
 .content {
-@apply mx-auto my-5 sm:my-10 sm:block
+  @apply mx-auto my-5 sm:my-10 sm:block;
 }
 
-.btn_primary{
-  @apply text-white bg-colorPrimary px-4 py-2 rounded
+.btn_primary {
+  @apply text-white bg-colorPrimary px-4 py-2 rounded;
 }
 
 .text-colorPrimary {
-  color: #5BAD34;
+  color: #5bad34;
 }
 
-.social_handle{
-  @apply flex dark:text-black dark:bg-white text-3xl text-white bg-black p-1 rounded
+.social_handle {
+  @apply flex dark:text-black dark:bg-white text-3xl text-white bg-black p-1 rounded;
 }
 
-.heading_secondary{
-  @apply text-3xl font-bold text-center my-10
-
-
+.heading_secondary {
+  @apply text-3xl font-bold text-center my-10;
 }
 
-.heading_tertiary{
-  @apply font-bold text-3xl mb-4
+.heading_tertiary {
+  @apply font-bold text-3xl mb-4;
 }
 
-.section_grid{
-  @apply grid md:grid-cols-2 gap-5 lg:gap-10 items-center
+.section_grid {
+  @apply grid md:grid-cols-2 gap-5 lg:gap-10 items-center;
 }
 
-.about_card{
-  @apply flex flex-col gap-4 justify-between p-6 dark:border-t-2 dark:border-r-2 border-slate-500 dark:bg-white/5 rounded-lg
+.about_card {
+  @apply flex flex-col gap-4 justify-between p-6 dark:border-t-2 dark:border-r-2 border-slate-500 dark:bg-white/5 rounded-lg;
 }
 
 .btn-active:hover .absolute,
@@ -78,168 +75,164 @@ body {
   opacity: 1;
 }
 .active span {
-   width: 100%;
-   opacity: 1;
- }
+  width: 100%;
+  opacity: 1;
+}
 
- .contact-container {
-   display: grid;
-   place-items: center;
-   margin-top: 40px;
- }
+.contact-container {
+  display: grid;
+  place-items: center;
+  margin-top: 40px;
+}
 
- .signup{
-  @apply grid gap-4 md:grid-cols-2 ;
- }
+.signup {
+  @apply grid gap-4;
+}
 
- .signup div{
+.signup div {
   @apply flex flex-col;
- }
+}
 
- .signup input{
+.signup input {
   @apply bg-inherit border rounded p-2;
- }
+}
 
- .contact-wrapper {
-   width: fit-content;
-   display: flex;
-   gap: 2rem;
- }
+.contact-wrapper {
+  width: fit-content;
+  display: flex;
+  gap: 2rem;
+}
 
- .contact-wrapper a {
-   background: #5BAD34;
-   font-size: 3rem;
-   border: 2px solid transparent;
-   color: white;
-   padding: 1rem;
-   border-radius: 1.5rem;
- }
+.contact-wrapper a {
+  background: #5bad34;
+  font-size: 3rem;
+  border: 2px solid transparent;
+  color: white;
+  padding: 1rem;
+  border-radius: 1.5rem;
+}
 
- .favicon_bg{
+.favicon_bg {
   background-image: url("../../public/assets/svg/bg_favicon.svg");
   background-position: center;
   background-size: contain;
   background-repeat: no-repeat;
- 
 }
 
-.revealAccordion{
-  animation: revealAccordion .5s ease-out;
+.revealAccordion {
+  animation: revealAccordion 0.5s ease-out;
 }
- .revealFromDown{
-animation: revealFromDown .5s ease-out;
- }
-
- .revealFromTop{
-animation: revealFromTop .5s ease-out;
- }
- .revealFromLeft{
-animation: revealFromLeft .5s  ease-in-out;
- }
- .revealFromRight{
-animation: revealFromRight .5s ease-out;
- }
-.popUp{
-  animation: popUp .5s ease-out ;
-}
-.slideDown{
-  animation: slideDown .5s ease-in-out;
+.revealFromDown {
+  animation: revealFromDown 0.5s ease-out;
 }
 
- .ani-delay_500ms{
-  animation-delay: .5s;
- }
- .ani-delay_1s{
-   animation-delay: 1s;
-  }
-  .ani-delay_1500ms{
-   animation-delay: 1.5s;
-  }
- .ani-delay_2s{
+.revealFromTop {
+  animation: revealFromTop 0.5s ease-out;
+}
+.revealFromLeft {
+  animation: revealFromLeft 0.5s ease-in-out;
+}
+.revealFromRight {
+  animation: revealFromRight 0.5s ease-out;
+}
+.popUp {
+  animation: popUp 0.5s ease-out;
+}
+.slideDown {
+  animation: slideDown 0.5s ease-in-out;
+}
+
+.ani-delay_500ms {
+  animation-delay: 0.5s;
+}
+.ani-delay_1s {
+  animation-delay: 1s;
+}
+.ani-delay_1500ms {
+  animation-delay: 1.5s;
+}
+.ani-delay_2s {
   animation-delay: 2s;
- }
- .ani-delay_3s{
+}
+.ani-delay_3s {
   animation-delay: 3s;
- }
- .ani-delay_4s{
+}
+.ani-delay_4s {
   animation-delay: 4s;
- }
- .ani-delay_5s{
+}
+.ani-delay_5s {
   animation-delay: 5s;
- }
-
+}
 
 .scroll-content {
-  grid-template-columns: repeat(auto-fill,minmax(290px,1fr));
-grid-auto-flow: column;
-grid-auto-columns: minmax(290px,1fr);
-overflow-x: auto;
+  grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
+  grid-auto-flow: column;
+  grid-auto-columns: minmax(290px, 1fr);
+  overflow-x: auto;
 }
 
- @keyframes revealFromDown {
-  from{
-    opacity:0;
+@keyframes revealFromDown {
+  from {
+    opacity: 0;
     transform: translateY(100%);
   }
-  to{
-    opacity:1;
-    transform: translateY(0);
-  }
- }
- @keyframes revealFromTop {
-  from{
-    opacity:0;
-    transform: translateY(-100%);
-  }
-  to{
-    opacity:1;
-    transform: translateY(0);
-  }
- }
- @keyframes revealFromLeft {
-  from{
-    opacity:0;
-    transform: translateX(-100vw);
-  }
-  to{
-    opacity:1;
-    transform: translateX(0);
-  }
- }
- @keyframes revealFromRight {
-  from{
-    opacity:0;
-    transform: translateX(100vw);
-  }
-  to{
-    opacity:1;
-    transform: translateX(0);
-  }
- }
-@keyframes slideDown {
-  from{
-    height: 0;
-  }
-  to{
-  height: 100%;
- }
-}
-@keyframes revealAccordion {
-  0%{
-    opacity: 0;
-    transform: translateY(-100%);
- 
-  }
- 
-  100%{
+  to {
     opacity: 1;
     transform: translateY(0);
-  
+  }
+}
+@keyframes revealFromTop {
+  from {
+    opacity: 0;
+    transform: translateY(-100%);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+@keyframes revealFromLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-100vw);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+@keyframes revealFromRight {
+  from {
+    opacity: 0;
+    transform: translateX(100vw);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+@keyframes slideDown {
+  from {
+    height: 0;
+  }
+  to {
+    height: 100%;
+  }
+}
+@keyframes revealAccordion {
+  0% {
+    opacity: 0;
+    transform: translateY(-100%);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateY(0);
   }
 }
 
-  .grid-container {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 1.5rem; /* Adjust the gap as needed */
-  }
+.grid-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1.5rem; /* Adjust the gap as needed */
+}
