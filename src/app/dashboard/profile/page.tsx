@@ -7,24 +7,25 @@ import { useContext, useEffect } from "react";
 
 const Profile = () => {
     const { data: session, status } = useSession();
-    const {currentUser, getCurrentUser} = useContext(GetUserContext)
+    const { currentUser, getCurrentUser } = useContext(GetUserContext)
     useEffect(() => {
         //@ts-ignore
-        session?.user.id  && getCurrentUser(session?.user.id)   
-         return () => {
-           
-         }
-       }, [])
+        session?.user.id && getCurrentUser(session?.user.id)
+        return () => {
+
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [])
     if (!status) {
         return <div>Loading!</div>;
-    }   
-    
-  
+    }
+
+
     //@ts-ignore
-    if (session && currentUser.userData) {  
-         //@ts-ignore
+    if (session && currentUser.userData) {
+        //@ts-ignore
         const { name, phone, profession, professional_pin, email } = currentUser?.userData
-         return <UserUpdateForm {...{ name, phone, profession, professional_pin, email}} /> 
+        return <UserUpdateForm {...{ name, phone, profession, professional_pin, email }} />
     }
 };
 export default Profile;

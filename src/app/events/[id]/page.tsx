@@ -32,10 +32,11 @@ const EventPage = () => {
   const [event, setEvent] = useState<Event | null>(null);
   const { myEvents, getAllMyEvents } = useContext(GetEventContext);
   const [isLoading, setIsLoading] = useState(true);
-
+  const eventId = Array.isArray(id) ? id[0] : id;
   const fetchEvent = async () => {
     try {
-      const fetchedEvent = await getEventById(id);
+
+      const fetchedEvent = await getEventById(eventId);
       setEvent(fetchedEvent);
       setIsLoading(false);
     } catch (error) {
@@ -44,7 +45,7 @@ const EventPage = () => {
   };
 
   useEffect(() => {
-    if (id) {
+    if (eventId) {
       !event?.id && fetchEvent();
       //@ts-ignore
       session?.user && getAllMyEvents(session?.user.id);
@@ -81,6 +82,7 @@ const EventPage = () => {
   const month = eventDateUpdate.toLocaleString('default', { month: 'short' });
   const day = eventDateUpdate.getDate();
   const time = eventDateUpdate.toLocaleTimeString();
+
 
   return (
     //         <div>
@@ -155,8 +157,8 @@ const EventPage = () => {
             <BiPlus size={20} />{" "}
             <p>Add to Calendar</p>
           </div>
-          {<EventRegistrationBtn id={id} myEvents={myEvents} session={session} />}
-          
+          {<EventRegistrationBtn id={eventId} myEvents={myEvents} session={session} />}
+
           <Link
             href={`${paymentLink}`}
             className="bg-colorPrimary  py-3  rounded text-white hover text-center"
@@ -178,7 +180,7 @@ const EventPage = () => {
           </h3>
           <p>
             Please visit{" "}
-            <Link  href="/contact_us" className="text-blue-500 underline">
+            <Link href="/contact_us" className="text-blue-500 underline">
               Our contact page
             </Link>{" "}
             and refer to the FAQ section for all questions and contact
@@ -201,7 +203,7 @@ const EventPage = () => {
             {" "}
             <h3 className="text-xl font-bold capitalize ">{location}</h3>
             <p>
-           {event.excerpt || <p>No exccerpt</p>}
+              {event.excerpt || <p>No exccerpt</p>}
             </p>
           </div>
           <div className="">

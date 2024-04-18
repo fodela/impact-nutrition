@@ -39,6 +39,7 @@ const PostsDashboardView = () => {
 
     const toggleUpdatePost = useCallback(() => {
         setUpdatePost((prevState) => !prevState);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     const [selectedPost, setSelectedPost] = useState<Post | null>(null);
@@ -46,6 +47,7 @@ const PostsDashboardView = () => {
 
     useEffect(() => {
         getAllPosts();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     const handleDelete = useCallback(
@@ -73,6 +75,7 @@ const PostsDashboardView = () => {
                 notify();
             }
         },
+        // eslint-disable-next-line react-hooks/exhaustive-deps
         [posts]
     );
 
@@ -133,8 +136,8 @@ const PostsDashboardView = () => {
                                         <button className="" onClick={() => {
                                             console.log(memoizedSelectedPost, 'memoised')
                                             handleUpdate(postDetail.id)
-                                        }}><FiEdit3  size={25} /></button> 
-                                        <button onClick={() => handleDelete(postDetail.id)}><TfiTrash size={25} className="text-red-500" /></button> 
+                                        }}><FiEdit3 size={25} /></button>
+                                        <button onClick={() => handleDelete(postDetail.id)}><TfiTrash size={25} className="text-red-500" /></button>
                                     </div>
                                 </td>
                             </tr>

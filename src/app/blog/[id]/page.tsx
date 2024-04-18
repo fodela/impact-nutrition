@@ -14,7 +14,8 @@ const PostPage = () => {
     useEffect(() => {
         const fetchPost = async () => {
             try {
-                const fetchedPost = await getPostById(id);
+                const postId = Array.isArray(id) ? id[0] : id; // Extract the first element if it's an array
+                const fetchedPost = await getPostById(postId);
                 setPost(fetchedPost);
             } catch (error) {
                 console.error("Error fetching post:", error);

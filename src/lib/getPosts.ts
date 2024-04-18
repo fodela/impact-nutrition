@@ -31,7 +31,7 @@ const getPublishedPosts = async () => {
   return response.data;
 };
 
-const getPostById = async (id: string) => {
+const getPostById = async (id: string | string[]) => {
   let headersList = {
     Accept: "*/*",
   };

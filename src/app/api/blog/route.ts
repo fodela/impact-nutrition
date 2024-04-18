@@ -1,9 +1,9 @@
 import { getServerSession } from "next-auth";
 import { NextResponse } from "next/server";
-import { authOptions } from "../auth/[...nextauth]/route";
 import { parse } from "url";
 import prisma from "@/lib/prisma";
 import { validateAuthorization } from "@/lib/validateAuthorization";
+import { authOptions } from "@/app/utils/authOptions";
 
 export interface userValidationErrors {
   error: string;
@@ -39,7 +39,16 @@ export async function POST(req: Request) {
     }
 
     const post = await prisma.post.create({
-      data: { title, content, slug, author, authorId, imageUrl, published, excerpt },
+      data: {
+        title,
+        content,
+        slug,
+        author,
+        authorId,
+        imageUrl,
+        published,
+        excerpt,
+      },
     });
 
     return NextResponse.json(post, { status: 200 });
@@ -77,7 +86,16 @@ export async function PUT(req: Request) {
 
     const updatedPost = await prisma.post.update({
       where: { id },
-      data: { title, content, slug, author, authorId, imageUrl, published, excerpt },
+      data: {
+        title,
+        content,
+        slug,
+        author,
+        authorId,
+        imageUrl,
+        published,
+        excerpt,
+      },
     });
 
     return NextResponse.json(updatedPost, { status: 200 });

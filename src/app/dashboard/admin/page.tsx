@@ -33,6 +33,7 @@ const Admin = () => {
   useEffect(() => {
     !attendees.length && getAllattendees();
     return () => { };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   console.log(attendees, 'attendees')
 

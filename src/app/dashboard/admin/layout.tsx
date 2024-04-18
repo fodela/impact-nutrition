@@ -39,7 +39,8 @@ export default function AdminLayout({
   const dispatch = useAppDispatch()
   useEffect(() => {
     !events?.length && dispatch(getEvents());
-    return () => {};
+    return () => { };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (

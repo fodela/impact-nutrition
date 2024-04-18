@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 "use client";
-import React, {  useEffect} from "react";
+import React, { useEffect } from "react";
 import dynamic from "next/dynamic";
 import { HeroDetail } from "../../../types";
 import Hero from "@/components/Hero";
@@ -24,11 +24,12 @@ const EventDisplay = dynamic(
 );
 
 const Events = () => {
-  const {events, error} = useAppSelector(state => state.events)
+  const { events, error } = useAppSelector(state => state.events)
   const dispatch = useAppDispatch()
+  console.log(events, 'events')
 
   useEffect(() => {
-   !events?.length && dispatch(getEvents())
+    !events?.length && dispatch(getEvents())
   }, []);
 
   if (!events) return <h1>Loading....</h1>;

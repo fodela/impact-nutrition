@@ -1,15 +1,15 @@
 import { getServerSession } from "next-auth";
 import { NextResponse } from "next/server";
-import { authOptions } from "../auth/[...nextauth]/route";
 import { parse } from "url";
 import prisma from "@/lib/prisma";
 import { validateAuthorization } from "@/lib/validateAuthorization";
+import { authOptions } from "@/app/utils/authOptions";
 
 export async function GET() {
   const events = await prisma.event.findMany({
     orderBy: {
-      eventDate: 'desc' // Sorting events by eventDate in descending order
-    }
+      eventDate: "desc", // Sorting events by eventDate in descending order
+    },
   });
   return NextResponse.json(events);
 }
@@ -26,10 +26,19 @@ export async function POST(req: Request) {
   }
 
   try {
-    const { title, details, location, organizers, image, price, paymentLink, eventDate, excerpt } =
-      await req.json();
+    const {
+      title,
+      details,
+      location,
+      organizers,
+      image,
+      price,
+      paymentLink,
+      eventDate,
+      excerpt,
+    } = await req.json();
     let Evprice = Number(price);
-    if (!title || !details || !location ) {
+    if (!title || !details || !location) {
       return NextResponse.json(
         { message: "Missing required data" },
         { status: 400 }
@@ -55,7 +64,7 @@ export async function POST(req: Request) {
         price: Evprice,
         paymentLink,
         userId,
-        eventDate
+        eventDate,
       },
     });
 

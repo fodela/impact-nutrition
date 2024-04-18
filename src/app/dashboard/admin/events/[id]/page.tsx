@@ -57,13 +57,14 @@ const EventPage = () => {
       }
       //@ts-ignore
     },
-     //@ts-ignore
+    //@ts-ignore
     [event?.attendees, toggleUpdatePayment]
   );
 
   const fetchEvent = async () => {
     try {
-      const fetchedEvent = await getEventById(id);
+      const eventId = Array.isArray(id) ? id[0] : id;
+      const fetchedEvent = await getEventById(eventId);
       setEvent(fetchedEvent);
       setIsLoading(false);
     } catch (error) {

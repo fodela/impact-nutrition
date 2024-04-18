@@ -11,19 +11,22 @@ import { FiChevronDown, FiUser } from "react-icons/fi";
 export default function SessionButtons() {
   const { data: session, status } = useSession();
 
-  const {sessionStatus, currentSession} = useAppSelector(state => state.session)
+  const { sessionStatus, currentSession } = useAppSelector(state => state.session)
   const dispatch = useAppDispatch()
 
   useEffect(() => {
     if (status === "unauthenticated" && sessionStatus !== status) {
+      //@ts-ignore
       dispatch(setSession({ session, sessionStatus: status }));
     } else if (status === "authenticated") {
+      //@ts-ignore
       if (currentSession != session) {
+        //@ts-ignore
         dispatch(setSession({ session, sessionStatus: status }));
       }
     }
   }, [currentSession, dispatch, session, sessionStatus, status]);
-  
+
   const [showAction, setShowAction] = useState(false);
 
   const authRef = useRef<HTMLDialogElement>(null);
@@ -72,7 +75,7 @@ export default function SessionButtons() {
                   Profile
                   <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-green-400 transition-all duration-300 opacity-0"></span>
                 </Link>
-              </li>              
+              </li>
             </ul>
             <button
               className="bg-colorPrimary hover:bg-colorPrimary-200 px-4 py-1 rounded text-white transition-colors duration-1200 w-24"

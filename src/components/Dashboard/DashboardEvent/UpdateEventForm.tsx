@@ -25,7 +25,7 @@ const UpdateEventForm = () => {
     const [eventInputs, setEventInputs] = useState<Event>({
         id: "",
         title: "",
-        details:"",
+        details: "",
         excerpt: "",
         image: "",
         //@ts-ignore
@@ -41,7 +41,8 @@ const UpdateEventForm = () => {
 
     const fetchEvent = async () => {
         try {
-            const fetchedEvent = await getEventById(id);
+            const postId = Array.isArray(id) ? id[0] : id;
+            const fetchedEvent = await getEventById(postId);
             setEvent(fetchedEvent);
             fetchedEvent && setEventInputs(fetchedEvent)
             setIsLoading(false);
@@ -57,6 +58,7 @@ const UpdateEventForm = () => {
         return () => {
             // Cleanup function to cancel any pending requests or subscriptions
         };
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [id]);
 
     if (isLoading) {
@@ -89,10 +91,10 @@ const UpdateEventForm = () => {
             newEvent.length && getAllEvents();
             const notify = () => toast.success("Event Updated!");
             notify()
-            if(newEvent?.id){
+            if (newEvent?.id) {
                 window.location.href = "/dashboard/admin/events"
             }
-          
+
         } catch (error) {
             //@ts-ignore
             const notify = () => toast.error("Something went wrong!", {

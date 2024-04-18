@@ -1,4 +1,4 @@
-import { authOptions } from "@/app/api/auth/[...nextauth]/route";
+import { authOptions } from "@/app/utils/authOptions";
 import prisma from "@/lib/prisma";
 import { getServerSession } from "next-auth";
 import { NextResponse } from "next/server";
@@ -27,7 +27,7 @@ export async function PUT(req: Request) {
       where: { id: user.id },
       data: {
         profession,
-        professional_pin
+        professional_pin,
       },
     });
 

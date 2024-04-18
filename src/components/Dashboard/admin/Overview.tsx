@@ -41,6 +41,7 @@ export function Overview() {
     getAllEvents();
     getAllattendees();
     return () => { };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   return (
     <>

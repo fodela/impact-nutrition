@@ -47,6 +47,7 @@ const PostsDashboardView = () => {
 
   useEffect(() => {
     getAllPosts();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const handleDelete = useCallback(
@@ -74,6 +75,7 @@ const PostsDashboardView = () => {
         notify();
       }
     },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     [posts]
   );
 

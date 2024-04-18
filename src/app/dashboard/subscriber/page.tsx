@@ -35,6 +35,7 @@ const Subscriber = () => {
             //@ts-ignore
             !myEvents.length && session.user && getAllMyEvents(session.user.id);
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
     console.log(myEvents, 'myEvents')
     return (
@@ -52,7 +53,7 @@ const Subscriber = () => {
                     </thead>
                     <tbody>
                         {myEvents?.map(({ id, title, details, location, price }, index) => (
-                            <tr className="p-4 m-4"  key={id}>
+                            <tr className="p-4 m-4" key={id}>
                                 <td className='p-4'>{index}</td>
                                 <td className='p-4'>{title}</td>
                                 <td className='p-4'>
@@ -69,7 +70,7 @@ const Subscriber = () => {
                                         </Link>
                                     </div>
                                 </td>
-                                
+
                             </tr>
                         ))}
                     </tbody>
