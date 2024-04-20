@@ -85,42 +85,6 @@ const EventPage = () => {
 
 
   return (
-    //         <div>
-    //             <main className="main">
-    //                 <section className="max-w-screen-xl px-4 md:mx-auto">
-    //                     <h2 className="heading_secondary">{title}</h2>
-    //                     <article className="block mx-auto">
-    //                         <div className="flex max-h-96 max-w-xl mx-auto">
-    //                             {image && <Image width={1000} height={500} className="rounded-md" src={image.toString()} alt="post image" />}
-    //                         </div>
-    //                         <div className="max-w-xl my-4 mx-auto rounded-md">
-    //                             <p className="py-4">{location}</p>
-    //                             {details && <div dangerouslySetInnerHTML={{ __html: details }} />}
-    //                             <div className="inline-flex border-b-2 my-4 border-b-green-700">Price: {price}</div>
-    //                         </div>
-
-    //                         {<EventRegistrationBtn id={id} myEvents={myEvents} session={session} />}
-
-    //                         <div className="max-w-xl my-4 mx-auto rounded-md">
-    // =                            <h3 className="text-xl font-bold">List of Event attendees</h3>
-    //                             <ul>
-    //                                 {attendees?.length ? (
-    //                                     attendees.map((att: Attendee) => (
-    //                                         <li className="font-bold" key={att.id}>
-    //                                             {
-    //                                                 //@ts-ignore
-    //                                                 att.user.name}
-    //                                         </li>
-    //                                     ))
-    //                                 ) : (
-    //                                     <li>No one has registered yet</li>
-    //                                 )}
-    //                             </ul>
-    //                         </div>
-    //                     </article>
-    //                 </section>
-    //             </main>
-    //         </div>
     <>
       <section className="bg-[linear-gradient(to_right_bottom,rgba(0,0,0,1),rgba(16,71,52,0.8)),url('/assets/Images/eventhero.jpg')] bg-cover bg-bottom bg-no-repeat pb-16 pt-32 grid md:grid-cols-2 gap-8 justify-between place-items-center text-white relative rounded-lg">
         <div className=" flex flex-col gap-4 p-8 max-w-screen-sm justify-left">
@@ -203,7 +167,7 @@ const EventPage = () => {
             {" "}
             <h3 className="text-xl font-bold capitalize ">{location}</h3>
             <p>
-              {event.excerpt || <p>No exccerpt</p>}
+              {event?.excerpt ? <div dangerouslySetInnerHTML={{ __html: event.excerpt }}></div> : <p>No exccerpt</p>}
             </p>
           </div>
           <div className="">
