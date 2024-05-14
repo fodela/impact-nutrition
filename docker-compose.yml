@@ -1,20 +1,36 @@
 version: "3.8"
 
+# Define volumes
+volumes:
+  postgres_data: # Volume for PostgreSQL data
+  nextjs_app_data:
+    # Optional volume for persistent Next.js app data (e.g., cache)
+
+    # Define services
 services:
   db:
-    image: postgres:14-alpine
+    image: postgres
     restart: always
+    volumes:
+      - postgres_data:/var/lib/postgresql/data # Mount persistent data
     environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: postgres
+      - POSTGRES_DB=dunamis_db
+      - POSTGRES_USER=kelib
+      - POSTGRES_PASSWORD=password # Consider using a stronger password for production
     ports:
-      - "5432:5432"
+      - 5433:5432 # Optional for external connections
 
-  app:
-    build: .
-    image: nextjs-app
+  # app:
+  #   build: .
+  #   image: nextjs-app
+  #   restart: always
+  #   environment:
+  #     DATABASE_URL: postgres://postgres:postgres@db:5432/appdb
+  #   ports:
+  #     - "3000:3000"
+
+  adminer:
+    image: adminer
     restart: always
-    environment:
-      DATABASE_URL: postgres://postgres:postgres@db:5432/appdb
     ports:
-      - "3000:3000"
+      - 8080:8080 # Map adminer port to host port 8080
