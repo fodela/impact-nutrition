@@ -10,7 +10,7 @@ import Hero from "@/components/Hero";
 const aboutHeroDetail: HeroDetail = {
   heading: "Get to Know Us",
   content: "Our Story, Your Health: A Partnership in Excellence",
-  imageLink: "/assets/Images/food/food3.png",
+  imageLink: "/assets/Images/Professional3.jpg",
   showMainButton: true,
   showSecondaryButton: true,
   mainButtonName: "",

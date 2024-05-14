@@ -24,10 +24,10 @@ const SectionAddress = () => {
             +233 55 007 9311
           </span>
         </a>
-        <a href="+233 20 420 0659">
+        <a href="+233 546912055">
           <span className="text-blue-700 underline hover:text-blue-900">
             {" "}
-            +233 20 420 0659
+            +233 546912055
           </span>
         </a>
       </div>

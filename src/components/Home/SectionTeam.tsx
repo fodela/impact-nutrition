@@ -2,7 +2,7 @@ import { TeamMember } from "./TeamMember";
 
 const teamMembersDetails = [
   {
-    name: "Raphael Angmortey",
+    name: "Raphael Kwabena Angmortey",
     position: "Administrative Director",
     imageLink: "raphael_angmortey.png",
     facebookLink: "facebook.com",
@@ -11,7 +11,7 @@ const teamMembersDetails = [
   },
   {
     name: "Jessica Naa Ayele Doe",
-    position: "Finance Director",
+    position: "Deputy Projects Director",
     imageLink: "jessica_doe.png",
     facebookLink: "facebook.com",
     twitterLink: "twitter.com",
@@ -27,9 +27,17 @@ const teamMembersDetails = [
     instagramLink: "instagram.com",
   },
   {
-    name: "Eric Baah",
-    position: "Internal Relations Director",
-    imageLink: "eric_baah.png",
+    name: "William Dormechele",
+    position: "Information Technology Director",
+    imageLink: "willi.png",
+    facebookLink: "facebook.com",
+    twitterLink: "twitter.com",
+    instagramLink: "instagram.com",
+  },
+  {
+    name: "Irene Pu",
+    position: "Finance Director",
+    imageLink: "irene.png",
     facebookLink: "facebook.com",
     twitterLink: "twitter.com",
     instagramLink: "instagram.com",

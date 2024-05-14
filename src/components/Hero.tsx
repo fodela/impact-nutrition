@@ -48,7 +48,7 @@ const Hero = ({ heroDetail }: { heroDetail: HeroDetail }) => {
         src={
           heroDetail.imageLink
             ? heroDetail.imageLink
-            : "/assets/Images/hero.jpg"
+            : "/assets/Images/Professional2.jpg"
         }
         alt="a grid of four amazing Ghanaian foods"
         width={836.5}

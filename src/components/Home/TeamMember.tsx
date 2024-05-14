@@ -26,9 +26,9 @@ export function TeamMember({ member }: { member: TeamMemberDetails }) {
         <div className="bg-[#3D3A35] h-[260px] w-[250px]  rounded-xl  mx-auto">
           {" "}
           <div className="flex flex-col items-center mx-auto bg-white w-9/12 py-5 px-1 rounded-lg absolute bottom-14 left-1/2 -translate-x-1/2 ">
-            <p className="text-lg font-bold text-black">{member.name}</p>
+            <p className="text-lg font-bold text-center text-black">{member.name}</p>
 
-            <p className="text-[#637381] text-sm">{member.position}</p>
+            <p className="text-[#637381] text-center text-sm">{member.position}</p>
           </div>
         </div>
         <div className="flex w-full gap-4 mx-auto p-2 m-4 justify-center text-dark rounded-md z-30">

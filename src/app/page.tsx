@@ -10,7 +10,7 @@ import { HeroDetail } from "../../types";
 const homeHeroDetail: HeroDetail = {
   heading: "",
   content: "",
-  imageLink: "",
+  imageLink: "/assets/Images/Professional1.jpg",
   showMainButton: true,
   showSecondaryButton: true,
   mainButtonName: "",

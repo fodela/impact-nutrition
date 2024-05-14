@@ -10,7 +10,7 @@ import { getEvents } from "../redux/actions/eventsAction";
 const eventHeroDetail: HeroDetail = {
   heading: "Don't Miss Out on What's Coming",
   content: "Exciting Moments Just Around the Corner",
-  imageLink: "/assets/Images/food/food2.png",
+  imageLink: "/assets/Images/Teaching.jpg",
   showMainButton: true,
   showSecondaryButton: true,
   mainButtonName: "",
