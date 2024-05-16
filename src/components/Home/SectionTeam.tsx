@@ -10,6 +10,14 @@ const teamMembersDetails = [
     instagramLink: "instagram.com",
   },
   {
+    name: "Irene Puplampu",
+    position: "Projects Director",
+    imageLink: "irene.png",
+    facebookLink: "facebook.com",
+    twitterLink: "twitter.com",
+    instagramLink: "instagram.com",
+  },
+  {
     name: "Jessica Naa Ayele Doe",
     position: "Deputy Projects Director",
     imageLink: "jessica_doe.png",
@@ -34,14 +42,7 @@ const teamMembersDetails = [
     twitterLink: "twitter.com",
     instagramLink: "instagram.com",
   },
-  {
-    name: "Irene Pu",
-    position: "Finance Director",
-    imageLink: "irene.png",
-    facebookLink: "facebook.com",
-    twitterLink: "twitter.com",
-    instagramLink: "instagram.com",
-  },
+  
 ];
 
 const SectionTeam = () => {
