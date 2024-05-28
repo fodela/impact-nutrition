@@ -18,7 +18,7 @@ services:
       - POSTGRES_USER=kelib
       - POSTGRES_PASSWORD=password # Consider using a stronger password for production
     ports:
-      - 5433:5432 # Optional for external connections
+      - 5434:5432 # Optional for external connections
 
   # app:
   #   build: .
@@ -33,4 +33,4 @@ services:
     image: adminer
     restart: always
     ports:
-      - 8080:8080 # Map adminer port to host port 8080
+      - 8088:8080 # Map adminer port to host port 8080
