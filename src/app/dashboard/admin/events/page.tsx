@@ -17,11 +17,8 @@ import { getEvents } from '@/app/redux/actions/eventsAction';
 const DashboardEvents = () => {
     const { events, error } = useAppSelector(state => state.events)
     const dispatch = useAppDispatch()
-    useEffect(() => {
-        !events?.length && dispatch(getEvents());
-        return () => { };
-    }, []);
 
+    !events?.length && dispatch(getEvents());
 
     const [selectedEvent, setSelectedEvent] = useState<Event | null>(null);
     const memoizedSelectedEvent = useMemo(() => selectedEvent, [selectedEvent]);

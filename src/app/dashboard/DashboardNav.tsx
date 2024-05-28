@@ -2,14 +2,12 @@
 import {BiMessageRoundedDetail, BiUser} from "react-icons/bi"
 import {BsDashSquare} from "react-icons/bs"
 import {CiCalendar} from "react-icons/ci"
-import {useParams} from 'next/navigation'
+import {usePathname} from 'next/navigation'
 
 const DashboardNav = () => {
-const params = useParams < {
-    pathname: string
-} > ()
+const pathname = usePathname()
 
-    const currentPath = params.pathname;
+    console.log(pathname, 'pathname')
     const navItems = [
         {
             path: "/dashboard/admin/",
@@ -31,7 +29,7 @@ const params = useParams < {
     ];
 
     return (
-        <nav className="bg-white rounded-xl py-4 mb-8 w-fit dark:bg-white/10">
+        <nav className="bg-white rounded-xl py-4 mb-4 w-fit dark:bg-white/10">
             <ul className="flex gap-8 px-4 justify-start">
                 {
                 navItems.map((item) => (
@@ -43,7 +41,7 @@ const params = useParams < {
                             }
                             className={
                                 `font-bold px-2 lg:px-4 flex gap-2 items-center ${
-                                    currentPath === item.path ? 'text-blue-500' : 'text-[#b7b7b7]'
+                                    pathname === item.path ? 'text-blue-500' : 'text-[#b7b7b7]'
                                 }`
                         }>
                             {

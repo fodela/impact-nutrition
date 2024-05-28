@@ -14,7 +14,6 @@ export const getEvents = createAsyncThunk( "events/getEvents", async (data, thun
         method: "GET",
         headers: headersList,
     };
-    console.log('get events running')
     try {
         let response = await axios.request(reqOptions);
         return response.data;

@@ -4,6 +4,8 @@ import { UpcomingEventCard } from "@/components/Dashboard/admin/UpcomingEventCar
 import GetAttendeeProvider from "@/components/context/AttendeeContext";
 import { GetEventContext } from "@/components/context/EventContext";
 import GetPaymentProvider from "@/components/context/PaymentContext";
+import { useSession } from "next-auth/react";
+import { redirect } from "next/navigation";
 import { useContext, useEffect } from "react";
 
 
@@ -13,6 +15,14 @@ export default function AdminLayout({
     children: React.ReactNode;
 }) {
     const { events, getAllEvents } = useContext(GetEventContext);
+
+const {data: session, status} = useSession();
+if (session) { // @ts-ignore
+    if (session?.user?.role !== "SUBSCRIBER") {
+        redirect("/dashboard/admin");
+    }
+}
+
 
     useEffect(() => {
         !events.length && getAllEvents();

@@ -28,21 +28,20 @@ const summaries = [
 
 
 const Admin = () => {
-  const { attendees, getAllattendees } = useContext(GetAttendeesContext);
+  // const { attendees, getAllattendees } = useContext(GetAttendeesContext);
 
-  useEffect(() => {
-    !attendees.length && getAllattendees();
-    return () => { };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-  console.log(attendees, 'attendees')
-
+  // useEffect(() => {
+  //   !attendees.length && getAllattendees();
+  //   return () => { };
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, []);
+  // !attendees.length && getAllattendees();
   return <div className="flexx">
     <div className="overflow-hidden rounded-lg border border-gray-200 shadow-md my-5 divide-y-2 bg-gray-50 dark:bg-white/10">
       <table className="w-full border-collapse  text-left text-sm my">
         <TableHeader headings={headings} />
         <tbody className="divide-y divide-gray-100 border-t border-gray-100">
-          {attendees.map((att, index) => (
+          {/* {attendees.map((att, index) => (
             <tr
               key={index}
               className={`hover:bg-inherit/80 ${att.paid && "bg-green-50 dark:bg-green-900/10"
@@ -109,7 +108,7 @@ const Admin = () => {
                 </div>
               </td>
             </tr>
-          ))}
+          ))} */}
         </tbody>
       </table>
       <Pagination />

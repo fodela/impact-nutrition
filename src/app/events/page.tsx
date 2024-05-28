@@ -26,12 +26,11 @@ const EventDisplay = dynamic(
 const Events = () => {
   const { events, error } = useAppSelector(state => state.events)
   const dispatch = useAppDispatch()
-  console.log(events, 'events')
 
-  useEffect(() => {
-    !events?.length && dispatch(getEvents())
-  }, []);
-
+  // useEffect(() => {
+    
+  // }, []);
+!events?.length && dispatch(getEvents())
   if (!events) return <h1>Loading....</h1>;
 
   return (

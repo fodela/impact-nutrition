@@ -30,6 +30,8 @@ export default function SessionButtons() {
   const [showAction, setShowAction] = useState(false);
 
   const authRef = useRef<HTMLDialogElement>(null);
+  //@ts-ignore
+  let sessionUserRoute = session?.user?.role == "ADMINISTRATOR" ? "admin" : "subscriber"
 
   if (currentSession) {
     return (
@@ -55,7 +57,7 @@ export default function SessionButtons() {
               <li>
                 <Link
                   className="btn-effect flex items-center gap-2"
-                  href="/dashboard"
+                  href={`/dashboard/${sessionUserRoute}`}
                 >
                   {" "}
                   {/* <LuLayoutPanelLeft /> */}

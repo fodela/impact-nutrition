@@ -9,6 +9,8 @@ import { BiCalendarCheck, BiUser } from "react-icons/bi";
 import { GiTakeMyMoney } from "react-icons/gi";
 import { useAppDispatch, useAppSelector } from "@/app/redux/hooks";
 import { getEvents } from "@/app/redux/actions/eventsAction";
+import { useSession } from "next-auth/react";
+import { redirect } from "next/navigation";
 
 const headings = ["#", "Name", "Date Created", "Role", "Status", "actions"];
 const summaries = [
@@ -35,14 +37,19 @@ export default function AdminLayout({
   children: React.ReactNode;
 }) {
   const { events, error } = useAppSelector(state => state.events)
+const {data: session, status} = useSession();
+if (session) {
+//@ts-ignore
+if (session?.user?.role !== "ADMINISTRATOR") {
+     redirect("/dashboard/subscriber");
+  }
+}
+
+
 
   const dispatch = useAppDispatch()
-  useEffect(() => {
-    !events?.length && dispatch(getEvents());
-    return () => { };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
 
+!events?.length && dispatch(getEvents());
   return (
     <>
       <div className="flex gap-8 justify-center">

@@ -18,22 +18,6 @@ export default function DashboardLayout({
     }
   }, [sessionStatus]);
 
-  if (currentSession) {
-    const currentPath = window.location.href;
-    const newPath =
-      //@ts-ignore
-      currentSession.user.role === "SUBSCRIBER" && currentPath.includes("admin")
-        ? currentPath.replace("/admin", "/subscriber")
-        : //@ts-ignore
-        currentSession.user.role === "ADMIN" && currentPath.includes("subscriber")
-        ? currentPath.replace("/subscriber", "/admin")
-        : currentPath;
-
-    if (currentPath !== newPath) {
-      window.location.href = newPath;
-    }
-  }
-
   return (
     <div>
       <GetUserProvider>
