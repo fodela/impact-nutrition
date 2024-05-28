@@ -68,7 +68,7 @@ const LoginForm = () => {
           >
             {showSignin ? (
               <div>
-                Don{`&apos;`}t have an account?{" "}
+                Don&apos;t have an account?{" "}
                 <span className="text-blue-500 underline font-bold">
                   Signup
                 </span>

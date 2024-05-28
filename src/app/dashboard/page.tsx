@@ -4,9 +4,9 @@ import { useSession } from "next-auth/react";
 
 const Dasboard = () => {
   const { data: session, status } = useSession();
-  
-console.log('home layout running')
-  if (!status) {
+
+
+    if (!status) {
     return <div>Loading!</div>;
   }
   //@ts-ignore

@@ -5,6 +5,7 @@ import { usePathname } from "next/navigation";
 import { useRef, useState } from "react";
 import Sidebar from "./Sidebar";
 import { AiOutlineMenu } from "react-icons/ai";
+import HomeNavBar from "./HomeNavBar";
 const NavBar = () => {
   const pathname = usePathname();
   const sidebarRootRef = useRef<HTMLDivElement | null>(null);
@@ -39,26 +40,7 @@ const NavBar = () => {
         }}
         sidebarRoot={sidebarRootRef.current}
       />
-      <div className="hidden md:block">
-        <ul className="flex justify-center items-center gap-3">
-          {links.map(({ href, label }) => (
-            <li key={href}>
-              <Link href={href} legacyBehavior>
-                <a
-                  className={` relative btn-effect uppercase ${pathname === href
-                      ? "active text-colorPrimary font-bold"
-                      : ""
-                    }`}
-                >
-                  {label}
-                  <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-green-400 transition-all duration-300 opacity-0"></span>
-                </a>
-              </Link>
-            </li>
-          ))}
-          <SessionButtons />
-        </ul>
-      </div>
+     <HomeNavBar />
     </div>
   );
 };

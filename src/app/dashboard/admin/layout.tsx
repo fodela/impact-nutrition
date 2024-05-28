@@ -7,7 +7,6 @@ import GetPaymentProvider from "@/components/context/PaymentContext";
 import { useContext, useEffect } from "react";
 import { BiCalendarCheck, BiUser } from "react-icons/bi";
 import { GiTakeMyMoney } from "react-icons/gi";
-import DashboardNav from "../DashboardNav";
 import { useAppDispatch, useAppSelector } from "@/app/redux/hooks";
 import { getEvents } from "@/app/redux/actions/eventsAction";
 
@@ -36,6 +35,7 @@ export default function AdminLayout({
   children: React.ReactNode;
 }) {
   const { events, error } = useAppSelector(state => state.events)
+
   const dispatch = useAppDispatch()
   useEffect(() => {
     !events?.length && dispatch(getEvents());
@@ -45,7 +45,6 @@ export default function AdminLayout({
 
   return (
     <>
-      <DashboardNav />
       <div className="flex gap-8 justify-center">
         <div className="w-3/4">
           <div className="flex lg:gap-8">
