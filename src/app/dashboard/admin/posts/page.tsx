@@ -134,7 +134,6 @@ const PostsDashboardView = () => {
                                 <td className="px-6 py-4 ">
                                     <div className="flex gap-2">
                                         <button className="" onClick={() => {
-                                            console.log(memoizedSelectedPost, 'memoised')
                                             handleUpdate(postDetail.id)
                                         }}><FiEdit3 size={25} /></button>
                                         <button onClick={() => handleDelete(postDetail.id)}><TfiTrash size={25} className="text-red-500" /></button>

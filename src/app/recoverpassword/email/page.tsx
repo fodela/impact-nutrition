@@ -44,7 +44,6 @@ const LoginForm = () => {
             });
             res && setMoveToPassword(true)
         }).catch((error) => {
-            console.log(error,'res')
             toast.error(error?.response?.data?.message ? `Unable to login! Wrong phone number` : "Something Went wrong!", {
                 position: "top-right",
                 autoClose: 5000,

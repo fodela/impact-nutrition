@@ -6,11 +6,9 @@ import {usePathname} from 'next/navigation'
 
 const DashboardNav = () => {
 const pathname = usePathname()
-
-    console.log(pathname, 'pathname')
     const navItems = [
         {
-            path: "/dashboard/admin/",
+            path: "/dashboard/admin",
             label: "Dashboard",
             icon: <BsDashSquare size={25}/>
         }, {

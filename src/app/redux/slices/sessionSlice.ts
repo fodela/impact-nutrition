@@ -18,7 +18,6 @@ const sessionSlice = createSlice({
   reducers: {},
   extraReducers(builder) {
         builder.addCase(setSession.fulfilled, (state, action) => {
-          console.log(action,'action')
           state.sessionStatus = action.payload.sessionStatus;
           state.currentSession = action.payload.currentSession;
         });

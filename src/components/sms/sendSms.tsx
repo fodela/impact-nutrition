@@ -6,7 +6,6 @@ interface sendSmsProps {
 }
 
 const sendSms = async ({from, to, content}:sendSmsProps ) => {
-    console.log(process.env.CLIENTID, 'sec', process.env.CLIENTSECRET)
     const params = new URLSearchParams({
         clientid: "paxiucym",
         clientsecret: "bcnpebmm",
@@ -19,7 +18,6 @@ const sendSms = async ({from, to, content}:sendSmsProps ) => {
 
     try {
         const response = await axios.get(apiUrl);
-        console.log('SMS sent:', response.data);
         return response.data;
     } catch (error) {
         console.error('Error sending SMS:', error);

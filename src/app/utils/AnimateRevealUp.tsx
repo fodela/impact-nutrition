@@ -22,7 +22,6 @@ const AnimateRevealUp = ({ children }: { children: ReactNode }) => {
   const isInView = useInView(ref, { once: true });
 
   useEffect(() => {
-    console.log(isInView);
     if (isInView) {
       mainControls.start("visible");
     }

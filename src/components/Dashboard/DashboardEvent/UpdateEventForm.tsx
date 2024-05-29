@@ -37,7 +37,6 @@ const UpdateEventForm = () => {
     });
 
 
-    console.log(eventInputs, 'inputs')
 
     const fetchEvent = async () => {
         try {
@@ -87,7 +86,6 @@ const UpdateEventForm = () => {
         try {
             //@ts-ignore
             const newEvent = await updateEvent(eventInputs)
-            console.log(newEvent, 'new Event')
             newEvent.length && getAllEvents();
             const notify = () => toast.success("Event Updated!");
             notify()
@@ -204,7 +202,6 @@ const UpdateEventForm = () => {
                         onChange={(e) => {
                             const selectedDate = new Date(e.target.value);
                             if (!isNaN(selectedDate.getTime())) {
-                                console.log(selectedDate, 'date');
                                 setEventInputs((prevState) => ({
                                     ...prevState,
                                     eventDate: selectedDate,

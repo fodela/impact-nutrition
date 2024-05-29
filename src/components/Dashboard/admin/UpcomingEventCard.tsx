@@ -9,15 +9,11 @@ interface UpcomingEventCardProp {
 
 
 export function UpcomingEventCard ({ event}: UpcomingEventCardProp) {
-  console.log('event running updcomgin',)
   const eventDate = new Date(event.eventDate);
   const year = eventDate.getFullYear();
   const month = eventDate.toLocaleString('default', { month: 'short' });
   const day = eventDate.getDate();
   const time = eventDate.toLocaleTimeString();
-
-
-
   return (
     <div className="bg-white dark:bg-white/10 shadow p-2  gap-4 flex rounded w-fit">
       <div className="h-4 w-4 rounded-full bg-purple-600"></div>

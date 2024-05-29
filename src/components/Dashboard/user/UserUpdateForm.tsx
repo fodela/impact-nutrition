@@ -93,7 +93,6 @@ export const UserUpdateForm = ({name, phone, profession, professional_pin, email
         });
     };
 
-console.log(formValues, 'values')
 
     return (
         <div className="w-full shadow-md">

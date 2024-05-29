@@ -37,12 +37,12 @@ export function Overview() {
   const year = today.getFullYear();
   const month = today.toLocaleString('default', { month: 'short' });
 
-  useEffect(() => {
-    getAllEvents();
-    getAllattendees();
-    return () => { };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  // useEffect(() => {
+  //   getAllEvents();
+  //   getAllattendees();
+  //   return () => { };
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, []);
   return (
     <>
       <div className="flex gap-8 justify-center">

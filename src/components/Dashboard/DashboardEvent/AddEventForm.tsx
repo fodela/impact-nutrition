@@ -87,7 +87,6 @@ const AddEventForm = () => {
         if (name === "eventDate") {
             const selectedDate = new Date(value);
             if (!isNaN(selectedDate.getTime())) {
-                console.log(selectedDate, 'date');
                 setEventInputs((prevState) => ({
                     ...prevState,
                     [name]: selectedDate,

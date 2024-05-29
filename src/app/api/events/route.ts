@@ -101,7 +101,6 @@ export async function PUT(req: Request) {
       eventDate,
     } = await req.json();
 
-    console.log(eventDate, "eventDate");
 
     let evPrice = Number(price);
     if (!id) {
@@ -138,7 +137,6 @@ export async function PUT(req: Request) {
       },
     });
 
-    console.log(updatedevent, "updated");
 
     //update the event price for each of the attendees
 

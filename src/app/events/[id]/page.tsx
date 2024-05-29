@@ -56,7 +56,6 @@ const EventPage = () => {
     };
   }, [id]);
 
-  console.log(event);
 
   if (isLoading) {
     return <Loading />;

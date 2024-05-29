@@ -37,7 +37,6 @@ const Subscriber = () => {
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
-    console.log(myEvents, 'myEvents')
     return (
         <div className="subscription-container">
             <div className="overflow-hidden rounded-lg border border-gray-200 shadow-md my-5 divide-y-2 bg-gray-50 dark:bg-white/10">
