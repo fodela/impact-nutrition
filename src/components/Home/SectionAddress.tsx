@@ -19,17 +19,17 @@ const SectionAddress = () => {
           <BsTelephone className="text-colorPrimary" size={80} />
         </div>
         <div className="font-bold text-xl my-4">Call us:</div>
-        <a href="+233550079311">
+        <a href="tel:+233550079311">
           <span className="text-blue-700 underline hover:text-blue-900">
             +233550079311
           </span>
         </a>
-        <a href="+233546912055">
+        <a href="tel:+233546912055">
           <span className="text-blue-700 underline hover:text-blue-900">
             +233546912055
           </span>
         </a>
-         <a href="+233206349421">
+         <a href="tel:+233206349421">
           <span className="text-blue-700 underline hover:text-blue-900">
             {" "}
              +233206349421

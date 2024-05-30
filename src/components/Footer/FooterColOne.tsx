@@ -1,6 +1,5 @@
-"use client"
+"use client";
 import Link from "next/link";
-
 import { ImFacebook, ImLinkedin2, ImTwitter } from "react-icons/im";
 import { BsEnvelopeFill, BsInstagram } from "react-icons/bs";
 import Logo from "../Logo";
@@ -10,13 +9,13 @@ const FooterColOne = () => {
     <div className="md:flex p-4 flex-col gap-6 ">
       <Logo />
       <div className="text-xl p-4 font-bold md:flex md:flex-col">
-        <a href="+233 55 007 9311">
+        <a href="tel:+233550079311">
           <span>Contact us at </span>
-          <span>+233 55 007 9311</span>
+          <span>+233550079311</span>
         </a>
         <p className="py-4">info@nutritionconsultgh.com</p>
         <p> Address:</p>
-        <p className="py-4">Suncity-Tema West,  Spring Onion Street</p>
+        <p className="py-4">Suncity-Tema West, Spring Onion Street</p>
         <p>Accra, Ghana</p>
       </div>
       <div className="flex flex-col justify-center items-center border-t-2 border-t-black md:border-t-0">
