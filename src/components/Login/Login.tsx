@@ -28,7 +28,7 @@ const Login = () => {
   };
 
   if (session) {
-    redirect("/dashboard");
+    redirect("/dashboard/subscriber");
   }
 
   const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -56,7 +56,7 @@ const Login = () => {
           progress: undefined,
           theme: "colored",
         });
-        window.location.href = "/dashboard";
+        redirect("/dashboard/subscriber") ;
       } else {
         throw new Error("Something went wrong");
       }

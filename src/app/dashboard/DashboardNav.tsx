@@ -3,6 +3,7 @@ import {BiMessageRoundedDetail, BiUser} from "react-icons/bi"
 import {BsDashSquare} from "react-icons/bs"
 import {CiCalendar} from "react-icons/ci"
 import {usePathname} from 'next/navigation'
+import { signOut } from "next-auth/react"
 
 const DashboardNav = () => {
 const pathname = usePathname()
@@ -50,7 +51,14 @@ const pathname = usePathname()
                         } </a>
                     </li>
                 ))
-            } </ul>
+            } 
+            <button
+              className="bg-colorPrimary hover:bg-colorPrimary-200 px-4 py-1 rounded text-white transition-colors duration-1200 w-24"
+              onClick={() => signOut()}
+            >
+              Sign out
+            </button>
+            </ul>
         </nav>
     );
 }

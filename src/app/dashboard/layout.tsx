@@ -3,21 +3,20 @@ import "react-toastify/ReactToastify.min.css";
 import GetUserProvider from "@/components/context/UserContent";
 import { useAppSelector } from "../redux/hooks";
 import { useEffect } from "react";
+import { useSession } from "next-auth/react";
+import { redirect } from "next/navigation";
 
 export default function DashboardLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  const { currentSession, sessionStatus } = useAppSelector(state => state.session)
- 
+  const { data: session, status } = useSession();
 
-  useEffect(() => {
-    if (sessionStatus === "unauthenticated") {
-      window.location.href = "/signin";
-    }
-  }, [sessionStatus]);
 
+if (status === "unauthenticated") {
+      redirect("/signin");
+}
   return (
     <div>
       <GetUserProvider>

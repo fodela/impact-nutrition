@@ -7,7 +7,7 @@ const contact_us = () => {
   return (
     <div>
       <div className="max-w-screen-lg p-4 md:p-2  md:mx-auto">
-        <h1 className="text-4xl font-bold text-center mt-20">
+        <h1 className="text-4xl font-bold text-center mt-20 pt-10">
           Get in touch with Us
         </h1>
 

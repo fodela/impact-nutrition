@@ -10,7 +10,7 @@ const teamMembersDetails = [
     instagramLink: "instagram.com",
   },
   {
-    name: "Irene Puplampu",
+    name: "Irene Afi Puplampu",
     position: "Projects Director",
     imageLink: "irene.png",
     facebookLink: "facebook.com",

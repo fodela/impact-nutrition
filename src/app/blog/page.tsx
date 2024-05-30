@@ -9,7 +9,7 @@ import Hero from "@/components/Hero";
 const blogHeroDetail: HeroDetail = {
   heading: "Stay Updated with Our Blog",
   content: "Your Source for Health and Nutrition Insights",
-  imageLink: "/assets/Images/professionals-about.jpeg",
+  imageLink: "/assets/Images/conversation.jpg",
   showMainButton: true,
   showSecondaryButton: true,
   mainButtonName: "",

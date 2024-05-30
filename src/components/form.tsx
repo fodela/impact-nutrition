@@ -65,7 +65,7 @@ export const RegisterForm = () => {
       signIn("credentials", {
         phone,
         password,
-        callbackUrl: "/dashboard", // Redirect URL after successful login
+        callbackUrl: "/dashboard/profile", // Redirect URL after successful login
       });
     } catch (error: any) {
       setLoading(false);
