@@ -1,7 +1,6 @@
 "use client";
 import { BsInstagram, BsTwitter } from "react-icons/bs";
 import { FaFacebook } from "react-icons/fa";
-import LoginForm from "../signin/page";
 
 const contact_us = () => {
   return (

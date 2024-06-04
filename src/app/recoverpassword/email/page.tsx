@@ -6,6 +6,7 @@ import axios, { Axios } from "axios";
 import { NextApiResponse } from "next";
 import { signIn, useSession, getProviders } from "next-auth/react";
 import Link from "next/link";
+import { redirect } from "next/navigation";
 import { NextResponse } from "next/server";
 import { ChangeEvent, useEffect, useState } from "react";
 import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
@@ -74,7 +75,7 @@ const LoginForm = () => {
                     progress: undefined,
                     theme: "colored",
                 });
-                window.location.href = "/signin";
+                redirect("/auth/signin") ;
             } else {
                 throw new Error("Something went wrong");
             }
@@ -94,7 +95,7 @@ const LoginForm = () => {
     return (
         <div className="h-full my-6">
             <form className="max-w-md mx-auto my-auto">
-                <a href="/signin" className="font-bold underline">Login</a>
+                <a href="/auth/signin" className="font-bold underline">Login</a>
                 <h1 className="text-3xl text-center font-bold mb-6">Recover Your Password</h1>
                 {!moveToPassword ? <>
                     <div className="mb-4">

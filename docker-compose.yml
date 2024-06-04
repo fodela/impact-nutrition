@@ -6,7 +6,7 @@ volumes:
   nextjs_app_data:
     # Optional volume for persistent Next.js app data (e.g., cache)
 
-    # Define services
+# Define services
 services:
   db:
     image: postgres
@@ -20,17 +20,29 @@ services:
     ports:
       - 5434:5432 # Optional for external connections
 
-  # app:
-  #   build: .
-  #   image: nextjs-app
-  #   restart: always
-  #   environment:
-  #     DATABASE_URL: postgres://postgres:postgres@db:5432/appdb
-  #   ports:
-  #     - "3000:3000"
+  redis:
+    image: redis
+    restart: always
+    ports:
+      - "6379:6379" # Optional: expose Redis port
+    environment:
+      - REDIS_PASSWORD=foobared
 
   adminer:
     image: adminer
     restart: always
     ports:
       - 8088:8080 # Map adminer port to host port 8080
+
+  # app:
+  #   build: .
+  #   image: nextjs-app
+  #   restart: always
+  #   environment:
+  #     DATABASE_URL: postgres://kelib:password@db:5432/dunamis_db
+  #     REDIS_URL: redis://default:foobared@redis:6379
+  #   ports:
+  #     - "3000:3000"
+  #   depends_on:
+  #     - db
+  #     - redis

@@ -23,7 +23,7 @@ const SectionTestimonial = () => {
           alt="A picture of Mr Saadong Emmanuel in a black suit"
           width={400}
           height={358}
-          onLoadingComplete={() => setIsLoading(false)}
+          onLoad={() => setIsLoading(false)}
         />
         <div className="col-span-2 favicon_bg">
           <p className="text-colorPrimary text-2xl font-medium ">

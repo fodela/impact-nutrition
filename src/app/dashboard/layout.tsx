@@ -15,7 +15,7 @@ export default function DashboardLayout({
 
 
 if (status === "unauthenticated") {
-      redirect("/signin");
+      redirect("/auth/signin");
 }
   return (
     <div>
