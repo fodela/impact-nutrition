@@ -1,11 +1,11 @@
-// import { compare } from "bcrypt";
-// import { NextAuthOptions } from "next-auth";
-// import CredentialsProvider from "next-auth/providers/credentials";
-// import GoogleProvider from "next-auth/providers/google";
-// import prisma from "@/lib/prisma";
-// import { User } from "../api/auth/[...nextauth]/route";
+import { authConfig } from "./auth.config";
+import NextAuth from "next-auth";
 
-// export const authOptions: NextAuthOptions = {
+export const { handlers, signIn, signOut, auth } = NextAuth(
+  {...authConfig}
+);
+
+// {
 //   // adapter,
 //   jwt: {
 //     secret: process.env.NEXTAUTH_SECRET,
@@ -87,4 +87,9 @@
 //   pages: {
 //     signIn: "/auth/signin",
 //   },
-// };
+// }
+
+
+// export const { handlers, signIn, signOut, auth } = NextAuth({
+//   ...authConfig,
+// });

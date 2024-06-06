@@ -8,7 +8,7 @@ import { useState } from "react";
 import "react-toastify/ReactToastify.min.css";
 
 const LoginForm = () => {
-  const [showSignin, setShowSignIn] = useState(true);
+  const [showSignin, setShowSignIn] = useState(false);
 
   return (
     <div className="grid md:grid-cols-2 mx-auto max-w-screen-xl">
@@ -68,7 +68,7 @@ const LoginForm = () => {
           >
             {showSignin ? (
               <div>
-                Don&apos;t have an account?{" "}
+                Don{`&apos;`}t have an account?{" "}
                 <span className="text-blue-500 underline font-bold">
                   Signup
                 </span>
