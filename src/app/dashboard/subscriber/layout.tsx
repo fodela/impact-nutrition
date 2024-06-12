@@ -1,34 +1,37 @@
-'use client'
 
 import { UpcomingEventCard } from "@/components/Dashboard/admin/UpcomingEventCard";
 import GetAttendeeProvider from "@/components/context/AttendeeContext";
 import { GetEventContext } from "@/components/context/EventContext";
 import GetPaymentProvider from "@/components/context/PaymentContext";
-import { useSession } from "next-auth/react";
-import { redirect } from "next/navigation";
-import { useContext, useEffect } from "react";
+// import { useSession } from "next-auth/react";
+// import { redirect } from "next/navigation";
+// import { useContext, useEffect } from "react";
+import { auth } from "../../../../auth";
 
 
-export default function AdminLayout({
+export default async function AdminLayout({
     children,
 }: {
     children: React.ReactNode;
 }) {
-    const { events, getAllEvents } = useContext(GetEventContext);
+    // const { events, getAllEvents } = useContext(GetEventContext);
 
-const {data: session, status} = useSession();
-if (session) { // @ts-ignore
-    if (session?.user?.role !== "SUBSCRIBER") {
-        redirect("/dashboard/admin");
-    }
-}
+// const {data: session, status} = useSession();
+// if (session) { // @ts-ignore
+//     if (session?.user?.role !== "SUBSCRIBER") {
+//         redirect("/dashboard/admin");
+//     }
+// }
+const session = await auth()
+console.log('session-logs', session)
 
 
-    useEffect(() => {
-        !events.length && getAllEvents();
-        return () => { };
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
+    // useEffect(() => {
+    //     !events.length && getAllEvents();
+    //     console.log('sessionsss', session)
+    //     return () => { };
+    //     // eslint-disable-next-line react-hooks/exhaustive-deps
+    // }, []);
 
     return (
         <div className="flex gap-8 justify-center">
@@ -41,9 +44,9 @@ if (session) { // @ts-ignore
                 <p className="text-sm">November 2023</p>
                 <p className="text-black dark:text-white ">Upcoming Events</p>
 
-                {events.map((event, index) => (
+                {/* {events.map((event, index) => (
                     <UpcomingEventCard key={index} event={event} />
-                ))}
+                ))} */}
             </div>
         </div>
     );

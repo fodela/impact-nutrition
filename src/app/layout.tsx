@@ -1,13 +1,12 @@
 import dynamic from "next/dynamic";
 import Footer from "../components/Footer/Footer";
 import Header from "../components/Header";
-import { NextAuthProvider } from "../components/NextAuthProvider";
 import "./globals.css";
 import { ToastContainer } from "react-toastify";
 import GetPostsProvider from "@/components/context/PostContext";
 import GetEventsProvider from "@/components/context/EventContext";
-import { Provider } from 'react-redux';
 import { ReduxProvider } from "./redux/Provider";
+import { SessionProvider } from "next-auth/react";
 
 const Hero = dynamic(() => import("@/components/Hero"));
 
@@ -39,7 +38,7 @@ export default function RootLayout({
         />
         <div className={` relative`}>
           <ReduxProvider>
-          <NextAuthProvider>
+          <SessionProvider>
             <GetPostsProvider>
               <GetEventsProvider>
                 <Header />
@@ -47,7 +46,7 @@ export default function RootLayout({
                 <Footer />
               </GetEventsProvider>
             </GetPostsProvider>
-          </NextAuthProvider>
+          </SessionProvider>
           </ReduxProvider>
         </div>
       </body>

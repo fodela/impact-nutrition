@@ -1,9 +1,8 @@
-import { getServerSession } from "next-auth";
 import { NextResponse } from "next/server";
 import { parse } from "url";
 import prisma from "@/lib/prisma";
 import { validateAuthorization } from "@/lib/validateAuthorization";
-import { authOptions } from "@/app/utils/authOptions";
+import { auth } from "../../../../auth";
 
 export async function GET() {
   const events = await prisma.event.findMany({
@@ -15,7 +14,7 @@ export async function GET() {
 }
 
 export async function POST(req: Request) {
-  const session = await getServerSession(authOptions);
+  const session = await auth();
   //@ts-ignore
   const userId = session?.user?.id;
   if (!session) {
@@ -75,7 +74,7 @@ export async function POST(req: Request) {
 }
 
 export async function PUT(req: Request) {
-  const session = await getServerSession(authOptions);
+  const session = await auth();
   //@ts-ignore
   if (!session.user) {
     NextResponse.json(
@@ -162,7 +161,7 @@ export async function PUT(req: Request) {
 }
 
 export async function DELETE(req: Request) {
-  const session = await getServerSession(authOptions);
+  const session = await auth();
   //@ts-ignore
   const userId = session?.user?.id;
   try {

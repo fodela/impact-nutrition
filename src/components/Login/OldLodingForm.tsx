@@ -97,7 +97,6 @@ const Login = () => {
           }`}
           placeholder="0240000000"
           value={phone}
-          onChange={handleEmailChange}
         />
 
         <p

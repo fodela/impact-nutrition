@@ -7,7 +7,7 @@ import { useState } from "react";
 
 import "react-toastify/ReactToastify.min.css";
 
-const Page = () => {
+const LoginForm = () => {
   const [showSignin, setShowSignIn] = useState(true);
 
   return (
@@ -68,7 +68,7 @@ const Page = () => {
           >
             {showSignin ? (
               <div>
-                Don`&apos;`t have an account?{" "}
+                Don{`&apos;`}t have an account?{" "}
                 <span className="text-blue-500 underline font-bold">
                   Signup
                 </span>
@@ -86,4 +86,4 @@ const Page = () => {
   );
 };
 
-export default Page;
+export default LoginForm;

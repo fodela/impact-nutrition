@@ -1,31 +1,32 @@
-"use client";
-import { setSession } from "@/app/redux/actions/sessionAction";
-import { useAppDispatch, useAppSelector } from "@/app/redux/hooks";
-import { useSession, signIn, signOut } from "next-auth/react";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import { BiLeftArrow, BiUserCircle } from "react-icons/bi";
 import { FiChevronDown, FiUser } from "react-icons/fi";
+// import { auth, signIn, signOut } from "../../auth";
+import { signIn, useSession } from "next-auth/react";
+import { signOutTo } from "./Login/signOUtAction";
 // import { LuLayoutPanelLeft } from "react-icons/lu";
 
-export default function SessionButtons() {
-  const { data: session, status } = useSession();
+export default function  SessionButtons() {
 
-  const { sessionStatus, currentSession } = useAppSelector(state => state.session)
-  const dispatch = useAppDispatch()
+  const session = useSession();
+  console.log(session, 'session')
 
-  useEffect(() => {
-    if (status === "unauthenticated" && sessionStatus !== status) {
-      //@ts-ignore
-      dispatch(setSession({ session, sessionStatus: status }));
-    } else if (status === "authenticated") {
-      //@ts-ignore
-      if (currentSession != session) {
-        //@ts-ignore
-        dispatch(setSession({ session, sessionStatus: status }));
-      }
-    }
-  }, [currentSession, dispatch, session, sessionStatus, status]);
+  // const { sessionStatus, currentSession } = useAppSelector(state => state.session)
+  // const dispatch = useAppDispatch()
+
+  // useEffect(() => {
+  //   if (status === "unauthenticated" && sessionStatus !== status) {
+  //     //@ts-ignore
+  //     dispatch(setSession({ session, sessionStatus: status }));
+  //   } else if (status === "authenticated") {
+  //     //@ts-ignore
+  //     if (currentSession != session) {
+  //       //@ts-ignore
+  //       dispatch(setSession({ session, sessionStatus: status }));
+  //     }
+  //   }
+  // }, [currentSession, dispatch, session, sessionStatus, status]);
 
   const [showAction, setShowAction] = useState(false);
 
@@ -33,7 +34,7 @@ export default function SessionButtons() {
   //@ts-ignore
   let sessionUserRoute = session?.user?.role == "ADMINISTRATOR" ? "admin" : "subscriber"
 
-  if (currentSession) {
+  if (session?.status === "authenticated") {
     return (
       <div className="relative ">
         <div className="link flex justify-center items-center font-bold cursor-pointer">
@@ -49,7 +50,6 @@ export default function SessionButtons() {
             <ul onClick={() => setShowAction(false)}>
               <li className="mb-1 font-bold relative">
                 <Link className="btn-effect" href="/dashboard">
-                  {" "}
                   Profile
                   <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-green-400 transition-all duration-300 opacity-0"></span>
                 </Link>
@@ -59,7 +59,6 @@ export default function SessionButtons() {
                   className="btn-effect flex items-center gap-2"
                   href={`/dashboard/${sessionUserRoute}`}
                 >
-                  {" "}
                   {/* <LuLayoutPanelLeft /> */}
                   <BiLeftArrow />
                   Go to Dashboard
@@ -81,7 +80,9 @@ export default function SessionButtons() {
             </ul>
             <button
               className="bg-colorPrimary hover:bg-colorPrimary-200 px-4 py-1 rounded text-white transition-colors duration-1200 w-24"
-              onClick={() => signOut()}
+              onClick={() =>{
+                signOutTo("/auth/signin")
+              } }
             >
               Sign out
             </button>
