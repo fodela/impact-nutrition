@@ -1,8 +1,7 @@
 import { paramsProp } from "@/app/api/users/update/route";
-import { authOptions } from "@/app/utils/authOptions";
 import prisma from "@/lib/prisma";
-import { getServerSession } from "next-auth";
 import { NextResponse } from "next/server";
+import { auth } from "../../../../../../../auth";
 
 export async function GET(req: Request, { params: { id } }: paramsProp) {
   if (!id) {
@@ -10,7 +9,7 @@ export async function GET(req: Request, { params: { id } }: paramsProp) {
   }
 
   try {
-    const session = await getServerSession(authOptions);
+    const session = await auth();
 
     if (!session?.user) {
       return NextResponse.json(

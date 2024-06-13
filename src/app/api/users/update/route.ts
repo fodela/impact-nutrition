@@ -1,7 +1,6 @@
-import { authOptions } from "@/app/utils/authOptions";
 import prisma from "@/lib/prisma";
-import { getServerSession } from "next-auth";
 import { NextResponse } from "next/server";
+import { auth } from "../../../../../auth";
 
 export interface paramsProp {
   params: {
@@ -10,7 +9,7 @@ export interface paramsProp {
 }
 
 export async function PUT(req: Request) {
-  const session = await getServerSession(authOptions);
+  const session = await auth();
   //@ts-ignore
   const { user } = session;
 

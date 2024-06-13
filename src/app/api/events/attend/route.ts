@@ -1,11 +1,10 @@
-import { getServerSession } from "next-auth";
 import { NextResponse } from "next/server";
 import prisma from "@/lib/prisma";
 import { sendMailValidationEmail } from "@/lib/sendEmail";
-import { authOptions } from "@/app/utils/authOptions";
+import { auth } from "../../../../../auth";
 
 export async function POST(req: Request) {
-  const session = await getServerSession(authOptions);
+  const session = await auth();
 
   if (!session?.user) {
     return NextResponse.json(
