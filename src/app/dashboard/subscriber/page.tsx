@@ -40,7 +40,7 @@ const Subscriber = () => {
     return (
         <div className="subscription-container">
             <div className="overflow-hidden rounded-lg border border-gray-200 shadow-md my-5 divide-y-2 bg-gray-50 dark:bg-white/10">
-                {myEvents?.length === 0 && <div>No events!</div>}
+                {myEvents?.length === 0 && <div className='mx-4'>You are not currently registered for any events!</div>}
 
                 <table className="w-full">
                     <thead>

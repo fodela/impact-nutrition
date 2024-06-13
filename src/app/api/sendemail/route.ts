@@ -8,7 +8,7 @@ export async function POST(req: Request) {
         if (!title || !message || !receiverEmail) {
             return NextResponse.json({ "message": "Missing required data" })
         }
-        const mailOption = mailOptions("kbooster17@gmail.com", receiverEmail)
+        const mailOption = mailOptions("impactnutritionconsult@gmail.com", receiverEmail)
         await transporter.sendMail({
             ...mailOption,
             subject: title,

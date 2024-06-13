@@ -45,7 +45,7 @@ const LoginForm = () => {
             });
             res && setMoveToPassword(true)
         }).catch((error) => {
-            toast.error(error?.response?.data?.message ? `Unable to login! Wrong phone number` : "Something Went wrong!", {
+            toast.error(error?.response ? `Unable to reset password` : "Something Went wrong!", {
                 position: "top-right",
                 autoClose: 5000,
                 hideProgressBar: false,
@@ -80,7 +80,7 @@ const LoginForm = () => {
                 throw new Error("Something went wrong");
             }
         } catch (error: any) {
-            toast.error(`Unable to reset! ${error?.response.data.message}`, {
+            toast.error(`Unable to reset! ${error?.response?.data?.message || "Unknown error"}`, {
                 position: "top-right",
                 autoClose: 5000,
                 hideProgressBar: false,
