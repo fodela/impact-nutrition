@@ -53,6 +53,7 @@ export async function POST(req: Request) {
     }
 
     const event = await prisma.event.create({
+      //@ts-ignore
       data: {
         title,
         details,

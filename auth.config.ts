@@ -3,12 +3,12 @@ import GitHub from "next-auth/providers/github";
 import Facebook from "next-auth/providers/facebook";
 import Google from "next-auth/providers/google";
 import Twitter from "next-auth/providers/twitter";
-import { PrismaAdapter } from "@next-auth/prisma-adapter";
 import prisma from "@/lib/prisma";
 import Credentials from "next-auth/providers/credentials";
 import { compare } from "bcryptjs";
 import { signInSchema } from "@/lib/zod";
 import { ZodError } from "zod";
+import { PrismaAdapter } from "@auth/prisma-adapter";
 
 export const authConfig = {
   adapter: PrismaAdapter(prisma),
