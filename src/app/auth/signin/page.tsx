@@ -63,22 +63,10 @@ const Page = () => {
             </>
           )}
           <button
-            className="text-sm px-4 py-2 mx-auto w-full"
+            className="text-center hover:bg-green-800 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
             onClick={() => setShowSignIn(!showSignin)}
           >
-            {showSignin ? (
-              <div>
-                Don`&apos;`t have an account?{" "}
-                <span className="text-blue-500 underline font-bold">
-                  Signup
-                </span>
-              </div>
-            ) : (
-              <div>
-                Already have an account?{" "}
-                <span className="text-blue-500 underline font-bold">Login</span>
-              </div>
-            )}
+            {showSignin ? "Register" : "Login"}
           </button>
         </div>
       </div>

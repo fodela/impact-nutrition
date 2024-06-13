@@ -3,14 +3,12 @@ import { useEffect, useRef, useState } from "react";
 import { BiLeftArrow, BiUserCircle } from "react-icons/bi";
 import { FiChevronDown, FiUser } from "react-icons/fi";
 // import { auth, signIn, signOut } from "../../auth";
-import { signIn, useSession } from "next-auth/react";
-import { signOutTo } from "./Login/signOUtAction";
+import { signIn, signOut, useSession } from "next-auth/react";
 // import { LuLayoutPanelLeft } from "react-icons/lu";
 
 export default function  SessionButtons() {
 
   const session = useSession();
-  console.log(session, 'session')
 
   // const { sessionStatus, currentSession } = useAppSelector(state => state.session)
   // const dispatch = useAppDispatch()
@@ -81,7 +79,7 @@ export default function  SessionButtons() {
             <button
               className="bg-colorPrimary hover:bg-colorPrimary-200 px-4 py-1 rounded text-white transition-colors duration-1200 w-24"
               onClick={() =>{
-                signOutTo("/auth/signin")
+                signOut()
               } }
             >
               Sign out
