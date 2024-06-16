@@ -4,7 +4,6 @@ import { useState } from "react";
 import { BsQuote } from "react-icons/bs";
 
 const SectionTestimonial = () => {
-  const [isLoading, setIsLoading] = useState(true);
   return (
     <section className="my-64 flex flex-col w-full items-center max-w-screen-xl mx-auto px-8">
       <h2 className="text-4xl sm:text-6xl font-medium text-center">
