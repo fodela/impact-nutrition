@@ -2,6 +2,8 @@
 import Image from "next/image";
 import Link from "next/link";
 import { HeroDetail } from "../../types";
+import { Button } from "./ui/button";
+import { ArrowRight } from "lucide-react";
 
 const Hero = ({ heroDetail }: { heroDetail: HeroDetail }) => {
   return (
@@ -21,11 +23,9 @@ const Hero = ({ heroDetail }: { heroDetail: HeroDetail }) => {
           {heroDetail.showMainButton && (
             <Link
               href={heroDetail.mainLink ? heroDetail.mainLink : "/signin"}
-              className="capitalize bg-colorPrimary rounded py-2 px-4 text-white  hover:bg-green-600 transition-all duration-300"
+              className="capitalize"
             >
-              {heroDetail.mainButtonName
-                ? heroDetail.mainButtonName
-                : "Get Started"}
+              <Button variant="primary">Get Started</Button>
             </Link>
           )}
           {heroDetail.showSecondaryButton && (
@@ -35,11 +35,15 @@ const Hero = ({ heroDetail }: { heroDetail: HeroDetail }) => {
                   ? heroDetail.secondaryLink
                   : "/services"
               }
-              className="capitalize border  border-colorPrimary rounded py-2 px-4 text-colorPrimary hover:bg-green-600 hover:text-white transition-all duration-300"
+              className="capitalize"
             >
-              {heroDetail.secondaryButtonName
-                ? heroDetail.secondaryButtonName
-                : "Explore our services"}
+              <Button
+                variant="expandIcon"
+                Icon={ArrowRight}
+                iconPlacement="right"
+              >
+                Explore our services
+              </Button>
             </Link>
           )}
         </div>
