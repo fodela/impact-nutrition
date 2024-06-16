@@ -31,7 +31,7 @@ const services = [
 
 const SectionServices = () => {
   return (
-    <section className="bg-[#EDF6EF] dark:bg-black py-24 pt-16 ">
+    <section className=" py-24 pt-16 ">
       <header className="max-w-screen-xl px-2 md:mx-auto my-2 ">
         <h2 className="text-xl font-bold text-center mt-10 text-colorPrimary">
           Our Services
