@@ -1,19 +1,19 @@
-import { NextResponse } from "next/server";
-import prisma from "@/lib/prisma";
-import { auth } from "../../../../../auth";
+import { NextApiRequest, NextApiResponse } from 'next';
+import prisma from '@/lib/prisma';
+import { authenticateUser } from '@/lib/authUtils';
+import { NextResponse } from 'next/server';
 
-export async function GET() {
-  const session = await auth();
-  //@ts-ignore
-  const { user } = session;
-
-  if (!user) {
-    NextResponse.json(
-      { message: "Kindly log in to update your profile." },
-      { status: 400 }
-    );
-  }
+export async function GET(req: Request) {
   try {
+    const user = await authenticateUser(req);
+
+    if (!user) {
+      return NextResponse.json(
+        { message: "Kindly log in to update your profile." },
+        { status: 400 }
+      );
+    }
+
     const userData = await prisma.user.findUnique({
       where: {
         id: user.id,
@@ -21,7 +21,7 @@ export async function GET() {
     });
 
     if (!userData) {
-      return NextResponse.json({ message: "User not found" });
+      return NextResponse.json({ message: "User not found" }, { status: 404 });
     }
 
     return NextResponse.json({
@@ -35,6 +35,6 @@ export async function GET() {
       },
     });
   } catch (error) {
-    return NextResponse.json({ message: "Sorry, we could not get the user" });
+    return NextResponse.json({ message: "Sorry, we could not get the user" }, { status: 500 });
   }
 }

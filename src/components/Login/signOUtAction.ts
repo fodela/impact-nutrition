@@ -1,9 +1,9 @@
-// signOutAction.js
-"use server";
-
-import {signOut as authSignOut} from "../../../auth";
+"use client";
+import { useRouter } from "next/navigation";
+import axios from "axios";
 
 export async function signOutTo(redirectTo: string) {
-    await authSignOut({redirectTo});
+  await axios.post("/api/logout");
+  const router = useRouter();
+  router.push(redirectTo);
 }
-

@@ -1,31 +1,45 @@
 "use client";
 import { UserUpdateForm } from "@/components/Dashboard/user/UserUpdateForm";
 import { GetUserContext } from "@/components/context/UserContent";
-import { useSession } from "next-auth/react";
-import { useContext, useEffect } from "react";
-
+import { useEffect, useContext } from "react";
+import { useAppDispatch, useAppSelector } from "@/app/redux/hooks";
+import { checkAuth, fetchUser } from "@/app/redux/slices/authSlice";
+import { useRouter } from "next/navigation";
 
 const Profile = () => {
-    const { data: session, status } = useSession();
-    const { currentUser, getCurrentUser } = useContext(GetUserContext)
-    useEffect(() => {
-        //@ts-ignore
-        session?.user.id && getCurrentUser(session?.user.id)
-        return () => {
+  const dispatch = useAppDispatch();
+  const router = useRouter();
+  const { user, status, currentUser, error } = useAppSelector((state) => state.auth);
 
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [])
-    if (!status) {
-        return <div>Loading!</div>;
-    }
+  useEffect(() => {
+    dispatch(checkAuth()).unwrap().then((response) => {
+      if (response.user) {
+        dispatch(fetchUser(response.user.id));
+      }
+    });
+  }, [dispatch]);
 
+//   useEffect(() => {
+//     if (user?.id) {
+//       getCurrentUser(user.id);
+//     }
+//   }, [user, getCurrentUser]);
 
+  if (status === 'loading') {
+    return <div>Loading!</div>;
+  }
+
+  if (status === 'failed' || !user) {
+    return <div>Please log in to view this page.</div>;
+  }
+
+  if (status === 'succeeded' && currentUser) {
+    const { name, phone, profession, professional_pin, email } = currentUser;
     //@ts-ignore
-    if (session && currentUser.userData) {
-        //@ts-ignore
-        const { name, phone, profession, professional_pin, email } = currentUser?.userData
-        return <UserUpdateForm {...{ name, phone, profession, professional_pin, email }} />
-    }
+    return <UserUpdateForm {...{ name, phone, profession, professional_pin, email }} />;
+  }
+
+  return null;
 };
+
 export default Profile;

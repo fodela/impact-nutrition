@@ -1,5 +1,4 @@
 "use client";
-import { signIn } from "next-auth/react";
 import Link from "next/link";
 
 const SectionCTA = () => {
@@ -27,12 +26,12 @@ const SectionCTA = () => {
           </p>
         </div>
         <div className="flex gap-4 justify-end items-center justify-self-end">
-          <button
+          <a
+          href="auth/login"
             className="text-white  hover:text-colorPrimary rounded py-2 px-4 border-inherit  hover:border-colorPrimary"
-            onClick={() => signIn()}
           >
             Contact Us
-          </button>
+          </a>
           <button
             className="text-colorPrimary hover:bg-colorPrimary hover:text-white 
           rounded py-1 px-4  border-colorPrimary

@@ -1,8 +1,9 @@
-import { NextResponse } from "next/server";
-import { parse } from "url";
-import prisma from "@/lib/prisma";
-import { validateAuthorization } from "@/lib/validateAuthorization";
-import { auth } from "../../../../auth";
+import { NextResponse } from 'next/server';
+import { parse } from 'url';
+import prisma from '@/lib/prisma';
+import { withAuth } from '@/lib/middleware';
+import { NextApiRequest, NextApiResponse } from 'next';
+import { DecodedToken } from '../../../../next-env';
 
 export async function GET() {
   const events = await prisma.event.findMany({
@@ -13,11 +14,10 @@ export async function GET() {
   return NextResponse.json(events);
 }
 
-export async function POST(req: Request) {
-  const session = await auth();
-  //@ts-ignore
-  const userId = session?.user?.id;
-  if (!session) {
+export const POST = withAuth(async (req: NextApiRequest, res: NextApiResponse) => {
+  const user = req.user as DecodedToken;
+  const userId = user.userId
+  if (!req.user) {
     return NextResponse.json(
       { message: "You are not logged in!" },
       { status: 400 }
@@ -44,16 +44,7 @@ export async function POST(req: Request) {
       );
     }
 
-    try {
-      //@ts-ignore
-      await validateAuthorization(session, userId, "EVENTS");
-    } catch (error) {
-      //@ts-ignore
-      return NextResponse.json({ message: error?.message }, { status: 401 });
-    }
-
     const event = await prisma.event.create({
-      //@ts-ignore
       data: {
         title,
         details,
@@ -72,21 +63,11 @@ export async function POST(req: Request) {
   } catch (error) {
     return NextResponse.json("Something went wrong!", { status: 500 });
   }
-}
+});
 
-export async function PUT(req: Request) {
-  const session = await auth();
-  //@ts-ignore
-  if (!session.user) {
-    NextResponse.json(
-      { message: "Kindly log in to update an event." },
-      { status: 400 }
-    );
-  }
-
-  //@ts-ignore
-  const userId = session?.user?.id;
-
+export const PUT = withAuth(async (req: NextApiRequest, res: NextApiResponse) => {
+  const user = req.user as DecodedToken;
+  const userId = user.userId
   try {
     const {
       id,
@@ -115,13 +96,7 @@ export async function PUT(req: Request) {
     if (!event) {
       return NextResponse.json({ message: "event not found" }, { status: 404 });
     }
-    try {
-      //@ts-ignore
-      await validateAuthorization(session, userId, "EVENTS");
-    } catch (error) {
-      //@ts-ignore
-      return NextResponse.json({ message: error?.message }, { status: 401 });
-    }
+
     const updatedevent = await prisma.event.update({
       where: { id },
       data: {
@@ -136,7 +111,6 @@ export async function PUT(req: Request) {
         eventDate,
       },
     });
-
 
     //update the event price for each of the attendees
 
@@ -154,17 +128,15 @@ export async function PUT(req: Request) {
       });
     }
     return NextResponse.json(updatedevent, { status: 200 });
-  } catch (error) {
-    //@ts-ignore
+  } catch (error: any) {
     const message = error?.message ? error?.message : "something went wrong!";
     return NextResponse.json({ message }, { status: 500 });
   }
-}
+});
 
-export async function DELETE(req: Request) {
-  const session = await auth();
-  //@ts-ignore
-  const userId = session?.user?.id;
+export const DELETE = withAuth(async (req: NextApiRequest, res: NextApiResponse) => {
+  const user = req.user as DecodedToken;
+  const userId = user.userId
   try {
     const { id } = parse(req.url || "", true).query;
 
@@ -174,15 +146,11 @@ export async function DELETE(req: Request) {
         { status: 400 }
       );
     }
-    //@ts-ignore
+
     const event = await prisma.event.findUnique({ where: { id } });
     if (!event) {
       return NextResponse.json({ message: "event not found" }, { status: 404 });
     }
-
-    // Check if the user is authorized to delete the event.
-    //@ts-ignore
-    await validateAuthorization(session, userId, "EVENTS");
 
     // Delete the attendees associated with the event.
     const attendees = await prisma.attendee.findMany({
@@ -199,7 +167,6 @@ export async function DELETE(req: Request) {
     }
 
     // Delete the event.
-    //@ts-ignore
     await prisma.event.delete({ where: { id } });
 
     return NextResponse.json(
@@ -209,4 +176,4 @@ export async function DELETE(req: Request) {
   } catch (error) {
     return NextResponse.json({ error }, { status: 500 });
   }
-}
+});

@@ -1,10 +1,13 @@
 'use client';
 import { useContext, useEffect } from 'react';
-import { useSession } from 'next-auth/react';
 import Link from 'next/link';
 import { BsFillEyeFill } from 'react-icons/bs';
 import { GetEventContext } from '@/components/context/EventContext';
 import Pagination from '@/components/Dashboard/DashboardTable/Pagination';
+
+import { useRouter } from 'next/navigation';
+import { useAppDispatch, useAppSelector } from '@/app/redux/hooks';
+import { checkAuth } from '@/app/redux/slices/authSlice';
 
 const headings = ["#", "Title", "Details", "Location", "Price", "actions"];
 const summaries = [
@@ -25,18 +28,27 @@ const summaries = [
     },
 ];
 
-
 const Subscriber = () => {
     const { myEvents, getAllMyEvents } = useContext(GetEventContext);
-    const { data: session } = useSession();
+    const dispatch = useAppDispatch();
+    const router = useRouter();
+    const auth = useAppSelector((state) => state.auth);
 
     useEffect(() => {
-        if (session) {
-            //@ts-ignore
-            !myEvents.length && session.user && getAllMyEvents(session.user.id);
+        // Dispatch the checkAuth action to verify if the user is authenticated
+        dispatch(checkAuth());
+    }, [dispatch]);
+
+    useEffect(() => {
+        // Redirect to the sign-in page if the user is unauthenticated
+        if (auth.status === "failed" && !auth.user) {
+            router.push("/auth/signin");
+        } else if (auth.status === "succeeded" && auth.user) {
+            // Fetch events if the user is authenticated
+            !myEvents.length && getAllMyEvents(auth.user.id);
         }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
+    }, [auth.status, auth.user, myEvents.length, getAllMyEvents, router]);
+
     return (
         <div className="subscription-container">
             <div className="overflow-hidden rounded-lg border border-gray-200 shadow-md my-5 divide-y-2 bg-gray-50 dark:bg-white/10">
@@ -69,7 +81,6 @@ const Subscriber = () => {
                                         </Link>
                                     </div>
                                 </td>
-
                             </tr>
                         ))}
                     </tbody>

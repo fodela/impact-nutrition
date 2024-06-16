@@ -1,24 +1,24 @@
-import { paramsProp } from "@/app/api/users/update/route";
-import prisma from "@/lib/prisma";
-import { NextResponse } from "next/server";
-import { auth } from "../../../../../../../auth";
+import { NextResponse } from 'next/server';
+import prisma from '@/lib/prisma';
+import { withAuth } from '@/lib/middleware';
 
-export async function GET(req: Request, { params: { id } }: paramsProp) {
+export async function GET(req: Request, { params }: { params: { id: string } }) {
+  const { id } = params;
+
   if (!id) {
     return NextResponse.json({ error: "Id missing" }, { status: 404 });
   }
 
   try {
-    const session = await auth();
-
+    const session = await withAuth(req);
     if (!session?.user) {
       return NextResponse.json(
         { message: "You are not logged in!" },
         { status: 400 }
       );
     }
-    //@ts-ignore
-    const userId = session?.user?.id;
+
+    const userId = (session.user).userId;
 
     const registeredEvents = await prisma.event.findMany({
       where: {
@@ -32,6 +32,6 @@ export async function GET(req: Request, { params: { id } }: paramsProp) {
 
     return NextResponse.json(registeredEvents);
   } catch (error) {
-    NextResponse.json(error, { status: 500 });
+    return NextResponse.json({ error: error.message }, { status: 500 });
   }
 }

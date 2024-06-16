@@ -6,7 +6,6 @@ import { ToastContainer } from "react-toastify";
 import GetPostsProvider from "@/components/context/PostContext";
 import GetEventsProvider from "@/components/context/EventContext";
 import { ReduxProvider } from "./redux/Provider";
-import { SessionProvider } from "next-auth/react";
 
 const Hero = dynamic(() => import("@/components/Hero"));
 
@@ -38,7 +37,6 @@ export default function RootLayout({
         />
         <div className={` relative`}>
           <ReduxProvider>
-          <SessionProvider>
             <GetPostsProvider>
               <GetEventsProvider>
                 <Header />
@@ -46,7 +44,6 @@ export default function RootLayout({
                 <Footer />
               </GetEventsProvider>
             </GetPostsProvider>
-          </SessionProvider>
           </ReduxProvider>
         </div>
       </body>

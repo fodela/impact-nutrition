@@ -1,32 +1,40 @@
-import { NextApiRequest, NextApiResponse } from 'next';
-import { signIn } from '../../../../../auth';
 import { NextResponse } from 'next/server';
+import { compare } from 'bcryptjs';
+import prisma from '@/lib/prisma';
+import { sign } from 'jsonwebtoken';
+import { serialize } from 'cookie';
 
-export  async function POST(req: Request) {
+export async function POST(req: Request) {
+  const { phone, password } = await req.json();
 
   try {
-    const { phone, password } = await req.json();
-
-    if (!phone || !password) {
-        return NextResponse.json(
-          { message: "Missing required data title content or slug" },
-          { status: 400 }
-        );
-      }
-
-    const result = await signIn('credentials', {
-      phone,
-      password,
-      redirect: false,
+    const user = await prisma.user.findUnique({
+      where: { phone: phone.trim() },
     });
 
-    if (result) {
-      NextResponse.json({ success: true, url: result.url }, { status: 200 });
-    } else {
-      throw new Error('Something went wrong');
+    if (!user) {
+      return NextResponse.json({ message: 'Invalid phone number or password' }, { status: 401 });
     }
+
+    const isValidPassword = await compare(password, user.password!);
+
+    if (!isValidPassword) {
+      return NextResponse.json({ message: 'Invalid phone number or password' }, { status: 401 });
+    }
+
+    const token = sign({ userId: user.id }, process.env.JWT_SECRET!, { expiresIn: '1h' });
+
+    const cookie = serialize('token', token, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production',
+      maxAge: 60 * 60, // 1 hour
+      sameSite: 'strict',
+      path: '/',
+    });
+
+    return NextResponse.json({ user: { id: user.id, phone: user.phone, name: user.name, email: user.email, role: user.role } }, { headers: { 'Set-Cookie': cookie } });
   } catch (error) {
     //@ts-ignore
-    return NextResponse.json({ message: error?.message || "Something went wrong!" }, { status: 401 });
+    return NextResponse.json({ message: error?.message }, { status: 500 });
   }
 }
