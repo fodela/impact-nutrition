@@ -28,7 +28,7 @@ const NavBar = () => {
   return (
     <div>
       <header className="flex justify-between md:hidden">
-        <button className="pr-4 dark:text-white" onClick={toggleSidebar}>
+        <button className="pr-4 " onClick={toggleSidebar}>
           <AiOutlineMenu className="text-colorPrimary" size={28} />
         </button>
       </header>
@@ -40,7 +40,7 @@ const NavBar = () => {
         }}
         sidebarRoot={sidebarRootRef.current}
       />
-     <HomeNavBar />
+      <HomeNavBar />
     </div>
   );
 };
