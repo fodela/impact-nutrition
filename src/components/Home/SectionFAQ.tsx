@@ -3,6 +3,12 @@ import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { IoIosArrowDown } from "react-icons/io";
 import { moveVariant } from "@/lib/animationVariants";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "../ui/accordion";
 const faqs = [
   {
     id: 1,
@@ -66,44 +72,20 @@ const SectionFAQ = () => {
           sustainable manner for our communities.
         </p>
       </header>
-      <div className="grid sm:grid-cols-2 items-start gap-4 ">
+      <Accordion type="single" collapsible className="w-full grid gap-4">
         {faqs.map((faq) => (
-          <div
+          <AccordionItem
+            className=" border-accent"
+            value={faq.id.toString()}
             key={faq.id}
-            className={`flex flex-col shadow-lg overflow-clip  ${activeId == faq.id && "sm:row-span-2"
-              }`}
           >
-            <header
-              className="flex gap-2 items-center justify-between bg-[#EDF6EF] dark:bg-[hsl(133,33%,10%)] rounded-t-lg p-4 z-10 "
-              onClick={() => toggleAccordion(faq.id)}
-            >
-              <h2>{faq.title} </h2>{" "}
-              <IoIosArrowDown
-                className={`${activeId == faq.id && "rotate-180 "
-                  } transition-transform ease-in-out`}
-                size={20}
-              />
-            </header>
-            <AnimatePresence>
-              {activeId == faq.id && (
-                <motion.div
-                  key={faq.id}
-                  className={` dark:bg-white/5 dark:border-b dark:border-x border-gray-800 last:col-start-`}
-                  variants={moveVariant}
-                  initial="top"
-                  animate="visible"
-                  transition={{ delay: 0, duration: 1, ease: "anticipate" }}
-                  exit="exitUp"
-                >
-                  <p className={`${activeId == faq.id && "p-4"}`}>
-                    {faq.content}
-                  </p>
-                </motion.div>
-              )}
-            </AnimatePresence>
-          </div>
+            <AccordionTrigger>{faq.title}</AccordionTrigger>
+            <AccordionContent className="text-muted-foreground text-base">
+              {faq.content}
+            </AccordionContent>
+          </AccordionItem>
         ))}
-      </div>
+      </Accordion>
     </section>
   );
 };
