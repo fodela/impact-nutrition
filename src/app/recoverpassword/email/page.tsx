@@ -3,8 +3,6 @@ import { RegisterForm } from "@/components/form";
 import sendSms from "@/components/sms/sendSms";
 import { resetUserPassword } from "@/lib/resetUserPassword";
 import axios, { Axios } from "axios";
-import { NextApiResponse } from "next";
-import { signIn, useSession, getProviders } from "next-auth/react";
 import Link from "next/link";
 import { redirect } from "next/navigation";
 import { NextResponse } from "next/server";

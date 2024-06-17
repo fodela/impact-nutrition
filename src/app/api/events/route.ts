@@ -3,7 +3,7 @@ import { parse } from 'url';
 import prisma from '@/lib/prisma';
 import { withAuth } from '@/lib/middleware';
 import { NextApiRequest, NextApiResponse } from 'next';
-import { DecodedToken } from '../../../../next-env';
+import { authenticateUser } from '@/lib/authUtils';
 
 export async function GET() {
   const events = await prisma.event.findMany({
@@ -14,10 +14,10 @@ export async function GET() {
   return NextResponse.json(events);
 }
 
-export const POST = withAuth(async (req: NextApiRequest, res: NextApiResponse) => {
-  const user = req.user as DecodedToken;
-  const userId = user.userId
-  if (!req.user) {
+export const POST = async (req: Request, res: NextApiResponse) => {
+  const user = await authenticateUser(req);
+  
+  if (!user) {
     return NextResponse.json(
       { message: "You are not logged in!" },
       { status: 400 }
@@ -54,7 +54,7 @@ export const POST = withAuth(async (req: NextApiRequest, res: NextApiResponse) =
         image,
         price: Evprice,
         paymentLink,
-        userId,
+        userId: user?.id,
         eventDate,
       },
     });
@@ -63,11 +63,17 @@ export const POST = withAuth(async (req: NextApiRequest, res: NextApiResponse) =
   } catch (error) {
     return NextResponse.json("Something went wrong!", { status: 500 });
   }
-});
+};
 
-export const PUT = withAuth(async (req: NextApiRequest, res: NextApiResponse) => {
-  const user = req.user as DecodedToken;
-  const userId = user.userId
+export const PUT = async (req: Request, res: NextApiResponse) => {
+  const user = await authenticateUser(req);
+  
+  if (!user) {
+    return NextResponse.json(
+      { message: "You are not logged in!" },
+      { status: 400 }
+    );
+  }
   try {
     const {
       id,
@@ -132,11 +138,10 @@ export const PUT = withAuth(async (req: NextApiRequest, res: NextApiResponse) =>
     const message = error?.message ? error?.message : "something went wrong!";
     return NextResponse.json({ message }, { status: 500 });
   }
-});
+};
 
-export const DELETE = withAuth(async (req: NextApiRequest, res: NextApiResponse) => {
-  const user = req.user as DecodedToken;
-  const userId = user.userId
+export const DELETE = async (req: Request) => {
+
   try {
     const { id } = parse(req.url || "", true).query;
 
@@ -146,7 +151,7 @@ export const DELETE = withAuth(async (req: NextApiRequest, res: NextApiResponse)
         { status: 400 }
       );
     }
-
+//@ts-expect-error
     const event = await prisma.event.findUnique({ where: { id } });
     if (!event) {
       return NextResponse.json({ message: "event not found" }, { status: 404 });
@@ -167,6 +172,7 @@ export const DELETE = withAuth(async (req: NextApiRequest, res: NextApiResponse)
     }
 
     // Delete the event.
+    //@ts-expect-error
     await prisma.event.delete({ where: { id } });
 
     return NextResponse.json(
@@ -176,4 +182,4 @@ export const DELETE = withAuth(async (req: NextApiRequest, res: NextApiResponse)
   } catch (error) {
     return NextResponse.json({ error }, { status: 500 });
   }
-});
+};

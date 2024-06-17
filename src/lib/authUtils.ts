@@ -1,7 +1,6 @@
 import { verify } from 'jsonwebtoken';
 import { parse } from 'cookie';
 import prisma from './prisma';
-import { NextApiRequest } from 'next';
 
 export const authenticateUser = async (req: Request) => {
   const cookieHeader = req.headers.get('cookie');

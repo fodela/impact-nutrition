@@ -1,6 +1,5 @@
 'use client'
 import { createContext, useState } from "react";
-import { ChildrenProps } from "../NextAuthProvider";
 import { Event, Payment } from "@prisma/client";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/ReactToastify.min.css";
@@ -21,8 +20,8 @@ export const GetPaymentContext = createContext<GetPaymentContextType>({
 
 
 
-
-const GetPaymentProvider = ({ children }: ChildrenProps) => {
+//@ts-expect-error
+const GetPaymentProvider = ({ children }) => {
     const [payments, setPayments] = useState<Payment[]>([]);
     const [totalPayments, setTotalPayments] = useState<Number>(0);
 

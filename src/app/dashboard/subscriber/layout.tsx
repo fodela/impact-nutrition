@@ -23,16 +23,16 @@ export default function AdminLayout({
     dispatch(checkAuth());
   }, [dispatch]);
 
-  // useEffect(() => {
-  //   // Redirect to the admin dashboard if the user is authenticated but not a subscriber
-  //   if (auth.status === "succeeded" && auth.user?.role !== "SUBSCRIBER") {
-  //     router.push("/dashboard/admin");
-  //   }
-  //   // Redirect to the sign-in page if the user is unauthenticated
-  //   if (auth.status === "failed" || !auth.user) {
-  //     router.push("/auth/signin");
-  //   }
-  // }, [auth.status, auth.user, router]);
+  useEffect(() => {
+    // Redirect to the admin dashboard if the user is authenticated but not a subscriber
+    if (auth.status === "succeeded" && auth.user?.role !== "SUBSCRIBER") {
+      router.push("/dashboard/admin");
+    }
+    // Redirect to the sign-in page if the user is unauthenticated
+    if (auth.status === "failed" && !auth.user) {
+      router.push("/auth/signin");
+    }
+  }, [auth.status, auth.user, router]);
 
   useEffect(() => {
     !events.length && getAllEvents();

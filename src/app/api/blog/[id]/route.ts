@@ -1,8 +1,8 @@
 import prisma from "@/lib/prisma";
 import { NextResponse } from "next/server";
-import { paramsProp } from "../../users/update/route";
 
-export async function GET(req: Request, { params: { id } }: paramsProp) {
+//@ts-expect-error
+export async function GET(req: Request, { params: { id } }) {
   try {
     if (!id) {
       return NextResponse.json({ error: "Post not found!" }, { status: 400 });

@@ -19,11 +19,6 @@ const Profile = () => {
     });
   }, [dispatch]);
 
-//   useEffect(() => {
-//     if (user?.id) {
-//       getCurrentUser(user.id);
-//     }
-//   }, [user, getCurrentUser]);
 
   if (status === 'loading') {
     return <div>Loading!</div>;

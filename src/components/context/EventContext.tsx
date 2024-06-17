@@ -1,6 +1,5 @@
 'use client'
 import { createContext, useState } from "react";
-import { ChildrenProps } from "../NextAuthProvider";
 import { Event } from "@prisma/client";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/ReactToastify.min.css";
@@ -22,8 +21,8 @@ export const GetEventContext = createContext<GetEventContextType>({
 
 
 
-
-const GetEventsProvider = ({ children }: ChildrenProps) => {
+//@ts-expect-error
+const GetEventsProvider = ({ children }) => {
     const [events, setEvents] = useState<Event[]>([]);
     const [myEvents, setMyEvents] = useState<Event[]>([]);
 

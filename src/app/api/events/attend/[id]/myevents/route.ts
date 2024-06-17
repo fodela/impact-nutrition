@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
 import prisma from '@/lib/prisma';
 import { withAuth } from '@/lib/middleware';
+import { authenticateUser } from '@/lib/authUtils';
 
 export async function GET(req: Request, { params }: { params: { id: string } }) {
   const { id } = params;
@@ -10,15 +11,15 @@ export async function GET(req: Request, { params }: { params: { id: string } }) 
   }
 
   try {
-    const session = await withAuth(req);
-    if (!session?.user) {
+    const user = await authenticateUser(req);
+    if (!user) {
       return NextResponse.json(
         { message: "You are not logged in!" },
         { status: 400 }
       );
     }
 
-    const userId = (session.user).userId;
+    const userId = user.id;
 
     const registeredEvents = await prisma.event.findMany({
       where: {
@@ -31,7 +32,7 @@ export async function GET(req: Request, { params }: { params: { id: string } }) 
     });
 
     return NextResponse.json(registeredEvents);
-  } catch (error) {
+  } catch (error: any) {
     return NextResponse.json({ error: error.message }, { status: 500 });
   }
 }

@@ -1,30 +1,33 @@
-import { NextResponse } from "next/server";
-import prisma from "@/lib/prisma";
-import { sendMailValidationEmail } from "@/lib/sendEmail";
-import { auth } from "../../../../../../auth";
+import { NextApiRequest } from 'next';
+import prisma from '@/lib/prisma';
+import { sendMailValidationEmail } from '@/lib/sendEmail';
+import { authenticateUser } from '@/lib/authUtils';
+import { NextResponse } from 'next/server';
 
 export async function POST(req: Request) {
-  const session = await auth();
-
-  if (!session) {
-    return NextResponse.json(
-      { message: "You are not logged in!" },
-      { status: 400 }
-    );
-  }
-  //@ts-ignore
-
   try {
+    const user = await authenticateUser(req);
+
+    if (!user) {
+      return NextResponse.json(
+        { message: "You are not logged in!" },
+        { status: 400 }
+      );
+    }
+
     const { userId, eventId, amount, paid, receipt } = await req.json();
 
-    const atendee = await prisma.user.findFirst({
+    const attendee = await prisma.user.findFirst({
       where: {
         id: userId,
       },
     });
 
-    if (!atendee) {
-      throw "We were unable to find the specified attendee that made this payment";
+    if (!attendee) {
+      return NextResponse.json(
+        { message: "We were unable to find the specified attendee that made this payment" },
+        { status: 400 }
+      );
     }
 
     // Check if the user is already registered for the event
@@ -41,6 +44,7 @@ export async function POST(req: Request) {
         { status: 400 }
       );
     }
+
     const payment = await prisma.payment.create({
       data: {
         receipt,
@@ -60,22 +64,24 @@ export async function POST(req: Request) {
     });
 
     // Send the email verification email
-
     await sendMailValidationEmail({
-      title: `Impact Nutriton: Hello ${atendee.name} payment received.`,
-      message: `Welcome, ${atendee.name}! <br> 
+      title: `Impact Nutrition: Hello ${attendee.name}, payment received.`,
+      message: `Welcome, ${attendee.name}! <br> 
        We have received a payment of ${amount} and just credited your account. <br>
         The receipt number is <b>${receipt}</b>. <br>
        Thank you. <br>
        Yours Sincerely,<br>
-       Impact Nutrition Consult.
-       `,
-      receiverEmail: atendee.email,
+       Impact Nutrition Consult.`,
+      receiverEmail: attendee.email,
       link: "",
     });
 
     return NextResponse.json(payment, { status: 200 });
   } catch (error) {
-    return NextResponse.json("Something went wrong!", { status: 500 });
+    return NextResponse.json(
+      //@ts-ignore
+      { message: "Something went wrong!", error: error.message },
+      { status: 500 }
+    );
   }
 }
