@@ -1,6 +1,5 @@
 "use client";
 import { UserUpdateForm } from "@/components/Dashboard/user/UserUpdateForm";
-import { GetUserContext } from "@/components/context/UserContent";
 import { useEffect, useContext } from "react";
 import { useAppDispatch, useAppSelector } from "@/app/redux/hooks";
 import { checkAuth, fetchUser } from "@/app/redux/slices/authSlice";
