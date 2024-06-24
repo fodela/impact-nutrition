@@ -12,17 +12,12 @@ const SectionTestimonial = () => {
       </h2>
       <div className="grid md:grid-cols-3 pt-8 gap-8">
         <Image
-          className={`w-400 h-400 mx-auto self-end ${
-            isLoading
-              ? "grayscale blur-2xl scale-110"
-              : "grayscale-0 blur-0 scale-100"
-          }`}
+          className={`w-400 h-400 mx-auto self-end `}
           src="/assets/Images/Saadong_ceo 1.png"
           // src="https://impactnutritionconsult.com/assets/Saadong.jpg"
           alt="A picture of Mr Saadong Emmanuel in a black suit"
           width={400}
           height={358}
-          onLoad={() => setIsLoading(false)}
         />
         <div className="col-span-2 favicon_bg">
           <p className="text-colorPrimary text-2xl font-medium ">
