@@ -42,7 +42,6 @@ const EventPage = () => {
       setEvent(fetchedEvent);
       setIsLoading(false);
     } catch (error) {
-      console.error("Unable to get event:", error);
       setIsLoading(false); // stop loading in case of error
     }
   };
@@ -126,7 +125,7 @@ const EventPage = () => {
             <BiPlus size={20} />{" "}
             <p>Add to Calendar</p>
           </div>
-          {<EventRegistrationBtn id={eventId} myEvents={myEvents} session={user} />}
+          { <EventRegistrationBtn id={eventId} myEvents={myEvents} session={user} />}
 
           <Link
             href={`${paymentLink}`}

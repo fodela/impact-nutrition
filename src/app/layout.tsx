@@ -6,6 +6,14 @@ import { ToastContainer } from "react-toastify";
 import GetPostsProvider from "@/components/context/PostContext";
 import GetEventsProvider from "@/components/context/EventContext";
 import { ReduxProvider } from "./redux/Provider";
+import { Inter as FontSans } from "next/font/google"
+import { cn } from "@/lib/utils"
+ 
+const fontSans = FontSans({
+  subsets: ["latin"],
+  variable: "--font-sans",
+})
+ 
 
 const Hero = dynamic(() => import("@/components/Hero"));
 
@@ -22,7 +30,10 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body>
+      <body  className={cn(
+          "font-sans antialiased",
+          fontSans.variable
+        )}>
         <ToastContainer
           position="top-right"
           autoClose={5000}

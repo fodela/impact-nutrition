@@ -9,7 +9,7 @@ const DashboardNav = () => {
 const pathname = usePathname()
     const navItems = [
         {
-            path: "/dashboard/admin",
+            path: "/dashboard/admin/reports",
             label: "Dashboard",
             icon: <BsDashSquare size={25}/>
         }, {

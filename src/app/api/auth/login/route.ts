@@ -27,7 +27,7 @@ export async function POST(req: Request) {
     const cookie = serialize('token', token, {
       httpOnly: true,
       secure: process.env.NODE_ENV === 'production',
-      maxAge: 60 * 60, // 1 hour
+      maxAge: 1260 * 1260, // 1 hour
       sameSite: 'strict',
       path: '/',
     });
