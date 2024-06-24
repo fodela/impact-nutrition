@@ -7,7 +7,8 @@ import Loading from "../loading";
 import { addEventAttendee, getEventById, getMyEvents } from "@/lib/getEvents";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { useSession } from "next-auth/react";
+import { useAppDispatch, useAppSelector } from "@/app/redux/hooks";
+import { checkAuth, fetchUser } from "@/app/redux/slices/authSlice";
 import { checkIdExists } from "@/lib/tokenUtils";
 import Image from "next/image";
 import EventRegistrationBtn from "@/components/eventsRegisterBtn";
@@ -27,35 +28,40 @@ const tags = [
 ];
 
 const EventPage = () => {
-  const { data: session, status } = useSession();
   const { id } = useParams();
-  const [event, setEvent] = useState<Event | null>(null);
+  const dispatch = useAppDispatch();
+  const { user, status } = useAppSelector((state) => state.auth);
   const { myEvents, getAllMyEvents } = useContext(GetEventContext);
+  const [event, setEvent] = useState<Event | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const eventId = Array.isArray(id) ? id[0] : id;
+
   const fetchEvent = async () => {
     try {
-
       const fetchedEvent = await getEventById(eventId);
       setEvent(fetchedEvent);
       setIsLoading(false);
     } catch (error) {
-      console.error("Unable to get event:", error);
+      setIsLoading(false); // stop loading in case of error
     }
   };
 
   useEffect(() => {
+    dispatch(checkAuth()).unwrap().then((response) => {
+      if (response.user) {
+        dispatch(fetchUser(response.user.id));
+      }
+    });
+  }, [dispatch]);
+
+  useEffect(() => {
     if (eventId) {
       !event?.id && fetchEvent();
-      //@ts-ignore
-      session?.user && getAllMyEvents(session?.user.id);
+      if (user?.id) {
+        getAllMyEvents(user.id);
+      }
     }
-
-    return () => {
-      // Cleanup function to cancel any pending requests or subscriptions
-    };
-  }, [id]);
-
+  }, [eventId, user]);
 
   if (isLoading) {
     return <Loading />;
@@ -64,7 +70,7 @@ const EventPage = () => {
   if (!event) {
     return <p>Event not found.</p>;
   }
-  //@ts-ignore
+
   const {
     eventDate,
     title,
@@ -81,7 +87,6 @@ const EventPage = () => {
   const month = eventDateUpdate.toLocaleString('default', { month: 'short' });
   const day = eventDateUpdate.getDate();
   const time = eventDateUpdate.toLocaleTimeString();
-
 
   return (
     <>
@@ -120,7 +125,7 @@ const EventPage = () => {
             <BiPlus size={20} />{" "}
             <p>Add to Calendar</p>
           </div>
-          {<EventRegistrationBtn id={eventId} myEvents={myEvents} session={session} />}
+          { <EventRegistrationBtn id={eventId} myEvents={myEvents} session={user} />}
 
           <Link
             href={`${paymentLink}`}
@@ -139,7 +144,7 @@ const EventPage = () => {
           )}
           {details && <div dangerouslySetInnerHTML={{ __html: details }} />}
           <h3 className="text-xl font-bold capitalize mt-16">
-            How can I contact the oganizer with any question?
+            How can I contact the organizer with any question?
           </h3>
           <p>
             Please visit{" "}
@@ -166,7 +171,7 @@ const EventPage = () => {
             {" "}
             <h3 className="text-xl font-bold capitalize ">{location}</h3>
             <p>
-              {event?.excerpt ? <div dangerouslySetInnerHTML={{ __html: event.excerpt }}></div> : <p>No exccerpt</p>}
+              {event?.excerpt ? <div dangerouslySetInnerHTML={{ __html: event.excerpt }}></div> : <p>No excerpt</p>}
             </p>
           </div>
           <div className="">

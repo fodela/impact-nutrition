@@ -1,16 +1,17 @@
 import { Session } from "@prisma/client";
 import { verifyUserRole } from "./verifyUserRole";
+import { userSession } from "@/app/api/auth/checkAuth/route";
 
 export async function validateAuthorization(
-  session: Session,
+  user: userSession,
   authorId: String,
   requiredRole: string
 ) {
-  if (!session) {
+  if (!user) {
     throw new Error("You are not logged in!");
   }
   //@ts-ignore
-  const { id, role } = session.user;
+  const { id, role } = user;
   //id !== authorId ||
   if (!verifyUserRole(role, requiredRole)) {
     throw new Error(

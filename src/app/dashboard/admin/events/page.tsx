@@ -6,7 +6,6 @@ import 'suneditor/dist/css/suneditor.min.css';
 import { ToastContainer, toast } from 'react-toastify';
 import { Event } from '@prisma/client';
 import { deleteEvent } from '@/lib/getEvents';
-import { GetEventContext } from '@/components/context/EventContext';
 import Link from 'next/link';
 import { BsFillEyeFill, BsTrash3 } from 'react-icons/bs';
 import { TbPencil } from 'react-icons/tb';

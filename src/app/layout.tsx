@@ -1,13 +1,19 @@
 import dynamic from "next/dynamic";
 import Footer from "../components/Footer/Footer";
 import Header from "../components/Header";
-import { NextAuthProvider } from "../components/NextAuthProvider";
 import "./globals.css";
 import { ToastContainer } from "react-toastify";
 import GetPostsProvider from "@/components/context/PostContext";
 import GetEventsProvider from "@/components/context/EventContext";
-import { Provider } from 'react-redux';
 import { ReduxProvider } from "./redux/Provider";
+import { Inter as FontSans } from "next/font/google"
+import { cn } from "@/lib/utils"
+ 
+const fontSans = FontSans({
+  subsets: ["latin"],
+  variable: "--font-sans",
+})
+ 
 
 const Hero = dynamic(() => import("@/components/Hero"));
 
@@ -24,7 +30,10 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body>
+      <body  className={cn(
+          "font-sans antialiased",
+          fontSans.variable
+        )}>
         <ToastContainer
           position="top-right"
           autoClose={5000}
@@ -39,7 +48,6 @@ export default function RootLayout({
         />
         <div className={` relative`}>
           <ReduxProvider>
-          <NextAuthProvider>
             <GetPostsProvider>
               <GetEventsProvider>
                 <Header />
@@ -47,7 +55,6 @@ export default function RootLayout({
                 <Footer />
               </GetEventsProvider>
             </GetPostsProvider>
-          </NextAuthProvider>
           </ReduxProvider>
         </div>
       </body>

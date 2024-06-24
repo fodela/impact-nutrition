@@ -22,8 +22,8 @@ const Hero = ({ heroDetail }: { heroDetail: HeroDetail }) => {
         <div className="flex gap-4 text-sm md:text-md lg:text-lg justify-center md:justify-start">
           {heroDetail.showMainButton && (
             <Link
-              href={heroDetail.mainLink ? heroDetail.mainLink : "/signin"}
-              className="capitalize"
+              href={heroDetail.mainLink ? heroDetail.mainLink : "/auth/signin"}
+              className="capitalize bg-colorPrimary rounded py-2 px-4 text-white  hover:bg-green-600 transition-all duration-300"
             >
               <Button variant="primary">Get Started</Button>
             </Link>

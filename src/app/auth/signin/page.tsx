@@ -1,5 +1,5 @@
 "use client";
-import Login from "@/components/Login/Login";
+import Login from "@/components/Login/LoginForm";
 import { RegisterForm } from "@/components/form";
 import Image from "next/image";
 
@@ -7,7 +7,7 @@ import { useState } from "react";
 
 import "react-toastify/ReactToastify.min.css";
 
-const LoginForm = () => {
+const Page = () => {
   const [showSignin, setShowSignIn] = useState(true);
 
   return (
@@ -63,22 +63,10 @@ const LoginForm = () => {
             </>
           )}
           <button
-            className="text-sm px-4 py-2 mx-auto w-full"
+            className="text-center hover:bg-green-800 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
             onClick={() => setShowSignIn(!showSignin)}
           >
-            {showSignin ? (
-              <div>
-                Don&apos;t have an account?{" "}
-                <span className="text-blue-500 underline font-bold">
-                  Signup
-                </span>
-              </div>
-            ) : (
-              <div>
-                Already have an account?{" "}
-                <span className="text-blue-500 underline font-bold">Login</span>
-              </div>
-            )}
+            {showSignin ? "Register" : "Login"}
           </button>
         </div>
       </div>
@@ -86,4 +74,4 @@ const LoginForm = () => {
   );
 };
 
-export default LoginForm;
+export default Page;

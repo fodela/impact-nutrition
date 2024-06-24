@@ -1,8 +1,8 @@
-import { paramsProp } from "@/app/api/users/update/route";
 import prisma from "@/lib/prisma";
 import { NextResponse } from "next/server";
 
-export async function GET(req: Request, { params: { id } }: paramsProp) {
+//@ts-expect-error
+export async function GET(req: Request, { params: { id } }) {
   try {
     if (!id) {
       return NextResponse.json({ error: "Id missing" }, { status: 404 });

@@ -1,44 +1,68 @@
 "use client";
-
-import axios from "axios";
-import { signIn } from "next-auth/react";
-import { ChangeEvent, useState } from "react";
+import { FormEvent, useState } from "react";
+import { useRouter } from "next/navigation";
 import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
 import { toast } from "react-toastify";
+import axios from "axios";
 import "react-toastify/ReactToastify.min.css";
+import { useDispatch } from "react-redux";
+import { AppDispatch } from "@/app/redux/store";
+import { login } from "@/app/redux/slices/authSlice";
 
 export const RegisterForm = () => {
-  const [phoneError, setPhoneError] = useState<string | null>(null);
-  let [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
-  const [showverifyPass, setshowverifyPass] = useState(false);
+  const [showVerifyPass, setShowVerifyPass] = useState(false);
   const [passwordMatch, setPasswordMatch] = useState(true);
+  const [loading, setLoading] = useState(false);
+  const router = useRouter();
 
-  let [formValues, setFormValues] = useState({
-    firstname: "",
-    lastname: "",
-    phone: "",
-    profession: "",
-    professional_pin: "",
-    email: "",
-    password: "",
-    verifyPass: "",
-  });
+  const dispatch = useDispatch<AppDispatch>();
 
-  const onSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
+  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    const formData = new FormData(event.target as HTMLFormElement);
+    const firstname = formData.get("firstname")?.toString().trim();
+    const lastname = formData.get("lastname")?.toString().trim();
+    const phone = formData.get("phone")?.toString().trim();
+    const profession = formData.get("profession")?.toString().trim();
+    const professional_pin = formData.get("professional_pin")?.toString().trim();
+    const email = formData.get("email")?.toString().trim();
+    const password = formData.get("password")?.toString().trim();
+    const verifyPass = formData.get("verifyPass")?.toString().trim();
+
+    if (!firstname || !lastname || !phone || !password || !verifyPass) {
+      toast.error("Please fill in all required fields.", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+      });
+      return;
+    }
+
+    if (password !== verifyPass) {
+      setPasswordMatch(false);
+      return;
+    }
+
     setLoading(true);
-    if (phoneError) return;
+
     try {
-      const res = await axios.post("/api/register", formValues, {
-        headers: {
-          "Content-Type": "application/json",
-        },
+      const res = await axios.post("/api/auth/register", {
+        firstname,
+        lastname,
+        phone,
+        profession,
+        professional_pin,
+        email,
+        password,
       });
 
-      setLoading(false);
-      if (res.status !== 200) {
-        const result = res.data;
+      if (res.status !== 201) {
         toast.error(`Something went wrong! ${res.data}`, {
           position: "top-right",
           autoClose: 5000,
@@ -49,8 +73,10 @@ export const RegisterForm = () => {
           progress: undefined,
           theme: "colored",
         });
+        setLoading(false);
         return;
       }
+
       toast.success("Registration is successful. Redirecting to dashboard", {
         position: "top-right",
         autoClose: 5000,
@@ -61,179 +87,133 @@ export const RegisterForm = () => {
         progress: undefined,
         theme: "colored",
       });
-      const { phone, password } = formValues;
-      signIn("credentials", {
-        phone,
-        password,
-        callbackUrl: "/dashboard/profile", // Redirect URL after successful login
-      });
+  await dispatch(login({ phone, password })).unwrap();
+      router.push("/dashboard/profile");
     } catch (error: any) {
       setLoading(false);
-      toast.error(
-        "Registration failed! Is there a chance you have already used that phone number to register?",
-        {
-          position: "top-right",
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "colored",
-        }
-      );
+      toast.error("Registration failed! Is there a chance you have already used that phone number to register?", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+      });
     }
-  };
-
-  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = event.target;
-
-    if (name === "phone") {
-      // Check the phone number length
-      if (value.trim().length > 11 || value.trim().length < 10) {
-        setPhoneError("Phone number must be 10 numbers!");
-      } else {
-        setPhoneError(null);
-      }
-    }
-
-    setFormValues((prevFormValues) => {
-      const updatedFormValues = { ...prevFormValues, [name]: value };
-
-      if (name === "password" || name === "verifyPass") {
-        setPasswordMatch(
-          updatedFormValues.password === updatedFormValues.verifyPass
-        );
-      }
-
-      return updatedFormValues;
-    });
   };
 
   return (
     <div className="w-fit">
       <h1 className="text-3xl text-center font-bold">Create a new account</h1>
-      <form className="m-4 p-6 signup" onSubmit={onSubmit}>
-        {" "}
-        <div className="">
-          {" "}
+      <form className="m-4 p-6 signup" onSubmit={handleSubmit}>
+        <div>
           <label className="opacity-50" htmlFor="firstname">
             Firstname
           </label>
           <input
-            className=""
             required
             type="text"
             name="firstname"
-            value={formValues.firstname}
-            onChange={handleChange}
+            id="firstname"
+            className="appearance-none my-4 border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
           />
         </div>
-        <div className="">
+        <div>
           <label className="opacity-50" htmlFor="lastname">
             Lastname
           </label>
           <input
-            className=""
             required
             type="text"
             name="lastname"
-            value={formValues.lastname}
-            onChange={handleChange}
+            id="lastname"
+            className="appearance-none my-4 border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
           />
         </div>
-        <div className="">
+        <div>
           <label className="opacity-50" htmlFor="phone">
             Phone
           </label>
           <input
-            className={` ${phoneError && "border-red-600"}`}
             required
             type="phone"
             name="phone"
-            value={formValues.phone}
-            onChange={handleChange}
+            id="phone"
+            className="appearance-none my-4 border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
           />
-          <div
-            className={`${
-              phoneError ? "opacity-100" : "opacity-0"
-            } text-red-400 px-3 text-sm text-left`}
-          >
-            {phoneError}
-          </div>
         </div>
-        <div className="">
+        <div>
           <label className="opacity-50" htmlFor="professional_pin">
             Professional Pin
           </label>
           <input
-            className=""
             required
             type="text"
             name="professional_pin"
-            value={formValues.professional_pin}
-            onChange={handleChange}
+            id="professional_pin"
+            className="appearance-none my-4 border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
           />
         </div>
-        <div className="">
+        <div>
           <label className="opacity-50" htmlFor="email">
             Email
           </label>
           <input
-            className=""
             required
             type="email"
             name="email"
-            value={formValues.email}
-            onChange={handleChange}
+            id="email"
+            className="appearance-none my-4 border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
           />
         </div>
-        <div className="">
+        <div>
+          <label className="opacity-50" htmlFor="profession">
+            Profession
+          </label>
+          <input
+            type="text"
+            name="profession"
+            id="profession"
+            className="appearance-none my-4 border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+          />
+        </div>
+        <div>
           <label htmlFor="password">Password</label>
           <div className="flex relative">
             <input
-              className={` ${!passwordMatch && "border-red-600"}`}
               required
               type={showPassword ? "text" : "password"}
               name="password"
-              value={formValues.password}
-              onChange={handleChange}
+              id="password"
+              className="appearance-none my-4 border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
             />
             <button
               type="button"
               onClick={() => setShowPassword(!showPassword)}
               className="text-gray-700 ml-2 absolute right-2 h-full focus:outline-none"
             >
-              {showPassword ? (
-                <AiFillEyeInvisible size={30} />
-              ) : (
-                <AiFillEye size={30} />
-              )}
+              {showPassword ? <AiFillEyeInvisible size={30} /> : <AiFillEye size={30} />}
             </button>
           </div>
         </div>
-        <div className="">
+        <div>
           <label htmlFor="verifyPass">Confirm Password</label>
           <div className="flex relative">
             <input
-              className={` ${!passwordMatch && "border-red-600"}`}
               required
-              type={showverifyPass ? "text" : "password"}
+              type={showVerifyPass ? "text" : "password"}
               name="verifyPass"
-              value={formValues.verifyPass}
-              onChange={handleChange}
+              id="verifyPass"
+              className="appearance-none my-4 border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
             />
-
             <button
               type="button"
-              onClick={() => setshowverifyPass(!showverifyPass)}
+              onClick={() => setShowVerifyPass(!showVerifyPass)}
               className="text-gray-700 ml-2 absolute right-2 h-full focus:outline-none"
             >
-              {showverifyPass ? (
-                <AiFillEyeInvisible size={20} />
-              ) : (
-                <AiFillEye size={20} />
-              )}
+              {showVerifyPass ? <AiFillEyeInvisible size={30} /> : <AiFillEye size={30} />}
             </button>
           </div>
         </div>

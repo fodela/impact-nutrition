@@ -1,6 +1,5 @@
 'use client'
 
-import { ChildrenProps } from "@/components/NextAuthProvider";
 import { ReactNode } from "react";
 
 interface DashboardCardProps {

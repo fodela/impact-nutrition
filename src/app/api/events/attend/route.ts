@@ -1,22 +1,23 @@
-import { getServerSession } from "next-auth";
-import { NextResponse } from "next/server";
 import prisma from "@/lib/prisma";
 import { sendMailValidationEmail } from "@/lib/sendEmail";
-import { authOptions } from "@/app/utils/authOptions";
+import { authenticateUser } from "@/lib/authUtils";
+import { NextApiRequest } from "next";
+import { NextResponse } from "next/server";
 
 export async function POST(req: Request) {
-  const session = await getServerSession(authOptions);
-
-  if (!session?.user) {
-    return NextResponse.json(
-      { message: "You are not logged in!" },
-      { status: 400 }
-    );
-  }
-  //@ts-ignore
-  const userId = session?.user?.id;
   try {
+    const user = await authenticateUser(req);
+
+    if (!user) {
+      return NextResponse.json(
+        { message: "You are not logged in!" },
+        { status: 400 }
+      );
+    }
+
+    const userId = user.id;
     const { eventId } = await req.json();
+
     if (!eventId) {
       return NextResponse.json(
         { message: "Missing required data" },
@@ -46,28 +47,27 @@ export async function POST(req: Request) {
         { status: 400 }
       );
     }
+
     const attendee = await prisma.attendee.create({
       data: {
         eventId,
         registrantId: userId,
         amount_paid: 0,
-        amount_due: event?.price,
+        amount_due: event.price,
       },
     });
 
-    // const link = `${process.env.LOCALURL}/api/verifyuser/${verificationToken}`;
-
-    const { user } = session;
     // Send the email verification email
     await sendMailValidationEmail({
-      title: `Impact Nutriton: You just registered for the event ${event.title}`,
-      message: `Welcome, ${user.email}! <br> We are happy to see you at our upcoming event: ${event.title}. Kindly note that if this event is priced, you will be required to pay the amount needed to receive your certificate!`,
+      title: `Impact Nutrition: You just registered for the event ${event.title}`,
+      message: `Welcome, ${user.name}! <br> We are happy to see you at our upcoming event: ${event.title}. Kindly note that if this event is priced, you will be required to pay the amount needed to receive your certificate!`,
       receiverEmail: user.email,
       link: "",
     });
 
     return NextResponse.json(attendee, { status: 200 });
   } catch (error) {
-    return NextResponse.json("Something went wrong!", { status: 500 });
+    //@ts-ignore
+    return NextResponse.json({ message: "Something went wrong!", error: error.message }, { status: 500 });
   }
 }

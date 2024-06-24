@@ -9,8 +9,8 @@ import { BiCalendarCheck, BiUser } from "react-icons/bi";
 import { GiTakeMyMoney } from "react-icons/gi";
 import { useAppDispatch, useAppSelector } from "@/app/redux/hooks";
 import { getEvents } from "@/app/redux/actions/eventsAction";
-import { useSession } from "next-auth/react";
-import { redirect } from "next/navigation";
+import { useRouter } from "next/navigation";
+import { checkAuth } from "@/app/redux/slices/authSlice";
 
 const headings = ["#", "Name", "Date Created", "Role", "Status", "actions"];
 const summaries = [
@@ -36,20 +36,33 @@ export default function AdminLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const { events, error } = useAppSelector(state => state.events)
-const {data: session, status} = useSession();
-if (session) {
-//@ts-ignore
-if (session?.user?.role !== "ADMINISTRATOR") {
-     redirect("/dashboard/subscriber");
-  }
-}
+  const dispatch = useAppDispatch();
+  const router = useRouter();
+  const { events, error } = useAppSelector((state) => state.events);
+  const auth = useAppSelector((state) => state.auth);
 
+  useEffect(() => {
+    // Dispatch the checkAuth action to verify if the user is authenticated
+    dispatch(checkAuth());
+  }, [dispatch]);
 
+  useEffect(() => {
+    // Redirect to the subscriber dashboard if the user is authenticated but not an administrator
+    if (auth.status === "succeeded" && auth.user?.role !== "ADMINISTRATOR") {
+      router.push("/dashboard/subscriber");
+    }
+    // Redirect to the sign-in page if the user is unauthenticated
+    if (auth.status === "failed" && !auth.user) {
+      router.push("/auth/signin");
+    }
+  }, [auth.status, auth.user, router]);
 
-  const dispatch = useAppDispatch()
+  useEffect(() => {
+    if (!events?.length && auth.user?.role === "ADMINISTRATOR") {
+      dispatch(getEvents());
+    }
+  }, [events?.length, dispatch, auth.user?.role]);
 
-!events?.length && dispatch(getEvents());
   return (
     <>
       <div className="flex gap-8 justify-center">
@@ -71,7 +84,7 @@ if (session?.user?.role !== "ADMINISTRATOR") {
         </div>
         <div className="flex flex-col text-stone-500 gap-4 w-1/4">
           <p className="text-sm">November 2023</p>
-          <p className="text-black dark:text-white ">Upcoming Events</p>
+          <p className="text-black dark:text-white">Upcoming Events</p>
 
           {events.map((event, index) => (
             <UpcomingEventCard key={index} event={event} />

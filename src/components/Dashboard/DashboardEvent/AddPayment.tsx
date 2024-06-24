@@ -1,7 +1,6 @@
 import dynamic from "next/dynamic";
 import { FC, memo, useState } from "react";
 import { Attendee } from "@prisma/client";
-import { useSession } from "next-auth/react";
 import { addEventPayment } from "@/lib/getEvents";
 import { ToastContainer, toast } from "react-toastify";
 

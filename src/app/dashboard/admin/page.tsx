@@ -1,30 +1,10 @@
 'use client'
 import Pagination from "@/components/Dashboard/DashboardTable/Pagination";
 import TableHeader from "@/components/Dashboard/DashboardTable/TableHeader";
-import { GetAttendeesContext } from "@/components/context/AttendeeContext";
-import { useContext, useEffect } from "react";
-import { BiTrashAlt } from "react-icons/bi";
-import { FaPencilAlt, FaUser } from "react-icons/fa";
+
 
 
 const headings = ["#", "Name", "Date Created", "Role", "Status", "actions"];
-const summaries = [
-  {
-    label: "users",
-    quantity: "22.54k",
-    color: "bg-purple-500",
-  },
-  {
-    label: "events",
-    quantity: "305",
-    color: "bg-cyan-500",
-  },
-  {
-    label: "revenue",
-    quantity: "22.5k",
-    color: "bg-sky-500",
-  },
-];
 
 
 const Admin = () => {

@@ -80,7 +80,6 @@ export const addEventPayment = createAsyncThunk(
       return response.data;
     } catch (error:any) {
       // Handle the error appropriately
-      console.error("Failed to add event payment:", error);
      thunkApi.rejectWithValue({ error: error.message }) ;
     }
   }

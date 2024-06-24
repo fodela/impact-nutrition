@@ -1,6 +1,5 @@
 'use client'
 import { createContext, useState } from "react";
-import { ChildrenProps } from "../NextAuthProvider";
 import { Post } from "@prisma/client";
 import { getPosts, getPublishedPosts } from "@/lib/getPosts";
 import { ToastContainer, toast } from "react-toastify";
@@ -20,8 +19,8 @@ export const GetPostsContext = createContext<GetPostsContextType>({
 
 
 
-
-const GetPostsProvider = ({ children }: ChildrenProps) => {
+//@ts-expect-error
+const GetPostsProvider = ({ children }) => {
     const [pubPosts, setPubPosts] = useState<Post[]>([]);
     const [posts, setAllPosts] = useState<Post[]>([]);
 

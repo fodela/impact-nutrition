@@ -1,6 +1,5 @@
 'use client'
 import { createContext, useState } from "react";
-import { ChildrenProps } from "../NextAuthProvider";
 import { Attendee, Event, Payment, User } from "@prisma/client";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/ReactToastify.min.css";
@@ -20,8 +19,8 @@ export const GetUserContext = createContext<GetUserContextType>({
 
 
 
-
-const GetUserProvider = ({ children }: ChildrenProps) => {
+//@ts-expect-error
+const GetUserProvider = ({ children }) => {
     const [currentUser, setCurrentUser] = useState<User[]>([]);
 
     const getCurrentUser = async (id:string) => {
